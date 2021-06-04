@@ -1,8 +1,7 @@
-# language: pt
+#language: pt
 
 Funcionalidade: Login
 
-  @login
   Contexto: Rota de login
     Dada a rota "/login"
 
@@ -10,15 +9,9 @@ Funcionalidade: Login
     Dado que utilize body "<body>"
     Quando realizar uma requisição do tipo "POST"
     Então deverá ser retornado o schema "post_login" e status <status>
-    E deverá ser retornada a mensgem "<mensagem>"
+    E deverá ser retornada a mensagem "<mensagem>"
 
     Exemplos:
-      | email    | password | status |
-      | válido   | válido   | 200    |
-      | inválido | válido   | 400    |
-      | válido   | inválido | 401    |
-      | vazio    | vazio    | 400    |
-
       | body             | status | mensagem                       |
       | válido           | 200    | Login realizado com sucesso    |
       | e-mail inválido  | 400    | email deve ser um email válido |
