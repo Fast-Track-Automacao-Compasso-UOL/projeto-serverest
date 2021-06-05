@@ -2,12 +2,10 @@
 
 Funcionalidade: Login
 
-  Contexto: Rota de login
-    Dada a rota "/login"
-
+  @Post @Login
   Esquema do Cenário: Realizar Login
     Dado que utilize body "<body>"
-    Quando realizar uma requisição do tipo "POST"
+    Quando realizar login
     Então deverá ser retornado o schema "post_login" e status <status>
     E deverá ser retornada a mensagem "<mensagem>"
 
