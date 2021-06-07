@@ -1,0 +1,241 @@
+{
+    "$schema": "http://json-schema.org/draft-07/schema",
+    "$id": "http://example.com/example.json",
+    "type": "object",
+    "title": "The root schema",
+    "description": "The root schema comprises the entire JSON document.",
+    "default": {},
+    "examples": [
+        {
+            "quantidade": 1,
+            "carrinhos": [
+                {
+                    "produtos": [
+                        {
+                            "idProduto": "BeeJh5lz3k6kSIzA",
+                            "quantidade": 2,
+                            "precoUnitario": 470
+                        },
+                        {
+                            "idProduto": "K6leHdftCeOJj8BJ",
+                            "quantidade": 1,
+                            "precoUnitario": 5240
+                        }
+                    ],
+                    "precoTotal": 6180,
+                    "quantidadeTotal": 3,
+                    "idUsuario": "oUb7aGkMtSEPf6BZ",
+                    "_id": "qbMqntef4iTOwWfg"
+                }
+            ]
+        }
+    ],
+    "required": [
+        "quantidade",
+        "carrinhos"
+    ],
+    "properties": {
+        "quantidade": {
+            "$id": "#/properties/quantidade",
+            "type": "integer",
+            "title": "The quantidade schema",
+            "description": "An explanation about the purpose of this instance.",
+            "default": 0,
+            "examples": [
+                1
+            ]
+        },
+        "carrinhos": {
+            "$id": "#/properties/carrinhos",
+            "type": "array",
+            "title": "The carrinhos schema",
+            "description": "An explanation about the purpose of this instance.",
+            "default": [],
+            "examples": [
+                [
+                    {
+                        "produtos": [
+                            {
+                                "idProduto": "BeeJh5lz3k6kSIzA",
+                                "quantidade": 2,
+                                "precoUnitario": 470
+                            },
+                            {
+                                "idProduto": "K6leHdftCeOJj8BJ",
+                                "quantidade": 1,
+                                "precoUnitario": 5240
+                            }
+                        ],
+                        "precoTotal": 6180,
+                        "quantidadeTotal": 3,
+                        "idUsuario": "oUb7aGkMtSEPf6BZ",
+                        "_id": "qbMqntef4iTOwWfg"
+                    }
+                ]
+            ],
+            "additionalItems": true,
+            "items": {
+                "$id": "#/properties/carrinhos/items",
+                "anyOf": [
+                    {
+                        "$id": "#/properties/carrinhos/items/anyOf/0",
+                        "type": "object",
+                        "title": "The first anyOf schema",
+                        "description": "An explanation about the purpose of this instance.",
+                        "default": {},
+                        "examples": [
+                            {
+                                "produtos": [
+                                    {
+                                        "idProduto": "BeeJh5lz3k6kSIzA",
+                                        "quantidade": 2,
+                                        "precoUnitario": 470
+                                    },
+                                    {
+                                        "idProduto": "K6leHdftCeOJj8BJ",
+                                        "quantidade": 1,
+                                        "precoUnitario": 5240
+                                    }
+                                ],
+                                "precoTotal": 6180,
+                                "quantidadeTotal": 3,
+                                "idUsuario": "oUb7aGkMtSEPf6BZ",
+                                "_id": "qbMqntef4iTOwWfg"
+                            }
+                        ],
+                        "required": [
+                            "produtos",
+                            "precoTotal",
+                            "quantidadeTotal",
+                            "idUsuario",
+                            "_id"
+                        ],
+                        "properties": {
+                            "produtos": {
+                                "$id": "#/properties/carrinhos/items/anyOf/0/properties/produtos",
+                                "type": "array",
+                                "title": "The produtos schema",
+                                "description": "An explanation about the purpose of this instance.",
+                                "default": [],
+                                "examples": [
+                                    [
+                                        {
+                                            "idProduto": "BeeJh5lz3k6kSIzA",
+                                            "quantidade": 2,
+                                            "precoUnitario": 470
+                                        },
+                                        {
+                                            "idProduto": "K6leHdftCeOJj8BJ",
+                                            "quantidade": 1,
+                                            "precoUnitario": 5240
+                                        }
+                                    ]
+                                ],
+                                "additionalItems": true,
+                                "items": {
+                                    "$id": "#/properties/carrinhos/items/anyOf/0/properties/produtos/items",
+                                    "anyOf": [
+                                        {
+                                            "$id": "#/properties/carrinhos/items/anyOf/0/properties/produtos/items/anyOf/0",
+                                            "type": "object",
+                                            "title": "The first anyOf schema",
+                                            "description": "An explanation about the purpose of this instance.",
+                                            "default": {},
+                                            "examples": [
+                                                {
+                                                    "idProduto": "BeeJh5lz3k6kSIzA",
+                                                    "quantidade": 2,
+                                                    "precoUnitario": 470
+                                                }
+                                            ],
+                                            "required": [
+                                                "idProduto",
+                                                "quantidade",
+                                                "precoUnitario"
+                                            ],
+                                            "properties": {
+                                                "idProduto": {
+                                                    "$id": "#/properties/carrinhos/items/anyOf/0/properties/produtos/items/anyOf/0/properties/idProduto",
+                                                    "type": "string",
+                                                    "title": "The idProduto schema",
+                                                    "description": "An explanation about the purpose of this instance.",
+                                                    "default": "",
+                                                    "examples": [
+                                                        "BeeJh5lz3k6kSIzA"
+                                                    ]
+                                                },
+                                                "quantidade": {
+                                                    "$id": "#/properties/carrinhos/items/anyOf/0/properties/produtos/items/anyOf/0/properties/quantidade",
+                                                    "type": "integer",
+                                                    "title": "The quantidade schema",
+                                                    "description": "An explanation about the purpose of this instance.",
+                                                    "default": 0,
+                                                    "examples": [
+                                                        2
+                                                    ]
+                                                },
+                                                "precoUnitario": {
+                                                    "$id": "#/properties/carrinhos/items/anyOf/0/properties/produtos/items/anyOf/0/properties/precoUnitario",
+                                                    "type": "integer",
+                                                    "title": "The precoUnitario schema",
+                                                    "description": "An explanation about the purpose of this instance.",
+                                                    "default": 0,
+                                                    "examples": [
+                                                        470
+                                                    ]
+                                                }
+                                            },
+                                            "additionalProperties": true
+                                        }
+                                    ]
+                                }
+                            },
+                            "precoTotal": {
+                                "$id": "#/properties/carrinhos/items/anyOf/0/properties/precoTotal",
+                                "type": "integer",
+                                "title": "The precoTotal schema",
+                                "description": "An explanation about the purpose of this instance.",
+                                "default": 0,
+                                "examples": [
+                                    6180
+                                ]
+                            },
+                            "quantidadeTotal": {
+                                "$id": "#/properties/carrinhos/items/anyOf/0/properties/quantidadeTotal",
+                                "type": "integer",
+                                "title": "The quantidadeTotal schema",
+                                "description": "An explanation about the purpose of this instance.",
+                                "default": 0,
+                                "examples": [
+                                    3
+                                ]
+                            },
+                            "idUsuario": {
+                                "$id": "#/properties/carrinhos/items/anyOf/0/properties/idUsuario",
+                                "type": "string",
+                                "title": "The idUsuario schema",
+                                "description": "An explanation about the purpose of this instance.",
+                                "default": "",
+                                "examples": [
+                                    "oUb7aGkMtSEPf6BZ"
+                                ]
+                            },
+                            "_id": {
+                                "$id": "#/properties/carrinhos/items/anyOf/0/properties/_id",
+                                "type": "string",
+                                "title": "The _id schema",
+                                "description": "An explanation about the purpose of this instance.",
+                                "default": "",
+                                "examples": [
+                                    "qbMqntef4iTOwWfg"
+                                ]
+                            }
+                        },
+                        "additionalProperties": true
+                    }
+                ]
+            }
+        }
+    },
+    "additionalProperties": true
+}
