@@ -5,6 +5,7 @@ export class ServeRest extends Rest {
   // Armazena rota baseado no parâmetro recebido
   static armazenarRota(rota) {
     cy.wrap(rota).as('Rota');
+    cy.wrap('').as('Body')
   }
 
   // Adiciona query params à rota recebida pelo cy.wrap()
@@ -18,7 +19,7 @@ export class ServeRest extends Rest {
     })
   }
 
-  //Adiciona complemento recebido pelo parâmetro na rota recebida pelo cy.wrap()
+  // Adiciona complemento recebido pelo parâmetro na rota recebida pelo cy.wrap()
   static adicionarComplemento(complemento) {
     cy.get('@Rota').then(rota => {
       cy.wrap(`${rota}/${complemento}`).as('Rota')
@@ -26,12 +27,21 @@ export class ServeRest extends Rest {
   }
 
   // Realiza requisição com rota recebida pelo cy.wrap() e tipo recebido no parâmetro
-  static realizarRequisicao(tipo) {
+  static realizarRequisicao(tipo, body = "") {
     cy.get('@Rota').then(rota => {
       switch (tipo) {
         case "GET":
           Rest.get(rota).then(res => {
+            cy.wrap(res).as('Response')
             cy.wrap(res.body).as('Body')
+            cy.wrap(res.status).as('Status')
+          })
+          break;
+        case "POST":
+          Rest.post(rota, body).then(res => {
+            cy.wrap(res).as('Response')
+            cy.wrap(res.body).as('Body')
+            cy.wrap(res.status).as('Status')
           })
           break;
         default:
@@ -44,6 +54,18 @@ export class ServeRest extends Rest {
   static validarSchemaEStatus(schema, status) {
     cy.get('@Body').then(body => {
       cy.validateSchema(body, `${schema}/${status}`)
+    })
+  }
+
+  // Cria variável 'Body' com valor recebido pelo parâmetro
+  static adicionarBody(body) {
+    cy.wrap(body).as('Body')
+  }
+
+  // Valida mensagem contida no body da requisição
+  static validarMensagem(mensagem) {
+    cy.get('@Body').then(body => {
+      expect(Object.values(body)).to.contain(mensagem)
     })
   }
 }

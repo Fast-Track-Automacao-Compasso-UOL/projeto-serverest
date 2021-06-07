@@ -7,6 +7,7 @@ Given('a rota {string}', (rota) => {
 });
 
 Given('que utilize query params {string}', (param) => {
+  // Refatorar para uso de fixtures
   let valor;
   switch (param) {
     case "_id":
@@ -34,14 +35,13 @@ Given('que utilize query params {string}', (param) => {
 });
 
 When('realizar uma requisição do tipo {string}', (tipo) => {
-  ServeRest.realizarRequisicao(tipo)
+  cy.get('@Body').then(body => {
+    ServeRest.realizarRequisicao(tipo, body)
+  })
 });
 
-Then('deverá ser retornado o schema {string} e status {int}', (schema, status) => {
-  ServeRest.validarSchemaEStatus(schema, status)
-})
-
 Given('que utilize complemento de rota {string}', (id) => {
+  // Refatorar para uso de fixtures
   switch (id) {
     case "válido":
       id = "0uxuPY0cbmQhpEz1"
@@ -55,4 +55,63 @@ Given('que utilize complemento de rota {string}', (id) => {
   }
 
   ServeRest.adicionarComplemento(id)
-})
+});
+
+Given('que utilize body {string}', (body) => {
+  // Refatorar para uso de fixtures
+  switch (body) {
+    case "válido":
+      body = {
+        "nome": "Fulano da Silva",
+        "email": "teste@qa.com.br",
+        "password": "teste",
+        "administrador": "true"
+      }
+      break;
+    case "e-mail já utilizado":
+      body = {
+        "nome": "Fulano da Silva",
+        "email": "fulano@qa.com",
+        "password": "teste",
+        "administrador": "true"
+      }
+      break;
+    case "e-mail inválido":
+      body = {
+        "nome": "Teste",
+        "email": "thatisnotanemail",
+        "password": "teste",
+        "administrador": "true"
+      }
+      break;
+    case "campos vazios":
+      body = {
+        "nome": "",
+        "email": "",
+        "password": "",
+        "administrador": ""
+      }
+      break;
+    case "campos inválidos":
+      body = {
+        "nome": 123,
+        "email": 123,
+        "password": 123,
+        "administrador": 123
+      }
+      break;
+    default:
+      body = ""
+      break;
+  }
+
+  ServeRest.adicionarBody(body)
+});
+
+Then('deverá ser retornada a mensagem {string}', (mensagem) => {
+  ServeRest.validarMensagem(mensagem)
+});
+
+Then('deverá ser retornado o schema {string} e status {int}', (schema, status) => {
+  ServeRest.validarSchemaEStatus(schema, status)
+});
