@@ -27,6 +27,6 @@
   },
   "homepage": "https://github.com/Fast-Track-Automacao-Compasso-UOL/projeto-serverest#readme",
   "cypress-cucumber-preprocessor": {
-    "stepDefinitions": "cypress/integration/step_definitions/"
+    "nonGlobalStepDefinitions": true
   }
 }
