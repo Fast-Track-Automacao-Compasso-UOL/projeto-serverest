@@ -18,3 +18,19 @@ When('realizar uma requisição do tipo {string}', (tipo) => {
 Then('deverá ser retornado o schema {string} e status {int}', (schema, status) => {
   ServeRest.validarSchemaEStatus(schema, status)
 })
+
+Given('que utilize complemento de rota {string}', (complemento) => {
+  switch (complemento) {
+    case "válido":
+      complemento = "0uxuPY0cbmQhpEz1"
+      break;
+    case "inválido":
+      complemento = "0uxuPY0cbmQhpEz"
+      break;
+    default:
+      complemento = ""
+      break;
+  }
+
+  ServeRest.adicionarComplemento(complemento)
+})
