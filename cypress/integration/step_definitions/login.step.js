@@ -15,6 +15,10 @@ When('realizar uma requisição do tipo {string}', (verb) => {
   ServeRest.realizar_login(cy.get('@rota'), cy.get('@body'))
 });
 
+When('realizar login', () => {
+  ServeRest.realizar_login();
+})
+
 Then('deverá ser retornado o schema {string} e status {int}', (schema, statuscode) => {
   return true
 })
