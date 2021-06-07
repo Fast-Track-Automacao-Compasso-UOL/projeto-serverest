@@ -8,28 +8,20 @@ export class ServeRest extends Rest {
   }
 
   // Adiciona query params à rota recebida pelo cy.wrap()
-  static adicionarQueryParams(params) {
+  static adicionarQueryParams(param, valor) {
     cy.get('@Rota').then(rota => {
-      switch (params) {
-        case "_id":
-          cy.wrap(`${rota}?${params}=0uxuPY0cbmQhpEz1`).as('Rota')
-          break;
-        case "nome":
-          cy.wrap(`${rota}?${params}=Fulano%20da%20Silva`).as('Rota')
-          break;
-        case "email":
-          cy.wrap(`${rota}?${params}=fulano@qa.com`).as('Rota')
-          break;
-        case "password":
-          cy.wrap(`${rota}?${params}=teste`).as('Rota')
-          break;
-        case "administrador":
-          cy.wrap(`${rota}?${params}=true`).as('Rota')
-          break;
-        default:
-          cy.wrap(rota).as('Rota')
-          break;
+      if (param && valor) {
+        cy.wrap(`${rota}?${param}=${valor}`).as('Rota')
+      } else {
+        cy.wrap(rota).as('Rota')
       }
+    })
+  }
+
+  //Adiciona complemento recebido pelo parâmetro na rota recebida pelo cy.wrap()
+  static adicionarComplemento(complemento) {
+    cy.get('@Rota').then(rota => {
+      cy.wrap(`${rota}/${complemento}`).as('Rota')
     })
   }
 
@@ -52,12 +44,6 @@ export class ServeRest extends Rest {
   static validarSchemaEStatus(schema, status) {
     cy.get('@Body').then(body => {
       cy.validateSchema(body, `${schema}/${status}`)
-    })
-  }
-
-  static adicionarComplemento(complemento) {
-    cy.get('@Rota').then(rota => {
-      cy.wrap(`${rota}/${complemento}`).as('Rota')
     })
   }
 }
