@@ -27,8 +27,8 @@ export class ServeRest extends Rest {
         })
     }
 
-    static validar_mensagem(mensagem) {
-        cy.get('@body').its('message').should('eq', mensagem)
+    static validar_mensagem(atributo, mensagem) {
+        cy.get('@body').its(atributo).should('eq', mensagem)
     }
 
 }
