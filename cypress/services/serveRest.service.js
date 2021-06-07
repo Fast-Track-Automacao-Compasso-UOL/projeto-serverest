@@ -21,16 +21,14 @@ export class ServeRest extends Rest {
         });
     }
 
-    static armazenar_resposta(res) {
-        cy.wrap(res).as('res');
-    }
-    static validar_esquema(res, schema) {
-
-        cy.validateSchema(res, schema);
+    static validar_esquema(schema, status) {
+        cy.get('@body').then(body => {
+            cy.validateSchema(body, `${schema}/${status}`);
+        })
     }
 
     static validar_mensagem(mensagem) {
-        cy.get('@res.message').should('contain', mensagem)
+        cy.get('@body').its('message').should('eq', mensagem)
     }
 
 }

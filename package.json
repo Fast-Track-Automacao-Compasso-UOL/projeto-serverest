@@ -13,7 +13,8 @@
     "fs-extra": "^10.0.0"
   },
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "cy:open": "npx cypress open --config watchForFileChanges=false"
   },
   "repository": {
     "type": "git",

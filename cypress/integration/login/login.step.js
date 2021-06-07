@@ -4,7 +4,7 @@ import { ServeRest } from '../../services/serveRest.service'
 
 
 Given('a rota {string}', (rota) => {
-  cy.wrap(rota).as('rota');
+  return true; //cy.wrap(rota).as('rota');
 });
 
 Given('que utilize body {string}', (body) => {
@@ -19,10 +19,10 @@ When('realizar login', () => {
   ServeRest.realizar_login();
 })
 
-Then('deverá ser retornado o schema {string} e status {int}', (schema, statuscode) => {
-  return true
+Then('deverá ser retornado o schema {string} e status {int}', (schema, status) => {
+  ServeRest.validar_esquema(schema, status);
 })
 
-Then('deverá ser retornada a mensagem {string}', (mensgem) => {
-  return true
+Then('deverá ser retornada a mensagem {string}', (mensagem) => {
+  ServeRest.validar_mensagem(mensagem)
 })
