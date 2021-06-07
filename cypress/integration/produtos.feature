@@ -19,15 +19,15 @@ Funcionalidade: Produtos
       | descricao  |
       | quantidade |
 
-  # Esquema do Cenário: Buscar produto por ID
-  #   Dado que utilize complemento de rota "<id>"
-  #   Quando realizar uma requisição do tipo "GET"
-  #   Então deverá ser retornado o schema "get_produtos_id" e status <status>
+  Esquema do Cenário: Buscar produto por ID
+    Dado que utilize complemento de rota "<id>"
+    Quando realizar uma requisição do tipo "GET"
+    Então deverá ser retornado o schema "get_produtos_id" e status <status>
 
-  #   Exemplos:
-  #     | id       | status |
-  #     | válido   | 200    |
-  #     | inválido | 400    |
+    Exemplos:
+      | id       | status |
+      | válido   | 200    |
+      | inválido | 400    |
 
   # Esquema do Cenário: Cadastrar produto
   #   Dado que possua uma autenticação "<auth>"

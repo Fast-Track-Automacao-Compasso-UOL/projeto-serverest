@@ -1,15 +1,15 @@
 /// <reference types="cypress" />
 import { Given, Then, When } from 'cypress-cucumber-preprocessor/steps'
 import { ServeRest } from '../../services/serveRest.service'
-import Rest  from "../../services/_rest.service"
-
+import Rest from '../../services/_rest.service'
 
 // Listar Produtos
 Given('a rota {string}', (rota) => {
-    ServeRest.armazenarRota(rota);
+   ServeRest.armazenarRota(rota);
 });
 
 Given ('que utilize query params {string}', (params) => {
+        
     ServeRest.adicionarQueryParams(params);
 });
 
@@ -19,4 +19,10 @@ When('realizar uma requisição do tipo {string}', (tipo) => {
 
 Then('deverá ser retornado o schema {string} e status {int}', (schema, status) => {
     ServeRest.validarSchemaEStatus(schema, status)
+})
+
+// Buscar produtos por ID
+
+Given('que utilize complemento de rota {string}', (id) => {
+    ServeRest.adicionarComplemento(id)
 })
