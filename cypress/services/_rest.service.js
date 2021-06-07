@@ -9,11 +9,12 @@ export default class Rest {
     });
   }
 
-  static post(endpoint, body) {
+  static post(endpoint, body, headers) {
     return cy.request({
       method: 'POST',
       url: endpoint,
       body: body,
+      headers: headers,
       failOnStatusCode: false
     });
   }
@@ -27,7 +28,7 @@ export default class Rest {
     });
   }
 
-  static delete(endpoint, body) {
+  static delete(endpoint, body = null) {
     return cy.request({
       method: 'DELETE',
       url: endpoint,

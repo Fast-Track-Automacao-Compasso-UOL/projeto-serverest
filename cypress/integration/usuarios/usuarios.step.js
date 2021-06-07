@@ -49,12 +49,26 @@ Given('que utilize complemento de rota {string}', (id) => {
     case "inválido":
       id = "0uxuPY0cbmQhpEz"
       break;
+    case "existente sem carrinho":
+      ServeRest.criarUsuario("sem carrinho")
+      cy.get('@Id').then(id => {
+        ServeRest.adicionarComplemento(id)
+      })
+      break;
+    case "existente com carrinho":
+      ServeRest.criarUsuario("com carrinho")
+      cy.get('@Id').then(id => {
+        ServeRest.adicionarComplemento(id)
+      })
+      break;
+    case "inexistente":
+      id = "0uxuPY0cbmQhpEz"
+      ServeRest.adicionarComplemento(id)
+      break;
     default:
       id = ""
       break;
   }
-
-  ServeRest.adicionarComplemento(id)
 });
 
 Given('que utilize body {string}', (body) => {

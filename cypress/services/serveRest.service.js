@@ -1,5 +1,6 @@
 /// <reference types="cypress" />
 import Rest from "./_rest.service"
+import faker from "faker"
 
 export class ServeRest extends Rest {
   // Armazena rota baseado no parâmetro recebido
@@ -44,6 +45,13 @@ export class ServeRest extends Rest {
             cy.wrap(res.status).as('Status')
           })
           break;
+        case "DELETE":
+          Rest.delete(rota, body).then(res => {
+            cy.wrap(res).as('Response')
+            cy.wrap(res.body).as('Body')
+            cy.wrap(res.status).as('Status')
+          })
+          break;
         default:
           break;
       }
@@ -67,5 +75,55 @@ export class ServeRest extends Rest {
     cy.get('@Body').then(body => {
       expect(Object.values(body)).to.contain(mensagem)
     })
+  }
+
+  static criarUsuario(options) {
+    switch (options) {
+      case "sem carrinho":
+        Rest.post("/usuarios",
+          {
+            "nome": "Fulano da Silva",
+            "email": faker.internet.email(),
+            "password": "teste",
+            "administrador": "true"
+          }
+        ).then(res => {
+          cy.wrap(res.body._id).as('Id')
+        })
+        break;
+
+      case "com carrinho":
+        let email = faker.internet.email()
+        Rest.post("/usuarios",
+          {
+            "nome": "Fulano da Silva",
+            "email": email,
+            "password": "teste",
+            "administrador": "true"
+          }
+        ).then(res => {
+          cy.wrap(res.body._id).as('Id')
+          Rest.post("/login",
+            {
+              "email": email,
+              "password": "teste"
+            }
+          ).then(res => {
+            Rest.post("/carrinhos",
+              {
+                "produtos":
+                  [{
+                    "idProduto": "BeeJh5lz3k6kSIzA",
+                    "quantidade": 1
+                  }]
+              },
+              { Authorization: res.body.authorization }
+            )
+          })
+        });
+        break;
+      default:
+        break;
+    }
   }
 }
