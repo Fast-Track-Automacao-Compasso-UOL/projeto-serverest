@@ -144,7 +144,7 @@ export class ServeRest extends Rest {
   // Realiza Login com body recebido pelo cy.wrap()
   static realizar_login() {
     let body;
-    cy.get('@tipoBody').then(tipo => {
+    cy.get('@TipoBody').then(tipo => {
       switch (tipo) {
         case 'válido':
           body = {
@@ -173,7 +173,7 @@ export class ServeRest extends Rest {
       }
 
       super.post(URL_BASE + URL_LOGIN, body).then(res => {
-        cy.wrap(res.body).as('body');
+        cy.wrap(res.body).as('Body');
       });
     })
   }

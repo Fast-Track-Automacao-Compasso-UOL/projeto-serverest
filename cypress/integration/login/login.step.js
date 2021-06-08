@@ -8,11 +8,11 @@ Given('a rota {string}', (rota) => {
 });
 
 Given('que utilize body {string}', (tipoBody) => {
-  cy.wrap(tipoBody).as('tipoBody');
+  cy.wrap(tipoBody).as('TipoBody');
 });
 
 When('realizar uma requisição do tipo {string}', (verb) => {
-  ServeRest.realizar_login(cy.get('@rota'), cy.get('@body'))
+  ServeRest.realizar_login(cy.get('@Rota'), cy.get('@Body'))
 });
 
 When('realizar login', () => {
@@ -20,9 +20,9 @@ When('realizar login', () => {
 })
 
 Then('deverá ser retornado o schema {string} e status {int}', (schema, status) => {
-  ServeRest.validar_esquema(schema, status);
+  ServeRest.validarSchemaEStatus(schema, status);
 })
 
-Then('deverá ser retornado o atributo {string} com a mensagem {string}', (atributo, mensagem) => {
-  ServeRest.validar_mensagem(atributo, mensagem);
+Then('deverá ser retornada a mensagem {string}', (mensagem) => {
+  ServeRest.validarMensagem(mensagem);
 })
