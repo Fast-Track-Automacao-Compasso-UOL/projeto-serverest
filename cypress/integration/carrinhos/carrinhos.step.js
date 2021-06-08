@@ -27,7 +27,16 @@ Then('deverá ser retornado o schema {string} e status {int}', (schema, status) 
 //  ServeRest.armazenarRota(rota);
 
 Given ('que utilize complemento de rota {string}', (id) => {
-  ServeRest.adicionarComplemento(id);
+  switch (id) {
+    case "válido":
+      id = "qbMqntef4iTOwWfg"
+      ServeRest.adicionarComplemento(id)
+      break;
+    case "inválido":
+      id = "ID11qntef4iTO11INVALIDO"
+      ServeRest.adicionarComplemento(id)
+      break;
+    }
 // When('realizar uma requisição do tipo {string}', (tipo) => {
 //  ServeRest.realizarRequisicao(tipo);
 
@@ -40,7 +49,7 @@ Given('que possua uma autenticação {string}', (auth) => {
   let token;
     switch (auth) {
       case "válida":
-        token = "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImZ1bGFub0BxYS5jb20iLCJwYXNzd29yZCI6InRlc3RlIiwiaWF0IjoxNjIzMTgyMjY5LCJleHAiOjE2MjMxODI4Njl9.C2LPuX9wKCGGDzjitoHaTuNgQk8sVe6InFGbdooVgKc" // Terminar esse caso
+        token = "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImZ1bGFub0BxYS5jb20iLCJwYXNzd29yZCI6InRlc3RlIiwiaWF0IjoxNjIzMTg0OTIxLCJleHAiOjE2MjMxODU1MjF9.nXEjxx18jzPj3VC889JxKKTo_tHFhcyE6eqoKLUo9FA" // Terminar esse caso
         break;
       case "inválida":
         token = "AUTHJIUzI1NiIsInRINVALIDA"
@@ -57,10 +66,10 @@ Given('que utilize body {string}', (body) => {
         "produtos": [
           {
             "idProduto": "BeeJh5lz3k6kSIzA",
-            "quantidade": 1
+            "quantidade": 5
           },
           {
-            "idProduto": "YaeJ455lz3k6kSIzA",
+            "idProduto": "K6leHdftCeOJj8BJ",
             "quantidade": 3
           }
         ]
@@ -105,3 +114,7 @@ Given('que utilize body {string}', (body) => {
   }
     ServeRest.adicionarBody(aux)
 });
+Then('deverá ser retornada a mensagem {string}', (mensagem) => {
+  ServeRest.validarMensagem(mensagem);
+
+})
