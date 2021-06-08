@@ -14,6 +14,6 @@ Funcionalidade: Login
       | válido           | 200    | message  | Login realizado com sucesso    |
       | e-mail inválido  | 400    | email    | email deve ser um email válido |
       | senha inválida   | 401    | message  | Email e/ou senha inválidos     |
-#      | vazio            | 400    | message  | é obrigatório                  |
+      | vazio            | 400    | email    | é obrigatório                  |
 #      | campos vazios    | 400    | não pode ficar em branco       |
 #      | campos inválidos | 400    | deve ser uma string            |
