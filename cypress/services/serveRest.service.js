@@ -2,6 +2,12 @@
 import Rest from "./_rest.service"
 import faker from "faker"
 
+const URL_BASE = Cypress.config("baseUrl");
+const URL_USUARIOS = "/usuarios";
+const URL_LOGIN = "/login";
+const URL_PRODUTOS = "/produtos";
+const URL_CARRINOS = "/carrinhos";
+
 export class ServeRest extends Rest {
   // Armazena rota baseado no parâmetro recebido
   static armazenarRota(rota) {
@@ -32,28 +38,28 @@ export class ServeRest extends Rest {
     cy.get('@Rota').then(rota => {
       switch (tipo) {
         case "GET":
-          Rest.get(rota).then(res => {
+          super.get(rota).then(res => {
             cy.wrap(res).as('Response')
             cy.wrap(res.body).as('Body')
             cy.wrap(res.status).as('Status')
           })
           break;
         case "POST":
-          Rest.post(rota, body).then(res => {
+          super.post(rota, body).then(res => {
             cy.wrap(res).as('Response')
             cy.wrap(res.body).as('Body')
             cy.wrap(res.status).as('Status')
           })
           break;
         case "DELETE":
-          Rest.delete(rota, body).then(res => {
+          super.delete(rota, body).then(res => {
             cy.wrap(res).as('Response')
             cy.wrap(res.body).as('Body')
             cy.wrap(res.status).as('Status')
           })
           break;
         case "PUT":
-          Rest.put(rota, body).then(res => {
+          super.put(rota, body).then(res => {
             cy.wrap(res).as('Response')
             cy.wrap(res.body).as('Body')
             cy.wrap(res.status).as('Status')
@@ -88,7 +94,7 @@ export class ServeRest extends Rest {
   static criarUsuario(options) {
     switch (options) {
       case "sem carrinho":
-        Rest.post("/usuarios",
+        super.post("/usuarios",
           {
             "nome": "Fulano da Silva",
             "email": faker.internet.email(),
@@ -102,7 +108,7 @@ export class ServeRest extends Rest {
 
       case "com carrinho":
         let email = faker.internet.email()
-        Rest.post("/usuarios",
+        super.post("/usuarios",
           {
             "nome": "Fulano da Silva",
             "email": email,
@@ -111,13 +117,13 @@ export class ServeRest extends Rest {
           }
         ).then(res => {
           cy.wrap(res.body._id).as('Id')
-          Rest.post("/login",
+          super.post("/login",
             {
               "email": email,
               "password": "teste"
             }
           ).then(res => {
-            Rest.post("/carrinhos",
+            super.post("/carrinhos",
               {
                 "produtos":
                   [{
@@ -133,5 +139,42 @@ export class ServeRest extends Rest {
       default:
         break;
     }
+  }
+
+  // Realiza Login com body recebido pelo cy.wrap()
+  static realizar_login() {
+    let body;
+    cy.get('@tipoBody').then(tipo => {
+      switch (tipo) {
+        case 'válido':
+          body = {
+            "email": "fulano@qa.com",
+            "password": "teste"
+          };
+          break;
+        case 'e-mail inválido':
+          body = {
+            "email": "fulano",
+            "password": "teste"
+          };
+          break;
+        case 'senha inválida':
+          body = {
+            "email": "fulano@qa.com",
+            "password": "senha errada"
+          };
+          break;
+        case 'vazio':
+          body = {};
+          break;
+        default:
+          cy.log(`Tipo não reconhecido: ${tipo}`);
+          break;
+      }
+
+      super.post(URL_BASE + URL_LOGIN, body).then(res => {
+        cy.wrap(res.body).as('body');
+      });
+    })
   }
 }
