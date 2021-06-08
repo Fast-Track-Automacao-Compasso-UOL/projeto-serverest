@@ -29,22 +29,22 @@ Funcionalidade: Produtos
       | válido   | 200    |
       | inválido | 400    |
 
-  # Esquema do Cenário: Cadastrar produto
-  #   Dado que possua uma autenticação "<auth>"
-  #   E que utilize body "<body>"
-  #   Quando realizar uma requisição do tipo "POST"
-  #   Então deverá ser retornado o schema "post_produtos" e status <status>
-  #   E deverá ser retornada a mensagem "<mensagem>"
+  Esquema do Cenário: Cadastrar produto
+    Dado que possua uma autenticação "<auth>"
+    E que utilize body "<body>"
+    Quando realizar uma requisição do tipo "POST"
+    Então deverá ser retornado o schema "post_produtos" e status <status>
+    E deverá ser retornada a mensagem "<mensagem>"
 
-  #   Exemplos:
-  #     | auth         | body              | status | mensagem                                                                        |
-  #     | válida admin | válido            | 201    | Cadastro realizado com sucesso                                                  |
-  #     | válida admin | nome já utilizado | 400    | Já existe produto com esse nome                                                 |
-  #     | válida admin | vazio             | 400    | é obrigatório                                                                   |
-  #     | válida admin | campos vazios     | 400    | não pode ficar em branco                                                        |
-  #     | válida admin | campos inválidos  | 400    | deve ser uma string                                                             |
-  #     | inválida     | válido            | 401    | Token de acesso ausente, inválido, expirado ou usuário do token não existe mais |
-  #     | válida comum | válido            | 403    | Rota exclusiva para administradores                                             |
+    Exemplos:
+      | auth         | body              | status | mensagem                                                                        |
+      | válida admin | válido            | 201    | Cadastro realizado com sucesso                                                  |
+      | válida admin | nome já utilizado | 400    | Já existe produto com esse nome                                                 |
+      | válida admin | vazio             | 400    | nome é obrigatório                                                                   |
+      | válida admin | campos vazios     | 400    | não pode ficar em branco                                                        |
+      | válida admin | campos inválidos  | 400    | deve ser uma string                                                             |
+      | inválida     | válido            | 401    | Token de acesso ausente, inválido, expirado ou usuário do token não existe mais |
+      | válida comum | válido            | 403    | Rota exclusiva para administradores                                             |
 
   # Esquema do Cenário: Excluir produto
   #   Dado que possua uma autenticação "<auth>"

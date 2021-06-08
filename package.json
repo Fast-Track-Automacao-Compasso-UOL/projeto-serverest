@@ -3,7 +3,9 @@
   "version": "1.0.0",
   "description": "Desenvolvimento de Testes Automatizados para a aplicação ServeRest, utilizando Cucumber e Cypress.",
   "main": "index.js",
-  "dependencies": {},
+  "dependencies": {
+    "cypress-tags": "^0.1.0"
+  },
   "devDependencies": {
     "cypress": "^7.4.0",
     "jsonschema": "^1.4.0",
