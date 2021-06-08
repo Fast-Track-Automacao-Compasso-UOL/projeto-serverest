@@ -52,6 +52,13 @@ export class ServeRest extends Rest {
             cy.wrap(res.status).as('Status')
           })
           break;
+        case "PUT":
+          Rest.put(rota, body).then(res => {
+            cy.wrap(res).as('Response')
+            cy.wrap(res.body).as('Body')
+            cy.wrap(res.status).as('Status')
+          })
+          break;
         default:
           break;
       }
@@ -77,6 +84,7 @@ export class ServeRest extends Rest {
     })
   }
 
+  // Cria um usuário baseado em uma string enviada pelo parâmetro options
   static criarUsuario(options) {
     switch (options) {
       case "sem carrinho":

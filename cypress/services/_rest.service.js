@@ -9,7 +9,7 @@ export default class Rest {
     });
   }
 
-  static post(endpoint, body, headers) {
+  static post(endpoint, body, headers = null) {
     return cy.request({
       method: 'POST',
       url: endpoint,

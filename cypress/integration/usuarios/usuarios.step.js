@@ -1,6 +1,7 @@
 /// <reference types="cypress" />
 import { Given, Then, When } from 'cypress-cucumber-preprocessor/steps'
 import { ServeRest } from '../../services/serveRest.service'
+import faker from "faker"
 
 Given('a rota {string}', (rota) => {
   ServeRest.armazenarRota(rota);
@@ -45,11 +46,13 @@ Given('que utilize complemento de rota {string}', (id) => {
   switch (id) {
     case "válido":
       id = "0uxuPY0cbmQhpEz1"
+      ServeRest.adicionarComplemento(id)
       break;
     case "inválido":
       id = "0uxuPY0cbmQhpEz"
+      ServeRest.adicionarComplemento(id)
       break;
-    case "existente sem carrinho":
+    case "existente":
       ServeRest.criarUsuario("sem carrinho")
       cy.get('@Id').then(id => {
         ServeRest.adicionarComplemento(id)
@@ -67,6 +70,7 @@ Given('que utilize complemento de rota {string}', (id) => {
       break;
     default:
       id = ""
+      ServeRest.adicionarComplemento(id)
       break;
   }
 });
@@ -77,7 +81,7 @@ Given('que utilize body {string}', (body) => {
     case "válido":
       body = {
         "nome": "Fulano da Silva",
-        "email": "teste@qa.com.br",
+        "email": faker.internet.email(),
         "password": "teste",
         "administrador": "true"
       }
