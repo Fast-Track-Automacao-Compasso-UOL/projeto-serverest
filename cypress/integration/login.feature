@@ -13,7 +13,7 @@ Funcionalidade: Login
       | body             | status | atributo | mensagem                       |
       | válido           | 200    | message  | Login realizado com sucesso    |
       | e-mail inválido  | 400    | email    | email deve ser um email válido |
-#      | senha inválida   | 401    | Email e/ou senha inválidos     |
-#      | vazio            | 400    | é obrigatório                  |
+      | senha inválida   | 401    | message  | Email e/ou senha inválidos     |
+#      | vazio            | 400    | message  | é obrigatório                  |
 #      | campos vazios    | 400    | não pode ficar em branco       |
 #      | campos inválidos | 400    | deve ser uma string            |

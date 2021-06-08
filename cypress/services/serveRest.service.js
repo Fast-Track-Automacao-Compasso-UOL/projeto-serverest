@@ -12,15 +12,39 @@ const URL_CARRINOS = "/carrinhos";
 export class ServeRest extends Rest {
 
     static realizar_login() {
-        //ajustar seleção de body
-        let body = {
-            "email": "fulano@qa.com",
-            "password": "teste"
-        }
-            
-        super.post(URL_BASE + URL_LOGIN, body).then(res => {
-            cy.wrap(res.body).as('body');
-        });
+        let body;
+        cy.get('@tipoBody').then(tipo => {
+            switch(tipo) {
+                case 'válido':
+                    body = {
+                        "email": "fulano@qa.com",
+                        "password": "teste"
+                    };
+                    break;
+                case 'e-mail inválido':
+                    body = {
+                        "email": "fulano",
+                        "password": "teste"
+                    };
+                    break;
+                case 'senha inválida':
+                    body = {
+                        "email": "fulano@qa.com",
+                        "password": "senha errada"
+                    };
+                    break;
+                case 'vazio':
+                    body = {};
+                    break;
+                default:
+                    cy.log('Switch case não funcionou!');
+                    break;
+            }
+
+            super.post(URL_BASE + URL_LOGIN, body).then(res => {
+                cy.wrap(res.body).as('body');
+            });
+        })
     }
 
     static validar_esquema(schema, status) {
