@@ -38,28 +38,28 @@ export class ServeRest extends Rest {
     cy.get('@Rota').then(rota => {
       switch (tipo) {
         case "GET":
-          Rest.get(rota).then(res => {
+          super.get(rota).then(res => {
             cy.wrap(res).as('Response')
             cy.wrap(res.body).as('Body')
             cy.wrap(res.status).as('Status')
           })
           break;
         case "POST":
-          Rest.post(rota, body).then(res => {
+          super.post(rota, body).then(res => {
             cy.wrap(res).as('Response')
             cy.wrap(res.body).as('Body')
             cy.wrap(res.status).as('Status')
           })
           break;
         case "DELETE":
-          Rest.delete(rota, body).then(res => {
+          super.delete(rota, body).then(res => {
             cy.wrap(res).as('Response')
             cy.wrap(res.body).as('Body')
             cy.wrap(res.status).as('Status')
           })
           break;
         case "PUT":
-          Rest.put(rota, body).then(res => {
+          super.put(rota, body).then(res => {
             cy.wrap(res).as('Response')
             cy.wrap(res.body).as('Body')
             cy.wrap(res.status).as('Status')
@@ -94,7 +94,7 @@ export class ServeRest extends Rest {
   static criarUsuario(options) {
     switch (options) {
       case "sem carrinho":
-        Rest.post("/usuarios",
+        super.post("/usuarios",
           {
             "nome": "Fulano da Silva",
             "email": faker.internet.email(),
@@ -108,7 +108,7 @@ export class ServeRest extends Rest {
 
       case "com carrinho":
         let email = faker.internet.email()
-        Rest.post("/usuarios",
+        super.post("/usuarios",
           {
             "nome": "Fulano da Silva",
             "email": email,
@@ -117,13 +117,13 @@ export class ServeRest extends Rest {
           }
         ).then(res => {
           cy.wrap(res.body._id).as('Id')
-          Rest.post("/login",
+          super.post("/login",
             {
               "email": email,
               "password": "teste"
             }
           ).then(res => {
-            Rest.post("/carrinhos",
+            super.post("/carrinhos",
               {
                 "produtos":
                   [{
