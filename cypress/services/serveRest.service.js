@@ -192,7 +192,6 @@ export class ServeRest extends Rest {
           cy.log(`Tipo não reconhecido: ${tipo}`);
           break;
       }
-      cy.log('INICIO LOGIN')
 
       cy.get('@Loginbody').then(body => {
         super.post(URL_BASE + URL_LOGIN, body).then(res => {

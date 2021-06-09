@@ -73,15 +73,7 @@ Given('que possua uma autenticação {string}', (auth) => {
       token = "AUTHJIUzI1NiIsInRINVALIDA"
       break;
   }
-/*    case "válida":
-      token = "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImJlbHRyYW5vQHFhLmNvbS5iciIsInBhc3N3b3JkIjoidGVzdGUiLCJpYXQiOjE2MjMyNDkzODEsImV4cCI6MTYyMzI0OTk4MX0.bAPrNTAxRXvrptvmH0kJO-u4mIBsF9I3WxGqyY9x5EE" // Terminar esse caso
-      break;
-    case "inválida":
-      token = "AUTHJIUzI1NiIsInRINVALIDA"
-      break;
-  }
-*/
-  //cy.wrap(token).as('Token');
+
 });
 
 Given('que utilize body {string}', (body) => {
