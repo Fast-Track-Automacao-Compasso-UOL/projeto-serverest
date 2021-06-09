@@ -133,7 +133,7 @@ Given('{string} carrinho ', (condicao) => {
               "quantidade": 1,
               "precoUnitario": 470
             },
-            {                                              //sera que é o ID ?
+            {                                              // refatorar
               "idProduto": "K6leHdftCeOJj8BJ",
               "quantidade": 2,
               "precoUnitario": 5240
