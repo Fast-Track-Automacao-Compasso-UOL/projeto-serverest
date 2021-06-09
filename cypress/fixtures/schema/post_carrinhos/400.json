@@ -10,9 +10,7 @@
             "message": "Não é permitido possuir produto duplicado | Não é permitido ter mais de 1 carrinho | Produto não encontrado | Produto não possui quantidade suficiente"
         }
     ],
-    "required": [
-        "message"
-    ],
+    "required": [],
     "properties": {
         "message": {
             "$id": "#/properties/message",

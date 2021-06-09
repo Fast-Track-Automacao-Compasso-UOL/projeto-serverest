@@ -26,7 +26,7 @@ Then('deverá ser retornado o schema {string} e status {int}', (schema, status) 
 // Given('a rota {string}', (rota) => {
 //  ServeRest.armazenarRota(rota);
 
-Given ('que utilize complemento de rota {string}', (id) => {
+Given('que utilize complemento de rota {string}', (id) => {
   switch (id) {
     case "válido":
       id = "qbMqntef4iTOwWfg"
@@ -36,26 +36,26 @@ Given ('que utilize complemento de rota {string}', (id) => {
       id = "ID11qntef4iTO11INVALIDO"
       ServeRest.adicionarComplemento(id)
       break;
-    }
-// When('realizar uma requisição do tipo {string}', (tipo) => {
-//  ServeRest.realizarRequisicao(tipo);
+  }
+  // When('realizar uma requisição do tipo {string}', (tipo) => {
+  //  ServeRest.realizarRequisicao(tipo);
 
-//Then('deverá ser retornado o schema {string} e status {int}', (schema, status) => {
-//  ServeRest.validarSchemaEStatus(schema, status);
+  //Then('deverá ser retornado o schema {string} e status {int}', (schema, status) => {
+  //  ServeRest.validarSchemaEStatus(schema, status);
 });
 
 //POST Cenario: Cadastrar Carrinho
 Given('que possua uma autenticação {string}', (auth) => {
   let token;
-    switch (auth) {
-      case "válida":
-        token = "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImZ1bGFub0BxYS5jb20iLCJwYXNzd29yZCI6InRlc3RlIiwiaWF0IjoxNjIzMTg0OTIxLCJleHAiOjE2MjMxODU1MjF9.nXEjxx18jzPj3VC889JxKKTo_tHFhcyE6eqoKLUo9FA" // Terminar esse caso
-        break;
-      case "inválida":
-        token = "AUTHJIUzI1NiIsInRINVALIDA"
-        break;
-    }
-    cy.wrap(token).as('Token');
+  switch (auth) {
+    case "válida":
+      token = "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImJlbHRyYW5vQHFhLmNvbS5iciIsInBhc3N3b3JkIjoidGVzdGUiLCJpYXQiOjE2MjMyNDkzODEsImV4cCI6MTYyMzI0OTk4MX0.bAPrNTAxRXvrptvmH0kJO-u4mIBsF9I3WxGqyY9x5EE" // Terminar esse caso
+      break;
+    case "inválida":
+      token = "AUTHJIUzI1NiIsInRINVALIDA"
+      break;
+  }
+  cy.wrap(token).as('Token');
 });
 
 Given('que utilize body {string}', (body) => {
@@ -77,42 +77,30 @@ Given('que utilize body {string}', (body) => {
       break;
     case "carrinho já cadastrado":
       aux = {
-        "produtos": [
+        "produtos":
           [
             {
               "idProduto": "BeeJh5lz3k6kSIzA",
-              "quantidade": 1,
-              "precoUnitario": 470
+              "quantidade": 1
             },
             {
               "idProduto": "K6leHdftCeOJj8BJ",
-              "quantidade": 2,
-              "precoUnitario": 5240
+              "quantidade": 2
             }
-          ]
-        ],    
+          ],
       }
       break;
     case "campos vazios":
-        aux = {
-          "produtos": [
-            {
-              "idProduto": "",
-              "quantidade": ""
-            },
-            {
-              "idProduto": "",
-              "quantidade": ""
-            }
-          ]
-        }
-        break;
-      default:
-        aux = ""
-        break;
+      aux = {
+        "produtos": 123
+      }
+      break;
+    default:
+      aux = ""
+      break;
 
   }
-    ServeRest.adicionarBody(aux)
+  ServeRest.adicionarBody(aux)
 });
 
 Then('deverá ser retornada a mensagem {string}', (mensagem) => {
@@ -139,7 +127,7 @@ Given('{string} carrinho ', (condicao) => {
               "precoUnitario": 5240
             }
           ]
-        ],    
+        ],
       }
       break;
     case "não possua":
