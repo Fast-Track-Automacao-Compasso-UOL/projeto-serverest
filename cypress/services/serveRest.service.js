@@ -1,6 +1,6 @@
 /// <reference types="cypress" />
 import Rest from "./_rest.service"
-import faker from "faker"
+import { criarBodyUsuario } from '../factories/dynamic';
 
 const URL_BASE = Cypress.config("baseUrl");
 const URL_USUARIOS = "/usuarios";
@@ -17,6 +17,7 @@ export class ServeRest extends Rest {
 
   // Adiciona query params à rota recebida pelo cy.wrap()
   static adicionarQueryParams(param, valor) {
+    cy.log(param, valor)
     cy.get('@Rota').then(rota => {
       if (param && valor) {
         cy.wrap(`${rota}?${param}=${valor}`).as('Rota')
@@ -90,37 +91,29 @@ export class ServeRest extends Rest {
     })
   }
 
-  // Cria um usuário baseado em uma string enviada pelo parâmetro options
-  static criarUsuario(options) {
-    switch (options) {
-      case "sem carrinho":
+  // Cria um usuário baseado no objeto do parâmetro options
+  static criarUsuario(options = { carrinho: false }) {
+    switch (options.carrinho) {
+      case false:
         super.post("/usuarios",
-          {
-            "nome": "Fulano da Silva",
-            "email": faker.internet.email(),
-            "password": "teste",
-            "administrador": "true"
-          }
+          criarBodyUsuario()
         ).then(res => {
           cy.wrap(res.body._id).as('Id')
+          cy.wrap(JSON.parse(res.requestBody)).as('Usuario')
         })
         break;
 
-      case "com carrinho":
-        let email = faker.internet.email()
+      case true:
+        let bodyUsuario = criarBodyUsuario()
         super.post("/usuarios",
-          {
-            "nome": "Fulano da Silva",
-            "email": email,
-            "password": "teste",
-            "administrador": "true"
-          }
+          bodyUsuario
         ).then(res => {
           cy.wrap(res.body._id).as('Id')
+          cy.wrap(res.requestBody).as('Usuario')
           super.post("/login",
             {
-              "email": email,
-              "password": "teste"
+              "email": bodyUsuario.email,
+              "password": bodyUsuario.password
             }
           ).then(res => {
             super.post("/carrinhos",
