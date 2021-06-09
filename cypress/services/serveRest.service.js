@@ -170,4 +170,55 @@ export class ServeRest extends Rest {
       });
     })
   }
+
+  // Cria um usuário baseado em uma string enviada pelo parâmetro options
+  static criarUsuario(options) {
+    switch (options) {
+      case "sem carrinho":
+        super.post("/usuarios",
+          {
+            "nome": "Fulano da Silva",
+            "email": faker.internet.email(),
+            "password": "teste",
+            "administrador": "true"
+          }
+        ).then(res => {
+          cy.wrap(res.body._id).as('Id')
+        })
+        break;
+
+      case "com carrinho":
+        let email = faker.internet.email()
+        super.post("/usuarios",
+          {
+            "nome": "Fulano da Silva",
+            "email": email,
+            "password": "teste",
+            "administrador": "true"
+          }
+        ).then(res => {
+          cy.wrap(res.body._id).as('Id')
+          super.post("/login",
+            {
+              "email": email,
+              "password": "teste"
+            }
+          ).then(res => {
+            super.post("/carrinhos",
+              {
+                "produtos":
+                  [{
+                    "idProduto": "BeeJh5lz3k6kSIzA",
+                    "quantidade": 1
+                  }]
+              },
+              { Authorization: res.body.authorization }
+            )
+          })
+        });
+        break;
+      default:
+        break;
+    }
+  }
 }
