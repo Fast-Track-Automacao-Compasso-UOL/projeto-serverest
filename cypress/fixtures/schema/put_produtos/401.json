@@ -5,14 +5,10 @@
     "title": "The root schema",
     "description": "The root schema comprises the entire JSON document.",
     "default": {},
-    "examples": [
-        {
-            "message": "Cadastro realizado com sucesso",
-            "_id": "jogfODIlXsqxNFS2"
-        }
+    "examples": [     
     ],
     "required": [
-     
+        "message"
     ],
     "properties": {
         "message": {
@@ -22,17 +18,7 @@
             "description": "An explanation about the purpose of this instance.",
             "default": "",
             "examples": [
-                "Cadastro realizado com sucesso"
-            ]
-        },
-        "_id": {
-            "$id": "#/properties/_id",
-            "type": "string",
-            "title": "The _id schema",
-            "description": "An explanation about the purpose of this instance.",
-            "default": "",
-            "examples": [
-                "jogfODIlXsqxNFS2"
+                "Token de acesso ausente, inválido, expirado ou usuário do token não existe mais"
             ]
         }
     },

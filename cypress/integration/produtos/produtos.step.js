@@ -51,12 +51,29 @@ Given('que utilize complemento de rota {string}', (id) => {
              id = "BeeJh5lz3k6kSIzA1"
              ServeRest.adicionarComplemento(id)
              break;
-                     
+          case "existente":
+             id = "BeeJh5lz3k6kSIzA1"
+             ServeRest.adicionarComplemento(id)
+             break;
+          case "existente sem carrinho":
+             id = "0uxuPY0cbmQhpEz1q"
+             ServeRest.adicionarComplemento(id)
+             break;
+          case "inexistente":
+             id = "jogfODIlXsqxNFS2"
+             ServeRest.adicionarComplemento(id)
+             break;
+          case "existente com carrinho":
+             id = "0uxuPY0cbmQhpEz1q"             
+             ServeRest.adicionarComplemento(id)
+             break;
+          case "existente sem carrinho":
+             id = "0uxuPY0cbmQhpEz1q"
+             ServeRest.adicionarComplemento(id)
+             break;
+                               
     };
-     cy.wrap(`${rota}/${id}`).as('Rota')    
-      
-    ServeRest.adicionarComplemento(id)
-   
+       
 });
 
 // Cadastrar Produto
@@ -65,10 +82,13 @@ Given('que possua uma autenticação {string}', (auth) => {
     let token;
     switch (auth) {
       case "válida admin":
-        token = "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImZ1bGFub0BxYS5jb20iLCJwYXNzd29yZCI6InRlc3RlIiwiaWF0IjoxNjIzMjQzNDc3LCJleHAiOjE2MjMyNDQwNzd9.DAYoutBw2eEDEhF5yRYOFOVcIxs1KGa0Y59pC1BWAeA" // Terminar esse caso
+        token = "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImZ1bGFub0BxYS5jb20iLCJwYXNzd29yZCI6InRlc3RlIiwiaWF0IjoxNjIzMjcxNjExLCJleHAiOjE2MjMyNzIyMTF9.kL51ENXHryAW3yzMl1Ne_hCNX8AM9wDO_WAEaPpnrG4" // Terminar esse caso
         break;
       case "inválida":
         token = "AUTHJIUzI1NiIsInRINVALIDA"
+        break;
+      case "válida comum":
+        token = "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImZ1bGFub0BxYS5jb20iLCJwYXNzd29yZCI6InRlc3RlIiwiaWF0IjoxNjIzMjcxNjExLCJleHAiOjE2MjMyNzIyMTF9.kL51ENXHryAW3yzMl1Ne_hCNX8AM9wDO_WAEaPpnrG4"
         break;
     }
     cy.wrap(token).as('Token');
@@ -78,7 +98,7 @@ Given('que utilize body {string}', (body) => {
     switch (body) {
         case "válido":
          body = {
-            "nome": "oUTRO PRODUTO",
+            "nome": "New Name07",
             "preco": 470,
             "descricao": "Mouse",
             "quantidade": 381
@@ -95,29 +115,21 @@ Given('que utilize body {string}', (body) => {
             }
            break;
         case "vazio":
-            body = {
-                "nome": "",
-                "preco": 470,
-                "descricao": "Mouse",
-                "quantidade": 381
-                
+            body = {          
             }
            break;
         case "campos vazios":
             body = {
                 "nome": "",
-                "preco": "",
-                "descricao": "",
-                "quantidade": ""
-                
+                "produtos": 1234               
             }
            break;
         case "campos inválidos":
             body = {
-                "nome": "Logitech MX Vertical",
-                "preco": "qe",
-                "descricao": "Mouse",
-                "quantidade": "qe"
+                "nome": 1234,
+                "preco": 1234,
+                "descricao": 1234,
+                "quantidade": 1234
                 
             }
            break;
@@ -148,8 +160,7 @@ Given('que utilize body {string}', (body) => {
 
 When('realizar uma requisição do tipo {string}', (tipo) => {
     cy.get('@Body').then(body => {
-        cy.log(body)
-        ServeRest.realizarRequisicao(tipo, body)
+       ServeRest.realizarRequisicao(tipo, body)
     })
     
 });
@@ -158,8 +169,9 @@ Then('deverá ser retornada a mensagem {string}', (mensagem) => {
     ServeRest.validarMensagem(mensagem)
   });
 
-Then('deverá ser retornado o schema {string} e status {int}', (schema, status) => {
-    ServeRest.validarSchemaEStatus(schema, status)
-});
+// Deletar Produto
+
+
+
 
 

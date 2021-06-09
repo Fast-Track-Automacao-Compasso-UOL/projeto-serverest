@@ -1,5 +1,4 @@
 /// <reference types="cypress" />
-<<<<<<< Updated upstream
 import Rest from "./_rest.service"
 import faker from "faker"
 
@@ -8,68 +7,13 @@ const URL_USUARIOS = "/usuarios";
 const URL_LOGIN = "/login";
 const URL_PRODUTOS = "/produtos";
 const URL_CARRINOS = "/carrinhos";
-=======
-import Rest from "./_rest.service";
->>>>>>> Stashed changes
 
 export class ServeRest extends Rest {
   // Armazena rota baseado no parâmetro recebido
   static armazenarRota(rota) {
-<<<<<<< Updated upstream
     cy.wrap(rota).as('Rota');
-<<<<<<< HEAD
-=======
-    cy.wrap(rota).as("Rota");
-    cy.wrap("").as("Token");
-    cy.wrap("").as("Body");
->>>>>>> Stashed changes
-  }
-
-  // Adiciona query params à rota recebida pelo cy.wrap()
-  static adicionarQueryParams(params) {
-    cy.get("@Rota").then((rota) => {
-      switch (params) {
-        case "_id":
-          cy.wrap(`${rota}?_id=BeeJh5lz3k6kSIzA`).as("Rota");
-          break;
-        case "nome":
-          cy.wrap(`${rota}?nome=Logitech%MX%Vertical`).as("Rota");
-          break;
-        case "preco":
-          cy.wrap(`${rota}?preco=470`);
-          break;
-        case "descricao":
-          cy.wrap(`${rota}?descricao=Mouse`).as("Rota");
-          break;
-        case "quantidade":
-          cy.wrap(`${rota}?quantidade=382`).as("Rota");
-          break;
-        default:
-          cy.wrap(rota).as("Rota");
-          break;
-      }
-    });
-  }
-
-  //Adiciona complemento recebido pelo parâmetro na rota recebida pelo cy.wrap()
-  static adicionarComplemento(id) {
-    cy.get("@Rota").then((rota) => {
-      switch (id) {
-        case "válido":
-          id = "BeeJh5lz3k6kSIzA";
-          break;
-        case "inválido":
-          id = "BeeJh5lz3k6kSIzA1";
-          break;
-      }
-      cy.wrap(`${rota}/${id}`).as("Rota");
-    });
-  }
-  // Realiza requisição com rota recebida pelo cy.wrap() e tipo recebido no parâmetro
-<<<<<<< Updated upstream
-  static realizarRequisicao(tipo) {
-=======
-    cy.wrap('').as('Body')
+    cy.wrap('').as('Body');
+    cy.wrap('').as('Token');
   }
 
   // Adiciona query params à rota recebida pelo cy.wrap()
@@ -92,56 +36,50 @@ export class ServeRest extends Rest {
 
   // Realiza requisição com rota recebida pelo cy.wrap() e tipo recebido no parâmetro
   static realizarRequisicao(tipo, body = "") {
->>>>>>> origin/develop
     cy.get('@Rota').then(rota => {
-=======
-  static realizarRequisicao(tipo, body = "") {
-    cy.get("@Rota").then((rota) => {
->>>>>>> Stashed changes
       switch (tipo) {
         case "GET":
-          super.get(rota).then((res) => {
-            cy.wrap(res).as("Response");
-            cy.wrap(res.body).as("Body");
-            cy.wrap(res.status).as("Status");
-          });
+          super.get(rota).then(res => {
+            cy.wrap(res).as('Response')
+            cy.wrap(res.body).as('Body')
+            cy.wrap(res.status).as('Status')
+          })
           break;
-        case "POST":
-          cy.get("@Token").then((token) => {
-            super.post(rota, body, { authorization: token }).then((res) => {
-              cy.wrap(res).as("Response");
-              cy.wrap(res.body).as("Body");
-              cy.wrap(res.status).as("Status");
-            });
-          });
+          case "POST":
+            cy.get('@Token').then(token => {
+                super.post(rota, body, { authorization: token }).then(res => {
+                    cy.wrap(res).as('Response')
+                    cy.wrap(res.body).as('Body')
+                    cy.wrap(res.status).as('Status')
+                })
+            })
           break;
         case "DELETE":
-          super.delete(rota, body).then((res) => {
-            cy.wrap(res).as("Response");
-            cy.wrap(res.body).as("Body");
-            cy.wrap(res.status).as("Status");
-          });
+          super.delete(rota, body).then(res => {
+            cy.wrap(res).as('Response')
+            cy.wrap(res.body).as('Body')
+            cy.wrap(res.status).as('Status')
+          })
           break;
         case "PUT":
-          super.put(rota, body).then((res) => {
-            cy.wrap(res).as("Response");
-            cy.wrap(res.body).as("Body");
-            cy.wrap(res.status).as("Status");
-          });
+          super.put(rota, body).then(res => {
+            cy.wrap(res).as('Response')
+            cy.wrap(res.body).as('Body')
+            cy.wrap(res.status).as('Status')
+          })
           break;
         default:
           break;
       }
-    });
+    })
   }
 
   // Valida schema e status com body da requisição recebido pelo cy.wrap() e parâmetros
   static validarSchemaEStatus(schema, status) {
-    cy.get("@Body").then((body) => {
-      cy.validateSchema(body, `${schema}/${status}`);
-    });
+    cy.get('@Body').then(body => {
+      cy.validateSchema(body, `${schema}/${status}`)
+    })
   }
-<<<<<<< Updated upstream
 
   // Cria variável 'Body' com valor recebido pelo parâmetro
   static adicionarBody(body) {
@@ -242,29 +180,6 @@ export class ServeRest extends Rest {
       });
     })
   }
-=======
-
-  static adicionarBody(body) {
-    cy.wrap(body).as("Body");
-  }
-
-  // static validarAuthorization (auth){
-  //   switch (Token) {
-  //     case "válida":
-  //       token = "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImZ1bGFub0BxYS5jb20iLCJwYXNzd29yZCI6InRlc3RlIiwiaWF0IjoxNjIzMTgyMjY5LCJleHAiOjE2MjMxODI4Njl9.C2LPuX9wKCGGDzjitoHaTuNgQk8sVe6InFGbdooVgKc" // Terminar esse caso
-  //       break;
-  //     case "inválida":
-  //       token = "AUTHJIUzI1NiIsInRINVALIDA"
-  //       break;
-  //   }
-  //   cy.wrap(token).as('Token');
-
-  // }
-
-  static validarMensagem(mensagem) {
-    cy.get("@Body").then((body) => {
-      expect(Object.values(body)).to.contain(mensagem);
-    });
-  }
->>>>>>> Stashed changes
 }
+
+

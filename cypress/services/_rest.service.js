@@ -11,11 +11,7 @@ export default class Rest {
 
   static post(endpoint, body, headers = null) {
     return cy.request({
-      method: 'POST',
-<<<<<<< Updated upstream
-=======
-      headers: headers,
->>>>>>> Stashed changes
+      method: 'POST',      
       url: endpoint,
       body: body,
       headers: headers,
@@ -23,20 +19,22 @@ export default class Rest {
     });
   }
 
-  static put(endpoint, body) {
+  static put(endpoint, body, headers = null) {
     return cy.request({
       method: 'PUT',
       url: endpoint,
       body: body,
+      headers: headers,
       failOnStatusCode: false
     });
   }
 
-  static delete(endpoint, body = null) {
+  static delete(endpoint, body = null, headers = null) {
     return cy.request({
       method: 'DELETE',
       url: endpoint,
       body: body,
+      headers: headers,
       failOnStatusCode: false
     });
   }
