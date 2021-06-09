@@ -86,8 +86,9 @@ export class ServeRest extends Rest {
   // Valida mensagem contida no body da requisição
   static validarMensagem(mensagem) {
     cy.get('@Body').then(body => {
-      let aux = Object.values(body);
-      expect(aux[0]).to.contain(mensagem)
+      //let aux = Object.values(body);
+      //expect(aux[0]).to.contain(mensagem)
+      expect(Object.values(body)).to.contain(mensagem)
     })
   }
 
