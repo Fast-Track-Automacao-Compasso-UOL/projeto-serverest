@@ -114,7 +114,44 @@ Given('que utilize body {string}', (body) => {
   }
     ServeRest.adicionarBody(aux)
 });
+
 Then('deverá ser retornada a mensagem {string}', (mensagem) => {
   ServeRest.validarMensagem(mensagem);
 
-})
+});
+
+//DELETE Cenario: Excluir carrinho concluir-compra/cancelar-compra
+Given('{string} carrinho ', (condicao) => {
+  let cond;
+  switch (condicao) {
+    case "possua":
+      cond = {
+        "produtos": [
+          [
+            {
+              "idProduto": "BeeJh5lz3k6kSIzA",
+              "quantidade": 1,
+              "precoUnitario": 470
+            },
+            {                                              //sera que é o ID ?
+              "idProduto": "K6leHdftCeOJj8BJ",
+              "quantidade": 2,
+              "precoUnitario": 5240
+            }
+          ]
+        ],    
+      }
+      break;
+    case "não possua":
+      cond = ""
+      break;
+  }
+
+  cy.wrap(cond).as('Condicao');
+});
+
+Given('que utilize complemento de rota {string}', () => {
+  ServeRest.adicionarComplemento(complemento);
+});
+
+
