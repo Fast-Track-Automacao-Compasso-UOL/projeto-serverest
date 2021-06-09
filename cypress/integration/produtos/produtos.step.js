@@ -35,10 +35,6 @@ Given ('que utilize query params {string}', (param) => {
     
 });
 
-When('realizar uma requisição do tipo {string}', (tipo) => {
-    ServeRest.realizarRequisicao(tipo)
-});
-
 Then('deverá ser retornado o schema {string} e status {int}', (schema, status) => {
     ServeRest.validarSchemaEStatus(schema, status)
 });
@@ -68,8 +64,8 @@ Given('que utilize complemento de rota {string}', (id) => {
 Given('que possua uma autenticação {string}', (auth) => {
     let token;
     switch (auth) {
-      case "válida":
-        token = "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImZ1bGFub0BxYS5jb20iLCJwYXNzd29yZCI6InRlc3RlIiwiaWF0IjoxNjIzMTgyMjY5LCJleHAiOjE2MjMxODI4Njl9.C2LPuX9wKCGGDzjitoHaTuNgQk8sVe6InFGbdooVgKc" // Terminar esse caso
+      case "válida admin":
+        token = "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImZ1bGFub0BxYS5jb20iLCJwYXNzd29yZCI6InRlc3RlIiwiaWF0IjoxNjIzMjQzNDc3LCJleHAiOjE2MjMyNDQwNzd9.DAYoutBw2eEDEhF5yRYOFOVcIxs1KGa0Y59pC1BWAeA" // Terminar esse caso
         break;
       case "inválida":
         token = "AUTHJIUzI1NiIsInRINVALIDA"
@@ -78,15 +74,15 @@ Given('que possua uma autenticação {string}', (auth) => {
     cy.wrap(token).as('Token');
 });
 
-Given('que utilize body{string}', (body) => {
+Given('que utilize body {string}', (body) => {
     switch (body) {
         case "válido":
          body = {
-             "nome": "Logitech MX Vertical",
-             "preco": 470,
-             "descricao": "Mouse",
-             "quantidade": 381,
-             "administrador": "true"
+            "nome": "oUTRO PRODUTO",
+            "preco": 470,
+            "descricao": "Mouse",
+            "quantidade": 381
+        
          }
         break;
         case "nome já utilizado":
@@ -94,8 +90,8 @@ Given('que utilize body{string}', (body) => {
                 "nome": "Logitech MX Vertical",
                 "preco": 470,
                 "descricao": "Mouse",
-                "quantidade": 381,
-                "administrador": "true"
+                "quantidade": 381
+                
             }
            break;
         case "vazio":
@@ -103,8 +99,8 @@ Given('que utilize body{string}', (body) => {
                 "nome": "",
                 "preco": 470,
                 "descricao": "Mouse",
-                "quantidade": 381,
-                "administrador": "true"
+                "quantidade": 381
+                
             }
            break;
         case "campos vazios":
@@ -112,26 +108,26 @@ Given('que utilize body{string}', (body) => {
                 "nome": "",
                 "preco": "",
                 "descricao": "",
-                "quantidade": "",
-                "administrador": ""
+                "quantidade": ""
+                
             }
            break;
         case "campos inválidos":
             body = {
                 "nome": "Logitech MX Vertical",
-                "preco": "qqee0",
+                "preco": "qe",
                 "descricao": "Mouse",
-                "quantidade": "eqeqeq",
-                "administrador": "true"
+                "quantidade": "qe"
+                
             }
            break;
-        case "Token inválido":
+        case "inválido":
             body = {
                 "nome": "Logitech MX Vertical",
                 "preco": 470,
                 "descricao": "Mouse",
-                "quantidade": 381,
-                "administrador": "true"
+                "quantidade": 381
+                
             }
            break;
         case "válido comum":
@@ -139,19 +135,23 @@ Given('que utilize body{string}', (body) => {
                 "nome": "Logitech MX Vertical",
                 "preco": 470,
                 "descricao": "Mouse",
-                "quantidade": 381,
-                "administrador": "true"
+                "quantidade": 381
+                
             }
            break;
            default:
                body =""
                break;
     }
-        cy.wrap(body).as('Body')
+        ServeRest.adicionarBody(body)
 });
 
-When('realizar uma requisição do tipo{string}', (tipo) => {
-    ServeRest.realizarRequisicao(tipo)
+When('realizar uma requisição do tipo {string}', (tipo) => {
+    cy.get('@Body').then(body => {
+        cy.log(body)
+        ServeRest.realizarRequisicao(tipo, body)
+    })
+    
 });
 
 Then('deverá ser retornada a mensagem {string}', (mensagem) => {

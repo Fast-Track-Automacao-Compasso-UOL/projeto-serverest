@@ -12,6 +12,10 @@ export default class Rest {
   static post(endpoint, body, headers = null) {
     return cy.request({
       method: 'POST',
+<<<<<<< Updated upstream
+=======
+      headers: headers,
+>>>>>>> Stashed changes
       url: endpoint,
       body: body,
       headers: headers,
