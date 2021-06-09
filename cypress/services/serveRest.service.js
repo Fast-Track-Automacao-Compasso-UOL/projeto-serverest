@@ -86,6 +86,8 @@ export class ServeRest extends Rest {
   // Valida mensagem contida no body da requisição
   static validarMensagem(mensagem) {
     cy.get('@Body').then(body => {
+      //let aux = Object.values(body);
+      //expect(aux[0]).to.contain(mensagem)
       expect(Object.values(body)).to.contain(mensagem)
     })
   }
@@ -144,7 +146,7 @@ export class ServeRest extends Rest {
   // Realiza Login com body recebido pelo cy.wrap()
   static realizar_login() {
     let body;
-    cy.get('@tipoBody').then(tipo => {
+    cy.get('@TipoBody').then(tipo => {
       switch (tipo) {
         case 'válido':
           body = {
@@ -167,13 +169,25 @@ export class ServeRest extends Rest {
         case 'vazio':
           body = {};
           break;
+        case 'campos vazios':
+            body = {
+              "email": "",
+              "password": ""
+            };
+            break;
+        case 'campos inválidos':
+              body = {
+                "email": 3,
+                "password": 5
+              };
+              break;
         default:
           cy.log(`Tipo não reconhecido: ${tipo}`);
           break;
       }
 
       super.post(URL_BASE + URL_LOGIN, body).then(res => {
-        cy.wrap(res.body).as('body');
+        cy.wrap(res.body).as('Body');
       });
     })
   }

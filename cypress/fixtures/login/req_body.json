@@ -1,0 +1,13 @@
+{
+    "tipos": {
+        "válido": {
+            "email": "fulano@qa.com",
+            "password": "teste"
+        },
+        "e-mail inválido": {
+            "email": "fulano",
+            "password": "teste"
+        }
+    }
+    
+}
