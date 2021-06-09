@@ -8,9 +8,31 @@ Given('a rota {string}', (rota) => {
    ServeRest.armazenarRota(rota);
 });
 
-Given ('que utilize query params {string}', (params) => {
+Given ('que utilize query params {string}', (param) => {
+    let valor;
+        switch (param) {
+          case "_id":
+           valor = "BeeJh5lz3k6kSIzA"
+            break;
+          case "nome":
+            valor = "Logitech%MX%Vertical"
+          case "preco":
+            valor = "470"
+             break;
+          case "descricao":
+            valor = "Mouse"
+             break;
+          case "quantidade":
+            valor ="382"
+              break;
+          default:
+            param = ""
+            valor = ""
+             break;
+        }
+    ServeRest.adicionarQueryParams(param, valor);
         
-    ServeRest.adicionarQueryParams(params);
+    
 });
 
 When('realizar uma requisição do tipo {string}', (tipo) => {
@@ -24,7 +46,21 @@ Then('deverá ser retornado o schema {string} e status {int}', (schema, status) 
 // Buscar produtos por ID
 
 Given('que utilize complemento de rota {string}', (id) => {
+        switch (id) {
+          case "válido":
+             id = "BeeJh5lz3k6kSIzA"
+             ServeRest.adicionarComplemento(id)
+             break;
+          case "inválido":
+             id = "BeeJh5lz3k6kSIzA1"
+             ServeRest.adicionarComplemento(id)
+             break;
+                     
+    };
+     cy.wrap(`${rota}/${id}`).as('Rota')    
+      
     ServeRest.adicionarComplemento(id)
+   
 });
 
 // Cadastrar Produto

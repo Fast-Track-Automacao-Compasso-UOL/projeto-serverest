@@ -3,8 +3,7 @@
 Funcionalidade: Produtos
   Contexto: Rota de produtos
     Dada a rota "/produtos"
-  
-  
+    
   Esquema do Cenário: Listar produtos
     Dado que utilize query params "<params>"
     Quando realizar uma requisição do tipo "GET"
