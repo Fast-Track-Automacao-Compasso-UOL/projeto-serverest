@@ -11,24 +11,9 @@ const URL_CARRINOS = "/carrinhos";
 export class ServeRest extends Rest {
   // Armazena rota baseado no parâmetro recebido
   static armazenarRota(rota) {
-    cy.wrap(rota).as("Rota");
-    cy.wrap("").as("Token");
-    cy.wrap("").as("Body");
-  }
-
-  //Adiciona complemento recebido pelo parâmetro na rota recebida pelo cy.wrap()
-  static adicionarComplemento(id) {
-    cy.get("@Rota").then((rota) => {
-      switch (id) {
-        case "válido":
-          id = "BeeJh5lz3k6kSIzA";
-          break;
-        case "inválido":
-          id = "BeeJh5lz3k6kSIzA1";
-          break;
-      }
-      cy.wrap(`${rota}/${id}`).as("Rota");
-    });
+    cy.wrap(rota).as('Rota');
+    cy.wrap('').as('Body')
+    cy.wrap('').as('Token')
   }
 
   // Adiciona query params à rota recebida pelo cy.wrap()
