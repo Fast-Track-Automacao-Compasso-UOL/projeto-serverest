@@ -14,7 +14,8 @@
   },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "cy:open": "npx cypress open --config watchForFileChanges=false"
+    "cy:open": "npx cypress open --config watchForFileChanges=false",
+    "cucumber": "./node_modules/.bin/cypress-tags run -e"
   },
   "repository": {
     "type": "git",

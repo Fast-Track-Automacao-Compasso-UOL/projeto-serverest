@@ -86,7 +86,8 @@ export class ServeRest extends Rest {
   // Valida mensagem contida no body da requisição
   static validarMensagem(mensagem) {
     cy.get('@Body').then(body => {
-      expect(Object.values(body)).to.contain(mensagem)
+      let aux = Object.values(body);
+      expect(aux[0]).to.contain(mensagem)
     })
   }
 
@@ -167,6 +168,18 @@ export class ServeRest extends Rest {
         case 'vazio':
           body = {};
           break;
+        case 'campos vazios':
+            body = {
+              "email": "",
+              "password": ""
+            };
+            break;
+        case 'campos inválidos':
+              body = {
+                "email": 3,
+                "password": 5
+              };
+              break;
         default:
           cy.log(`Tipo não reconhecido: ${tipo}`);
           break;
