@@ -206,6 +206,7 @@ export class ServeRest extends Rest {
   static criarUsuario(options) {
     switch (options) {
       case "sem carrinho":
+        // TODO vincular com método de login
         super.post("/usuarios",
           {
             "nome": "Fulano da Silva",
