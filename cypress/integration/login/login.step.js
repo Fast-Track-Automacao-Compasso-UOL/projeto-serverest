@@ -12,12 +12,12 @@ Given('que utilize body {string}', (tipoBody) => {
 });
 
 //When('realizar uma requisição do tipo {string}', (verb) => {
-//  ServeRest.realizar_login(cy.get('@Rota'), cy.get('@Body'))
+//  ServeRest.realizarLogin(cy.get('@Rota'), cy.get('@Body'))
 //});
 
 When('realizar login', () => {
   cy.get('@TipoBody').then(tipo => {
-    ServeRest.realizar_login(tipo);
+    ServeRest.realizarLogin(tipo);
   })
 })
 

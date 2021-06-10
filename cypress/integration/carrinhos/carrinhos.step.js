@@ -66,7 +66,7 @@ Given('que possua uma autenticação {string}', (auth) => {
   let token;
   switch (auth) {
     case "válida":
-      ServeRest.realizar_login('admin');
+      ServeRest.realizarLogin('admin');
 
     break;
     case "inválida":
