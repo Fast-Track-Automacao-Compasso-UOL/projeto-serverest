@@ -57,13 +57,14 @@ Given('que possua uma autenticação {string}', (auth) => {
   let token;
   switch (auth) {
     case "válida":
-      ServeRest.realizar_login(admin)
-      break;
+      ServeRest.realizar_login('admin');
+
+    break;
     case "inválida":
       token = "AUTHJIUzI1NiIsInRINVALIDA"
       break;
   }
-  cy.wrap(token).as('Token');
+
 });
 
 Given('que utilize body {string}', (body) => {

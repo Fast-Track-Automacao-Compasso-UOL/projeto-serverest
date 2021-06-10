@@ -11,12 +11,14 @@ Given('que utilize body {string}', (tipoBody) => {
   cy.wrap(tipoBody).as('TipoBody');
 });
 
-When('realizar uma requisição do tipo {string}', (verb) => {
-  ServeRest.realizar_login(cy.get('@Rota'), cy.get('@Body'))
-});
+//When('realizar uma requisição do tipo {string}', (verb) => {
+//  ServeRest.realizar_login(cy.get('@Rota'), cy.get('@Body'))
+//});
 
 When('realizar login', () => {
-  ServeRest.realizar_login();
+  cy.get('@TipoBody').then(tipo => {
+    ServeRest.realizar_login(tipo);
+  })
 })
 
 Then('deverá ser retornado o schema {string} e status {int}', (schema, status) => {
