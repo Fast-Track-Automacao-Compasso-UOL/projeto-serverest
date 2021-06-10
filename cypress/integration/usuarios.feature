@@ -38,10 +38,10 @@ Funcionalidade: Usuários
       | body                | status | mensagem                       |
       | válido              | 201    | Cadastro realizado com sucesso |
       | e-mail já utilizado | 400    | Este email já está sendo usado |
-      | vazio               | 400    | é obrigatório                  |
+      | vazio               | 400    | nome é obrigatório             |
       | e-mail inválido     | 400    | email deve ser um email válido |
-      | campos vazios       | 400    | não pode ficar em branco       |
-      | campos inválidos    | 400    | deve ser uma string            |
+      | campos vazios       | 400    | nome não pode ficar em branco  |
+      | campos inválidos    | 400    | nome deve ser uma string       |
 
   # Falta validar campos obrigatórios um por um
   # Falta validar Mensagem do campo de Administrador
@@ -55,7 +55,7 @@ Funcionalidade: Usuários
 
     Exemplos:
       | id                     | status | mensagem                                                |
-      | existente sem carrinho | 200    | Registro excluído com sucesso                           |
+      | existente              | 200    | Registro excluído com sucesso                           |
       | inexistente            | 200    | Nenhum registro excluído                                |
       | existente com carrinho | 400    | Não é permitido excluir usuário com carrinho cadastrado |
 
@@ -64,14 +64,14 @@ Funcionalidade: Usuários
     E que utilize complemento de rota "<id>"
     Quando realizar uma requisição do tipo "PUT"
     Então deverá ser retornado o schema "put_usuarios" e status <status>
+    E deverá ser retornada a mensagem "<mensagem>"
 
     Exemplos:
       | body                | id          | status | mensagem                       |
       | válido              | existente   | 200    | Registro alterado com sucesso  |
       | válido              | inexistente | 201    | Cadastro realizado com sucesso |
       | e-mail já utilizado | existente   | 400    | Este email já está sendo usado |
-      | vazio               | existente   | 400    | é obrigatório                  |
+      | vazio               | existente   | 400    | nome é obrigatório             |
       | e-mail inválido     | existente   | 400    | email deve ser um email válido |
-      | campos vazios       | existente   | 400    | não pode ficar em branco       |
-      | campos inválidos    | existente   | 400    | deve ser uma string            |
-
+      | campos vazios       | existente   | 400    | nome não pode ficar em branco  |
+      | campos inválidos    | existente   | 400    | nome deve ser uma string       |

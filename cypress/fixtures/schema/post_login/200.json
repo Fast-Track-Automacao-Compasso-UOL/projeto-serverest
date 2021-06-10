@@ -1,0 +1,41 @@
+{
+    "$schema": "http://json-schema.org/draft-07/schema",
+    "$id": "http://example.com/example.json",
+    "type": "object",
+    "title": "The root schema",
+    "description": "The root schema comprises the entire JSON document.",
+    "default": {},
+    "examples": [
+        {
+            "message": "Login realizado com sucesso",
+            "authorization": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImFhZHVtYi5qb2VAcWEuY29tLmJyIiwicGFzc3dvcmQiOiJ0ZXN0IiwiaWF0IjoxNjIxODg3ODM0LCJleHAiOjE2MjE4ODg0MzR9.Cea1YUR2v2nc6zioXeSfdHEU64NByOtgjsr7WBg3jDs"
+        }
+    ],
+    "required": [
+        "message",
+        "authorization"
+    ],
+    "properties": {
+        "message": {
+            "$id": "#/properties/message",
+            "type": "string",
+            "title": "The message schema",
+            "description": "An explanation about the purpose of this instance.",
+            "default": "",
+            "examples": [
+                "Login realizado com sucesso"
+            ]
+        },
+        "authorization": {
+            "$id": "#/properties/authorization",
+            "type": "string",
+            "title": "The authorization schema",
+            "description": "An explanation about the purpose of this instance.",
+            "default": "",
+            "examples": [
+                "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImFhZHVtYi5qb2VAcWEuY29tLmJyIiwicGFzc3dvcmQiOiJ0ZXN0IiwiaWF0IjoxNjIxODg3ODM0LCJleHAiOjE2MjE4ODg0MzR9.Cea1YUR2v2nc6zioXeSfdHEU64NByOtgjsr7WBg3jDs"
+            ]
+        }
+    },
+    "additionalProperties": true
+}

@@ -1,0 +1,32 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema",
+  "$id": "http://example.com/example.json",
+  "type": "object",
+  "title": "The root schema",
+  "description": "The root schema comprises the entire JSON document.",
+  "default": {},
+  "examples": [],
+  "required": [
+    "message",
+    "idCarrinho"
+  ],
+  "properties": {
+    "message": {
+      "$id": "#/properties/message",
+      "type": "string",
+      "title": "The message schema",
+      "description": "An explanation about the purpose of this instance.",
+      "default": "",
+      "examples": []
+    },
+    "idCarrinho": {
+      "$id": "#/properties/idCarrinho",
+      "type": "string",
+      "title": "The idCarrinho schema",
+      "description": "An explanation about the purpose of this instance.",
+      "default": "",
+      "examples": []
+    }
+  },
+  "additionalProperties": true
+}

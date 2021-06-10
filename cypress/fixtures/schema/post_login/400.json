@@ -1,0 +1,43 @@
+{
+    "$schema": "http://json-schema.org/draft-07/schema",
+    "$id": "http://example.com/example.json",
+    "type": "object",
+    "title": "The root schema",
+    "description": "The root schema comprises the entire JSON document.",
+    "default": {},
+    "examples": [],
+    "required": [],
+    "properties": {
+        "message": {
+            "$id": "#/properties/message",
+            "type": "string",
+            "title": "The message schema",
+            "description": "An explanation about the purpose of this instance.",
+            "default": "",
+            "examples": [
+                "Email e/ou senha inválidos"
+            ]
+        },
+        "email": {
+            "$id": "#/properties/email",
+            "type": "string",
+            "title": "The email schema",
+            "description": "An explanation about the purpose of this instance.",
+            "default": "",
+            "examples": [
+                "email é obrigatório"
+            ]
+        },
+        "password": {
+            "$id": "#/properties/password",
+            "type": "string",
+            "title": "The password schema",
+            "description": "An explanation about the purpose of this instance.",
+            "default": "",
+            "examples": [
+                "password é obrigatório"
+            ]
+        }
+    },
+    "additionalProperties": true
+}

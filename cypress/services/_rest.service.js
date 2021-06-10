@@ -11,7 +11,7 @@ export default class Rest {
 
   static post(endpoint, body, headers = null) {
     return cy.request({
-      method: 'POST',      
+      method: 'POST',
       url: endpoint,
       body: body,
       headers: headers,

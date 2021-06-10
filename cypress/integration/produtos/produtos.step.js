@@ -5,34 +5,35 @@ import Rest from '../../services/_rest.service'
 
 // Listar Produtos
 Given('a rota {string}', (rota) => {
-   ServeRest.armazenarRota(rota);
+    ServeRest.armazenarRota(rota);
 });
 
-Given ('que utilize query params {string}', (param) => {
+Given('que utilize query params {string}', (param) => {
     let valor;
-        switch (param) {
-          case "_id":
-           valor = "BeeJh5lz3k6kSIzA"
+    switch (param) {
+        case "_id":
+            valor = "BeeJh5lz3k6kSIzA"
             break;
-          case "nome":
-            valor = "Logitech%MX%Vertical"
-          case "preco":
+        case "nome":
+            valor = "Logitech%20MX%20Vertical"
+            break;
+        case "preco":
             valor = "470"
-             break;
-          case "descricao":
+            break;
+        case "descricao":
             valor = "Mouse"
-             break;
-          case "quantidade":
-            valor ="382"
-              break;
-          default:
+            break;
+        case "quantidade":
+            valor = "382"
+            break;
+        default:
             param = ""
             valor = ""
-             break;
-        }
+            break;
+    }
     ServeRest.adicionarQueryParams(param, valor);
-        
-    
+
+
 });
 
 Then('deverá ser retornado o schema {string} e status {int}', (schema, status) => {
@@ -111,19 +112,19 @@ Given('que utilize body {string}', (body) => {
                 "preco": 470,
                 "descricao": "Mouse",
                 "quantidade": 381
-                
+
             }
-           break;
+            break;
         case "vazio":
             body = {          
             }
-           break;
+            break;
         case "campos vazios":
             body = {
                 "nome": "",
                 "produtos": 1234               
             }
-           break;
+            break;
         case "campos inválidos":
             body = {
                 "nome": 1234,
@@ -132,37 +133,37 @@ Given('que utilize body {string}', (body) => {
                 "quantidade": 1234
                 
             }
-           break;
+            break;
         case "inválido":
             body = {
                 "nome": "Logitech MX Vertical",
                 "preco": 470,
                 "descricao": "Mouse",
                 "quantidade": 381
-                
+
             }
-           break;
+            break;
         case "válido comum":
             body = {
                 "nome": "Logitech MX Vertical",
                 "preco": 470,
                 "descricao": "Mouse",
                 "quantidade": 381
-                
+
             }
-           break;
-           default:
-               body =""
-               break;
+            break;
+        default:
+            body = ""
+            break;
     }
-        ServeRest.adicionarBody(body)
+    ServeRest.adicionarBody(body)
 });
 
 When('realizar uma requisição do tipo {string}', (tipo) => {
     cy.get('@Body').then(body => {
        ServeRest.realizarRequisicao(tipo, body)
     })
-    
+
 });
 
 Then('deverá ser retornada a mensagem {string}', (mensagem) => {

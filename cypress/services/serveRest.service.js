@@ -12,8 +12,8 @@ export class ServeRest extends Rest {
   // Armazena rota baseado no parâmetro recebido
   static armazenarRota(rota) {
     cy.wrap(rota).as('Rota');
-    cy.wrap('').as('Body');
-    cy.wrap('').as('Token');
+    cy.wrap('').as('Body')
+    cy.wrap('').as('Token')
   }
 
   // Adiciona query params à rota recebida pelo cy.wrap()
@@ -81,7 +81,6 @@ export class ServeRest extends Rest {
     })
   }
 
-  // Cria variável 'Body' com valor recebido pelo parâmetro
   static adicionarBody(body) {
     cy.wrap(body).as('Body')
   }
@@ -89,7 +88,71 @@ export class ServeRest extends Rest {
   // Valida mensagem contida no body da requisição
   static validarMensagem(mensagem) {
     cy.get('@Body').then(body => {
+      //let aux = Object.values(body);
+      //expect(aux[0]).to.contain(mensagem)
       expect(Object.values(body)).to.contain(mensagem)
+    })
+  }
+
+  // static validarAuthorization (auth){
+  //   switch (Token) {
+  //     case "válida":
+  //       token = "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImZ1bGFub0BxYS5jb20iLCJwYXNzd29yZCI6InRlc3RlIiwiaWF0IjoxNjIzMTgyMjY5LCJleHAiOjE2MjMxODI4Njl9.C2LPuX9wKCGGDzjitoHaTuNgQk8sVe6InFGbdooVgKc" // Terminar esse caso
+  //       break;
+  //     case "inválida":
+  //       token = "AUTHJIUzI1NiIsInRINVALIDA"
+  //       break;
+  //   }
+  //   cy.wrap(token).as('Token');
+
+  // }
+
+  // Realiza Login com body recebido pelo cy.wrap()
+  static realizar_login() {
+    let body;
+    cy.get('@TipoBody').then(tipo => {
+      switch (tipo) {
+        case 'válido':
+          body = {
+            "email": "fulano@qa.com",
+            "password": "teste"
+          };
+          break;
+        case 'e-mail inválido':
+          body = {
+            "email": "fulano",
+            "password": "teste"
+          };
+          break;
+        case 'senha inválida':
+          body = {
+            "email": "fulano@qa.com",
+            "password": "senha errada"
+          };
+          break;
+        case 'vazio':
+          body = {};
+          break;
+        case 'campos vazios':
+          body = {
+            "email": "",
+            "password": ""
+          };
+          break;
+        case 'campos inválidos':
+          body = {
+            "email": 3,
+            "password": 5
+          };
+          break;
+        default:
+          cy.log(`Tipo não reconhecido: ${tipo}`);
+          break;
+      }
+
+      super.post(URL_BASE + URL_LOGIN, body).then(res => {
+        cy.wrap(res.body).as('Body');
+      });
     })
   }
 
@@ -143,43 +206,4 @@ export class ServeRest extends Rest {
         break;
     }
   }
-
-  // Realiza Login com body recebido pelo cy.wrap()
-  static realizar_login() {
-    let body;
-    cy.get('@tipoBody').then(tipo => {
-      switch (tipo) {
-        case 'válido':
-          body = {
-            "email": "fulano@qa.com",
-            "password": "teste"
-          };
-          break;
-        case 'e-mail inválido':
-          body = {
-            "email": "fulano",
-            "password": "teste"
-          };
-          break;
-        case 'senha inválida':
-          body = {
-            "email": "fulano@qa.com",
-            "password": "senha errada"
-          };
-          break;
-        case 'vazio':
-          body = {};
-          break;
-        default:
-          cy.log(`Tipo não reconhecido: ${tipo}`);
-          break;
-      }
-
-      super.post(URL_BASE + URL_LOGIN, body).then(res => {
-        cy.wrap(res.body).as('body');
-      });
-    })
-  }
 }
-
-

@@ -3,7 +3,7 @@
 Funcionalidade: Produtos
   Contexto: Rota de produtos
     Dada a rota "/produtos"
-    
+
   Esquema do Cenário: Listar produtos
     Dado que utilize query params "<params>"
     Quando realizar uma requisição do tipo "GET"
@@ -28,12 +28,12 @@ Funcionalidade: Produtos
       | válido   | 200    |
       | inválido | 400    |
 
-  Esquema do Cenário: Cadastrar produto
-    Dado que possua uma autenticação "<auth>"
-    E que utilize body "<body>"
-    Quando realizar uma requisição do tipo "POST"
-    Então deverá ser retornado o schema "post_produtos" e status <status>
-    E deverá ser retornada a mensagem "<mensagem>"
+Esquema do Cenário: Cadastrar produto
+  Dado que possua uma autenticação "<auth>"
+  E que utilize body "<body>"
+  Quando realizar uma requisição do tipo "POST"
+  Então deverá ser retornado o schema "post_produtos" e status <status>
+  E deverá ser retornada a mensagem "<mensagem>"
 
     Exemplos:
       | auth         | body              | status | mensagem                                                                        |

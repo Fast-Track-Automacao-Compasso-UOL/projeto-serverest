@@ -2,5 +2,5 @@
   "$schema": "https://on.cypress.io/cypress.schema.json",
   "video": false,
   "chromeWebSecurity": false,
-  "testFiles": "**/*.{feature, features}"
+  "testFiles": "*.feature"
 }
