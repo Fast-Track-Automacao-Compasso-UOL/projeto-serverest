@@ -23,7 +23,7 @@ export const criarBodyProduto = (options = { nome: null, preco: null, descricao:
   } : {
     "nome": options.nome || faker.commerce.productName(),
     "preco": options.preco || parseInt(faker.commerce.price()),
-    "descricao": options.descricao || faker.commerce.productDescription,
+    "descricao": options.descricao || faker.commerce.productDescription(),
     "quantidade": Math.floor(Math.random() * 999) + 1
   }
 }

@@ -11,7 +11,7 @@ Given('que utilize query params {string}', (param) => {
   ServeRest.criarUsuario()
   let valor;
   cy.get('@Usuario').then(usuario => {
-    cy.get('@Id').then(id => {
+    cy.get('@IdUsuario').then(id => {
       switch (param) {
         case "_id":
           valor = id
@@ -50,13 +50,18 @@ Given('que utilize complemento de rota {string}', (id) => {
   switch (id) {
     case "existente":
       ServeRest.criarUsuario()
-      cy.get('@Id').then(id => {
+      cy.get('@IdUsuario').then(id => {
         ServeRest.adicionarComplemento(id)
       })
       break;
     case "existente com carrinho":
-      ServeRest.criarUsuario({ carrinho: true })
-      cy.get('@Id').then(id => {
+      ServeRest.criarUsuario({ admin: 'true' }) // cy.wrap('Usuario')
+      ServeRest.realizarLogin() // cy.wrap('Token')
+      ServeRest.criarProduto() // cy.wrap('Usario') cy.wrap('Token')
+      ServeRest.criarUsuario()
+      ServeRest.realizarLogin()
+      ServeRest.criarCarrinho()
+      cy.get('@IdUsuario').then(id => {
         ServeRest.adicionarComplemento(id)
       })
       break;
