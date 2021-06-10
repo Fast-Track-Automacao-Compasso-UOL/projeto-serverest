@@ -108,52 +108,98 @@ export class ServeRest extends Rest {
   // }
 
   // Realiza Login com body recebido pelo cy.wrap()
-  static realizar_login() {
+  
+  static buscarDadosUsuario(tipo = false) {
+    let admin;
+    if(tipo == 'admin') {
+      admin = true;
+    } else {
+      admin = false;
+    }
+    super.get(`${URL_USUARIOS}?administrador=${admin}`).then((res) => {
+      cy.wrap(res.body.usuarios[0].email).as("Email");
+      cy.wrap(res.body.usuarios[0].password).as("Password");
+    });
+  }
+  
+  static realizar_login(tipo) {
     let body;
-    cy.get('@TipoBody').then(tipo => {
+
       switch (tipo) {
         case 'válido':
           body = {
             "email": "fulano@qa.com",
             "password": "teste"
           };
+          cy.wrap(body).as('Loginbody');
           break;
         case 'e-mail inválido':
           body = {
             "email": "fulano",
             "password": "teste"
           };
+          cy.wrap(body).as('Loginbody');
           break;
         case 'senha inválida':
           body = {
             "email": "fulano@qa.com",
             "password": "senha errada"
           };
+          cy.wrap(body).as('Loginbody');
+
           break;
         case 'vazio':
           body = {};
+          cy.wrap(body).as('Loginbody');
           break;
         case 'campos vazios':
           body = {
             "email": "",
             "password": ""
           };
+          cy.wrap(body).as('Loginbody');
+
           break;
         case 'campos inválidos':
           body = {
             "email": 3,
             "password": 5
           };
+          cy.wrap(body).as('Loginbody');
+
           break;
+        case 'admin':
+          cy.log('INICIO BUSCAR DADOS USUÁRIO')
+
+          this.buscarDadosUsuario(tipo);
+          cy.get('@Email').then(email => {
+            cy.get('@Password').then(password => {
+              body = {"email": email,
+                  "password": password
+                };
+            cy.wrap(body).as('Loginbody');
+            })
+          })
+          break;
+        case 'comum':
+          this.buscarDadosUsuario(tipo);
+          body = {"email": cy.get('@Email'),
+                  "password": cy.get('@Password')
+                };
+              cy.wrap(body).as('Loginbody');
+              break;
         default:
           cy.log(`Tipo não reconhecido: ${tipo}`);
           break;
       }
 
-      super.post(URL_BASE + URL_LOGIN, body).then(res => {
-        cy.wrap(res.body).as('Body');
-      });
-    })
+      cy.get('@Loginbody').then(body => {
+        super.post(URL_BASE + URL_LOGIN, body).then(res => {
+          cy.wrap(res.body).as('Body');
+          cy.wrap(res.body.authorization).as('Token');
+        });
+      })
+  
   }
 
   // Cria um usuário baseado em uma string enviada pelo parâmetro options
