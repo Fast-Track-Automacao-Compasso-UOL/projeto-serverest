@@ -39,6 +39,10 @@ Then('deverá ser retornado o schema {string} e status {int}', (schema, status) 
   ServeRest.validarSchemaEStatus(schema, status);
 });
 
+//GET Cenario: Buscar carrinhos por ID
+// Given('a rota {string}', (rota) => {
+//  ServeRest.armazenarRota(rota);
+
 Given('que utilize complemento de rota {string}', (id) => {
   switch (id) {
     case "válido":
@@ -50,6 +54,11 @@ Given('que utilize complemento de rota {string}', (id) => {
       ServeRest.adicionarComplemento(id)
       break;
   }
+  // When('realizar uma requisição do tipo {string}', (tipo) => {
+  //  ServeRest.realizarRequisicao(tipo);
+
+  //Then('deverá ser retornado o schema {string} e status {int}', (schema, status) => {
+  //  ServeRest.validarSchemaEStatus(schema, status);
 });
 
 //POST Cenario: Cadastrar Carrinho
@@ -119,18 +128,17 @@ Then('deverá ser retornada a mensagem {string}', (mensagem) => {
 
 //DELETE Cenario: Excluir carrinho concluir-compra/cancelar-compra
 Given('{string} carrinho ', (condicao) => {
-  
   let cond;
   switch (condicao) {
     case "possua":
-      ServeRest.criarUsuario('com carrinho')
+      cond = ""                                                              //refatorar
       break;
     case "não possua":
-      ServeRest.criarUsuario('sem carrinho')
+      cond = ""
       break;
   }
 
-  
+
 });
 
 Given('que utilize complemento de rota {string}', () => {
