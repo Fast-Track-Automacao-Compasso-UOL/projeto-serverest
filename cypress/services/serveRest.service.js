@@ -89,8 +89,6 @@ export class ServeRest extends Rest {
   // Valida mensagem contida no body da requisição
   static validarMensagem(mensagem) {
     cy.get('@Body').then(body => {
-      //let aux = Object.values(body);
-      //expect(aux[0]).to.contain(mensagem)
       expect(Object.values(body)).to.contain(mensagem)
     })
   }
@@ -120,8 +118,19 @@ export class ServeRest extends Rest {
       cy.wrap(res.body.usuarios[0].password).as("Password");
     });
   }
+  // Realiza o login com usuário recebido pelo cy.wrap()
+  // static realizarLogin() {
+  //   cy.get('@Usuario').then(usuario => {
+  //     super.post(URL_LOGIN, {
+  //       "email": usuario.email,
+  //       "password": usuario.password
+  //     }).then(res => {
+  //       cy.wrap(res.body.authorization).as('Token')
+  //     })
+  //   })
+  // }
 
-  static realizar_login(tipo) {
+  static realizarLogin(tipo = 'padrao') {
     let body;
 
     switch (tipo) {
@@ -130,33 +139,33 @@ export class ServeRest extends Rest {
           "email": "fulano@qa.com",
           "password": "teste"
         };
-        cy.wrap(body).as('Loginbody');
+        cy.wrap(body).as('LoginBody');
         break;
       case 'e-mail inválido':
         body = {
           "email": "fulano",
           "password": "teste"
         };
-        cy.wrap(body).as('Loginbody');
+        cy.wrap(body).as('LoginBody');
         break;
       case 'senha inválida':
         body = {
           "email": "fulano@qa.com",
           "password": "senha errada"
         };
-        cy.wrap(body).as('Loginbody');
+        cy.wrap(body).as('LoginBody');
 
         break;
       case 'vazio':
         body = {};
-        cy.wrap(body).as('Loginbody');
+        cy.wrap(body).as('LoginBody');
         break;
       case 'campos vazios':
         body = {
           "email": "",
           "password": ""
         };
-        cy.wrap(body).as('Loginbody');
+        cy.wrap(body).as('LoginBody');
 
         break;
       case 'campos inválidos':
@@ -164,7 +173,7 @@ export class ServeRest extends Rest {
           "email": 3,
           "password": 5
         };
-        cy.wrap(body).as('Loginbody');
+        cy.wrap(body).as('LoginBody');
 
         break;
       case 'admin':
@@ -177,7 +186,7 @@ export class ServeRest extends Rest {
               "email": email,
               "password": password
             };
-            cy.wrap(body).as('Loginbody');
+            cy.wrap(body).as('LoginBody');
           })
         })
         break;
@@ -187,15 +196,24 @@ export class ServeRest extends Rest {
           "email": cy.get('@Email'),
           "password": cy.get('@Password')
         };
-        cy.wrap(body).as('Loginbody');
+        cy.wrap(body).as('LoginBody');
+        break;
+      case 'padrao':
+        cy.get('@Usuario').then(usuario => {
+          body = {
+            "email": usuario.email,
+            "password": usuario.password
+          };
+          cy.wrap(body).as('LoginBody');
+        })
         break;
       default:
         cy.log(`Tipo não reconhecido: ${tipo}`);
         break;
     }
 
-    cy.get('@Loginbody').then(body => {
-      super.post(URL_BASE + URL_LOGIN, body).then(res => {
+    cy.get('@LoginBody').then(body => {
+      super.post(URL_LOGIN, body).then(res => {
         cy.wrap(res.body).as('Body');
         cy.wrap(res.body.authorization).as('Token');
       });
@@ -205,7 +223,7 @@ export class ServeRest extends Rest {
 
   // Cria usuário(admin ou não), baseado no parâmetro recebido
   static criarUsuario(options = { admin: 'false' }) {
-    super.post("/usuarios", criarBodyUsuario(options.admin)).then(res => {
+    super.post(URL_USUARIOS, criarBodyUsuario({ administrador: options.admin })).then(res => {
       cy.wrap(res.body._id).as('IdUsuario')
       cy.wrap(JSON.parse(res.requestBody)).as('Usuario')
     })
@@ -237,15 +255,4 @@ export class ServeRest extends Rest {
     })
   }
 
-  // Realiza o login com usuário recebido pelo cy.wrap()
-  static realizarLogin() {
-    cy.get('@Usuario').then(usuario => {
-      super.post("/login", {
-        "email": usuario.email,
-        "password": usuario.password
-      }).then(res => {
-        cy.wrap(res.body.authorization).as('Token')
-      })
-    })
-  }
 }

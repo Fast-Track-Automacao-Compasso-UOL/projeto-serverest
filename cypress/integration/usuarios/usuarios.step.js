@@ -3,10 +3,6 @@ import { Given, Then, When } from 'cypress-cucumber-preprocessor/steps'
 import { ServeRest } from '../../services/serveRest.service'
 import { criarBodyUsuario } from '../../factories/dynamic';
 
-Given('a rota {string}', (rota) => {
-  ServeRest.armazenarRota(rota);
-});
-
 Given('que utilize query params {string}', (param) => {
   ServeRest.criarUsuario()
   let valor;
@@ -37,12 +33,6 @@ Given('que utilize query params {string}', (param) => {
       }
       ServeRest.adicionarQueryParams(param, valor);
     })
-  })
-});
-
-When('realizar uma requisição do tipo {string}', (tipo) => {
-  cy.get('@Body').then(body => {
-    ServeRest.realizarRequisicao(tipo, body)
   })
 });
 
@@ -105,12 +95,4 @@ Given('que utilize body {string}', (body) => {
       body = ""
       break;
   }
-});
-
-Then('deverá ser retornada a mensagem {string}', (mensagem) => {
-  ServeRest.validarMensagem(mensagem)
-});
-
-Then('deverá ser retornado o schema {string} e status {int}', (schema, status) => {
-  ServeRest.validarSchemaEStatus(schema, status)
 });
