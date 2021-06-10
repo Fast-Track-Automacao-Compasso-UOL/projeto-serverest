@@ -212,7 +212,7 @@ export class ServeRest extends Rest {
           break;
       }
   
-      cy.get('@Loginbody').then(body => {
+      cy.get('@LoginBody').then(body => {
         super.post(URL_LOGIN, body).then(res => {
           cy.wrap(res.body).as('Body');
           cy.wrap(res.body.authorization).as('Token');
