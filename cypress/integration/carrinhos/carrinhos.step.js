@@ -39,10 +39,6 @@ Then('deverá ser retornado o schema {string} e status {int}', (schema, status) 
   ServeRest.validarSchemaEStatus(schema, status);
 });
 
-//GET Cenario: Buscar carrinhos por ID
-// Given('a rota {string}', (rota) => {
-//  ServeRest.armazenarRota(rota);
-
 Given('que utilize complemento de rota {string}', (id) => {
   switch (id) {
     case "válido":
@@ -54,11 +50,6 @@ Given('que utilize complemento de rota {string}', (id) => {
       ServeRest.adicionarComplemento(id)
       break;
   }
-  // When('realizar uma requisição do tipo {string}', (tipo) => {
-  //  ServeRest.realizarRequisicao(tipo);
-
-  //Then('deverá ser retornado o schema {string} e status {int}', (schema, status) => {
-  //  ServeRest.validarSchemaEStatus(schema, status);
 });
 
 //POST Cenario: Cadastrar Carrinho
@@ -66,7 +57,7 @@ Given('que possua uma autenticação {string}', (auth) => {
   let token;
   switch (auth) {
     case "válida":
-      token = "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImJlbHRyYW5vQHFhLmNvbS5iciIsInBhc3N3b3JkIjoidGVzdGUiLCJpYXQiOjE2MjMyNDkzODEsImV4cCI6MTYyMzI0OTk4MX0.bAPrNTAxRXvrptvmH0kJO-u4mIBsF9I3WxGqyY9x5EE" // Terminar esse caso
+      ServeRest.realizar_login(admin)
       break;
     case "inválida":
       token = "AUTHJIUzI1NiIsInRINVALIDA"
@@ -127,6 +118,7 @@ Then('deverá ser retornada a mensagem {string}', (mensagem) => {
 
 //DELETE Cenario: Excluir carrinho concluir-compra/cancelar-compra
 Given('{string} carrinho ', (condicao) => {
+  
   let cond;
   switch (condicao) {
     case "possua":
@@ -152,7 +144,7 @@ Given('{string} carrinho ', (condicao) => {
       break;
   }
 
-  cy.wrap(cond).as('Condicao');
+  
 });
 
 Given('que utilize complemento de rota {string}', () => {
