@@ -1,12 +1,12 @@
 /// <reference types="cypress" />
 import Rest from "./_rest.service"
-import { criarBodyUsuario } from '../factories/dynamic';
+import { criarBodyUsuario, criarBodyProduto } from '../factories/dynamic';
 
 const URL_BASE = Cypress.config("baseUrl");
 const URL_USUARIOS = "/usuarios";
 const URL_LOGIN = "/login";
 const URL_PRODUTOS = "/produtos";
-const URL_CARRINOS = "/carrinhos";
+const URL_CARRINHOS = "/carrinhos";
 
 export class ServeRest extends Rest {
   // Armazena rota baseado no parâmetro recebido
@@ -105,14 +105,12 @@ export class ServeRest extends Rest {
   //       break;
   //   }
   //   cy.wrap(token).as('Token');
-
   // }
 
   // Realiza Login com body recebido pelo cy.wrap()
-  
   static buscarDadosUsuario(tipo = false) {
     let admin;
-    if(tipo == 'admin') {
+    if (tipo == 'admin') {
       admin = true;
     } else {
       admin = false;
@@ -122,127 +120,132 @@ export class ServeRest extends Rest {
       cy.wrap(res.body.usuarios[0].password).as("Password");
     });
   }
-  
+
   static realizar_login(tipo) {
     let body;
 
-      switch (tipo) {
-        case 'válido':
-          body = {
-            "email": "fulano@qa.com",
-            "password": "teste"
-          };
-          cy.wrap(body).as('Loginbody');
-          break;
-        case 'e-mail inválido':
-          body = {
-            "email": "fulano",
-            "password": "teste"
-          };
-          cy.wrap(body).as('Loginbody');
-          break;
-        case 'senha inválida':
-          body = {
-            "email": "fulano@qa.com",
-            "password": "senha errada"
-          };
-          cy.wrap(body).as('Loginbody');
+    switch (tipo) {
+      case 'válido':
+        body = {
+          "email": "fulano@qa.com",
+          "password": "teste"
+        };
+        cy.wrap(body).as('Loginbody');
+        break;
+      case 'e-mail inválido':
+        body = {
+          "email": "fulano",
+          "password": "teste"
+        };
+        cy.wrap(body).as('Loginbody');
+        break;
+      case 'senha inválida':
+        body = {
+          "email": "fulano@qa.com",
+          "password": "senha errada"
+        };
+        cy.wrap(body).as('Loginbody');
 
-          break;
-        case 'vazio':
-          body = {};
-          cy.wrap(body).as('Loginbody');
-          break;
-        case 'campos vazios':
-          body = {
-            "email": "",
-            "password": ""
-          };
-          cy.wrap(body).as('Loginbody');
+        break;
+      case 'vazio':
+        body = {};
+        cy.wrap(body).as('Loginbody');
+        break;
+      case 'campos vazios':
+        body = {
+          "email": "",
+          "password": ""
+        };
+        cy.wrap(body).as('Loginbody');
 
-          break;
-        case 'campos inválidos':
-          body = {
-            "email": 3,
-            "password": 5
-          };
-          cy.wrap(body).as('Loginbody');
+        break;
+      case 'campos inválidos':
+        body = {
+          "email": 3,
+          "password": 5
+        };
+        cy.wrap(body).as('Loginbody');
 
-          break;
-        case 'admin':
-          cy.log('INICIO BUSCAR DADOS USUÁRIO')
+        break;
+      case 'admin':
+        cy.log('INICIO BUSCAR DADOS USUÁRIO')
 
-          this.buscarDadosUsuario(tipo);
-          cy.get('@Email').then(email => {
-            cy.get('@Password').then(password => {
-              body = {"email": email,
-                  "password": password
-                };
+        this.buscarDadosUsuario(tipo);
+        cy.get('@Email').then(email => {
+          cy.get('@Password').then(password => {
+            body = {
+              "email": email,
+              "password": password
+            };
             cy.wrap(body).as('Loginbody');
-            })
           })
-          break;
-        case 'comum':
-          this.buscarDadosUsuario(tipo);
-          body = {"email": cy.get('@Email'),
-                  "password": cy.get('@Password')
-                };
-              cy.wrap(body).as('Loginbody');
-              break;
-        default:
-          cy.log(`Tipo não reconhecido: ${tipo}`);
-          break;
-      }
-
-      cy.get('@Loginbody').then(body => {
-        super.post(URL_BASE + URL_LOGIN, body).then(res => {
-          cy.wrap(res.body).as('Body');
-          cy.wrap(res.body.authorization).as('Token');
-        });
-      })
-  
-  }
-
-  // Cria um usuário baseado no objeto do parâmetro options
-  static criarUsuario(options = { carrinho: false }) {
-    switch (options.carrinho) {
-      case false:
-        super.post("/usuarios",
-          criarBodyUsuario()
-        ).then(res => {
-          cy.wrap(res.body._id).as('Id')
-          cy.wrap(JSON.parse(res.requestBody)).as('Usuario')
         })
         break;
-
-      case true:
-        let bodyUsuario = criarBodyUsuario()
-        super.post("/usuarios",
-          bodyUsuario
-        ).then(res => {
-          cy.wrap(res.body._id).as('Id')
-          cy.wrap(res.requestBody).as('Usuario')
-          super.post("/login",
-            {
-              "email": bodyUsuario.email,
-              "password": bodyUsuario.password
-            }
-          ).then(res => {
-            super.post("/carrinhos",
-              {
-                "produtos":
-                  [{
-                    "idProduto": "BeeJh5lz3k6kSIzA",
-                    "quantidade": 1
-                  }]
-              },
-              { Authorization: res.body.authorization }
-            )
-          })
-        });
+      case 'comum':
+        this.buscarDadosUsuario(tipo);
+        body = {
+          "email": cy.get('@Email'),
+          "password": cy.get('@Password')
+        };
+        cy.wrap(body).as('Loginbody');
         break;
       default:
+        cy.log(`Tipo não reconhecido: ${tipo}`);
         break;
     }
+
+    cy.get('@Loginbody').then(body => {
+      super.post(URL_BASE + URL_LOGIN, body).then(res => {
+        cy.wrap(res.body).as('Body');
+        cy.wrap(res.body.authorization).as('Token');
+      });
+    })
+
+  }
+
+  // Cria usuário(admin ou não), baseado no parâmetro recebido
+  static criarUsuario(options = { admin: 'false' }) {
+    super.post("/usuarios", criarBodyUsuario(options.admin)).then(res => {
+      cy.wrap(res.body._id).as('IdUsuario')
+      cy.wrap(JSON.parse(res.requestBody)).as('Usuario')
+    })
+  }
+
+  // Cria um produto aleatório com Token recebido pelo cy.wrap()
+  static criarProduto() {
+    cy.get('@Token').then(authorization => {
+      super.post(URL_PRODUTOS, criarBodyProduto(), { authorization }).then(res => {
+        cy.wrap(res.body._id).as('IdProduto')
+      })
+    })
+  }
+
+  // Cria um carrinho com id do produto recebido pelo cy.wrap()
+  static criarCarrinho() {
+    cy.get('@IdProduto').then(idProduto => {
+      cy.get('@Token').then(authorization => {
+        super.post(URL_CARRINHOS, {
+          produtos: [
+            {
+              "idProduto": idProduto,
+              "quantidade": 1
+            }
+          ]
+        },
+          { authorization })
+      })
+    })
+  }
+
+  // Realiza o login com usuário recebido pelo cy.wrap()
+  static realizarLogin() {
+    cy.get('@Usuario').then(usuario => {
+      super.post("/login", {
+        "email": usuario.email,
+        "password": usuario.password
+      }).then(res => {
+        cy.wrap(res.body.authorization).as('Token')
+      })
+    })
   }
 }
