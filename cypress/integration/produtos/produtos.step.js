@@ -4,9 +4,6 @@ import { ServeRest } from '../../services/serveRest.service'
 import Rest from '../../services/_rest.service'
 
 // Listar Produtos
-Given('a rota {string}', (rota) => {
-    ServeRest.armazenarRota(rota);
-});
 
 Given('que utilize query params {string}', (param) => {
     let valor;
@@ -36,10 +33,6 @@ Given('que utilize query params {string}', (param) => {
 
 });
 
-Then('deverá ser retornado o schema {string} e status {int}', (schema, status) => {
-    ServeRest.validarSchemaEStatus(schema, status)
-});
-
 // Buscar produtos por ID
 
 Given('que utilize complemento de rota {string}', (id) => {
@@ -61,19 +54,6 @@ Given('que utilize complemento de rota {string}', (id) => {
 });
 
 // Cadastrar Produto
-
-Given('que possua uma autenticação {string}', (auth) => {
-    let token;
-    switch(auth) {
-       case "válida admin":
-           ServeRest.realizar_login('admin');
-           break;
-       case "inválida":
-           token = "AUTHJIUzI1NiIsInRINVALIDA"
-           break;         
-    }        
-    
-});
 
 Given('que utilize body {string}', (body) => {
     switch (body) {
@@ -145,16 +125,4 @@ Given('que utilize body {string}', (body) => {
             break;
     }
     ServeRest.adicionarBody(body)
-});
-
-When('realizar uma requisição do tipo {string}', (tipo) => {
-    cy.get('@Body').then(body => {
-        cy.log(body)
-        ServeRest.realizarRequisicao(tipo, body)
-    })
-
-});
-
-Then('deverá ser retornada a mensagem {string}', (mensagem) => {
-    ServeRest.validarMensagem(mensagem)
 });
