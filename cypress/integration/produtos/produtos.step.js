@@ -44,11 +44,15 @@ Then('deverá ser retornado o schema {string} e status {int}', (schema, status) 
 
 Given('que utilize complemento de rota {string}', (id) => {
     switch (id) {
-        case "válido":
-            id = "BeeJh5lz3k6kSIzA"
+        case "existente":
+            id = "BeeJh5lz3k6kSIzA"            
+            ServeRest.adicionarComplemento(id)                       
+            break;
+        case "inexistente":
+            id = "BeeJh5lz3k6kSIzA1"
             ServeRest.adicionarComplemento(id)
             break;
-        case "inválido":
+        case "existente com carrinho":
             id = "BeeJh5lz3k6kSIzA1"
             ServeRest.adicionarComplemento(id)
             break;
@@ -66,20 +70,9 @@ Given('que possua uma autenticação {string}', (auth) => {
            break;
        case "inválida":
            token = "AUTHJIUzI1NiIsInRINVALIDA"
-           break;           
-    }     
-    // switch (auth) {
-    //   case "válida admin":
-    //     token = "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImZ1bGFub0BxYS5jb20iLCJwYXNzd29yZCI6InRlc3RlIiwiaWF0IjoxNjIzMjcxNjExLCJleHAiOjE2MjMyNzIyMTF9.kL51ENXHryAW3yzMl1Ne_hCNX8AM9wDO_WAEaPpnrG4" // Terminar esse caso
-    //     break;
-    //   case "inválida":
-    //     token = "AUTHJIUzI1NiIsInRINVALIDA"
-    //     break;
-    //   case "válida comum":
-    //     token = "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImZ1bGFub0BxYS5jb20iLCJwYXNzd29yZCI6InRlc3RlIiwiaWF0IjoxNjIzMjcxNjExLCJleHAiOjE2MjMyNzIyMTF9.kL51ENXHryAW3yzMl1Ne_hCNX8AM9wDO_WAEaPpnrG4"
-    //     break;
-    // }
-    // cy.wrap(token).as('Token');
+           break;         
+    }        
+    
 });
 
 Given('que utilize body {string}', (body) => {
@@ -102,7 +95,7 @@ Given('que utilize body {string}', (body) => {
 
             }
             break;
-        case "vazio":
+        case "campo ausente":
             body = {
                 "nome": "",
                 "preco": 470,
@@ -121,13 +114,14 @@ Given('que utilize body {string}', (body) => {
             }
             break;
         case "campos inválidos":
-            body = {
-                "nome": "Logitech MX Vertical",
-                "preco": "qe",
-                "descricao": "Mouse",
-                "quantidade": "qe"
-
-            }
+            body = 
+                {
+                    "nome": 123,
+                    "preco": 123,
+                    "descricao": 123,
+                    "quantidade": 123
+                }
+            
             break;
         case "inválido":
             body = {
@@ -138,13 +132,12 @@ Given('que utilize body {string}', (body) => {
 
             }
             break;
-        case "válido comum":
+        case "válida comum":
             body = {
                 "nome": "Logitech MX Vertical",
                 "preco": 470,
                 "descricao": "Mouse",
-                "quantidade": 381
-
+                "quantidade": 381               
             }
             break;
         default:

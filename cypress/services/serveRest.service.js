@@ -251,5 +251,5 @@ export class ServeRest extends Rest {
       default:
         break;
     }
-  }
+  }  
 }

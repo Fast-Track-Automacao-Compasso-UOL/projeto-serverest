@@ -156,7 +156,7 @@ Given('{string} carrinho ', (condicao) => {
   cy.wrap(cond).as('Condicao');
 });
 
-Given('que utilize complemento de rota {string}', () => {
+Given('que utilize complemento de rota {string}', (complemento) => {
   ServeRest.adicionarComplemento(complemento);
 });
 
