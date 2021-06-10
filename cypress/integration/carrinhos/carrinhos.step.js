@@ -3,10 +3,6 @@ import { Given, Then, When } from 'cypress-cucumber-preprocessor/steps'
 import { ServeRest } from '../../services/serveRest.service'
 import Rest from '../../services/_rest.service'
 
-
-Given('a rota {string}', (rota) => {
-  ServeRest.armazenarRota(rota);
-});
 // GET Cenario: Listar Carrinhos
 Given('que utilize query params {string}', (params) => {
   let valor;
@@ -27,16 +23,6 @@ Given('que utilize query params {string}', (params) => {
   }
 
   ServeRest.adicionarQueryParams(params, valor);
-});
-
-When('realizar uma requisição do tipo {string}', (tipo) => {
-  cy.get('@Body').then(body => {
-    ServeRest.realizarRequisicao(tipo, body);
-  })
-});
-
-Then('deverá ser retornado o schema {string} e status {int}', (schema, status) => {
-  ServeRest.validarSchemaEStatus(schema, status);
 });
 
 //GET Cenario: Buscar carrinhos por ID
@@ -62,19 +48,6 @@ Given('que utilize complemento de rota {string}', (id) => {
 });
 
 //POST Cenario: Cadastrar Carrinho
-Given('que possua uma autenticação {string}', (auth) => {
-  let token;
-  switch (auth) {
-    case "válida":
-      ServeRest.realizarLogin('admin');
-
-    break;
-    case "inválida":
-      token = "AUTHJIUzI1NiIsInRINVALIDA"
-      break;
-  }
-
-});
 
 Given('que utilize body {string}', (body) => {
   let aux;
@@ -119,11 +92,6 @@ Given('que utilize body {string}', (body) => {
 
   }
   ServeRest.adicionarBody(aux)
-});
-
-Then('deverá ser retornada a mensagem {string}', (mensagem) => {
-  ServeRest.validarMensagem(mensagem);
-
 });
 
 //DELETE Cenario: Excluir carrinho concluir-compra/cancelar-compra
