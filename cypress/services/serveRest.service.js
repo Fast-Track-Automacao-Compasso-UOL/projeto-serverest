@@ -203,18 +203,10 @@ export class ServeRest extends Rest {
   
   }
 
-<<<<<<< HEAD
-  // Cria um usuário baseado em uma string enviada pelo parâmetro options
-  static criarUsuario(options) {
-    switch (options) {
-      case "sem carrinho":
-        // TODO vincular com método de login
-=======
   // Cria um usuário baseado no objeto do parâmetro options
   static criarUsuario(options = { carrinho: false }) {
     switch (options.carrinho) {
       case false:
->>>>>>> develop
         super.post("/usuarios",
           criarBodyUsuario()
         ).then(res => {
