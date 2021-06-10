@@ -26,20 +26,20 @@ Funcionalidade: Carrinhos
             | válido   | 200    |
             | inválido | 400    |
 
-# Esquema do Cenário: Cadastrar carrinho
-#     Dado que possua uma autenticação "<auth>"
-#     E que utilize body "<body>"
-#     Quando realizar uma requisição do tipo "POST"
-#     Então deverá ser retornado o schema "post_carrinhos" e status <status>
-#     E deverá ser retornada a mensagem "<mensagem>"
+ Esquema do Cenário: Cadastrar carrinho
+     Dado que possua uma autenticação "<auth>"
+     E que utilize body "<body>"
+     Quando realizar uma requisição do tipo "POST"
+     Então deverá ser retornado o schema "post_carrinhos" e status <status>
+     E deverá ser retornada a mensagem "<mensagem>"
 
-#     Exemplos:
-#         | auth     | body          | status | mensagem                                                                        |
-#         # | válida   | válido                 | 201    | Cadastro realizado com sucesso                                                  |
-#         # | válida   | carrinho já cadastrado | 400    | Não é permitido ter mais de 1 carrinho                                          |
-#         | válida   | vazio         | 400    | produtos é obrigatório                                                          |
-#         | válida   | campos vazios | 400    | produtos deve ser um array                                                      |
-#         | inválida | válido        | 401    | Token de acesso ausente, inválido, expirado ou usuário do token não existe mais |
+     Exemplos:
+         | auth     | body                   | status | mensagem                                                                        |
+         | válida   | válido                 | 201    | Cadastro realizado com sucesso                                                  |
+         | válida   | carrinho já cadastrado | 400    | Não é permitido ter mais de 1 carrinho                                          |
+         | válida   | vazio                  | 400    | produtos é obrigatório                                                          |
+         | válida   | campos vazios          | 400    | produtos deve ser um array                                                      |
+         | inválida | válido                 | 401    | Token de acesso ausente, inválido, expirado ou usuário do token não existe mais |
 
 # Esquema do Cenário: Excluir carrinho
 #     Dado que possua uma autenticação "<auth>"
