@@ -1,38 +1,43 @@
 /// <reference types="cypress" />
 import { Given, Then, When } from 'cypress-cucumber-preprocessor/steps'
 import { ServeRest } from '../../services/serveRest.service'
-import faker from "faker"
+import { criarBodyUsuario } from '../../factories/dynamic';
 
 Given('a rota {string}', (rota) => {
   ServeRest.armazenarRota(rota);
 });
 
 Given('que utilize query params {string}', (param) => {
-  // Refatorar para uso de fixtures
+  ServeRest.criarUsuario()
   let valor;
-  switch (param) {
-    case "_id":
-      valor = "0uxuPY0cbmQhpEz1"
-      break;
-    case "nome":
-      valor = "Fulano%20da%20Silva"
-      break;
-    case "email":
-      valor = "fulano@qa.com"
-      break;
-    case "password":
-      valor = "teste"
-      break;
-    case "administrador":
-      valor = "true"
-      break;
-    default:
-      param = ""
-      valor = ""
-      break;
-  }
-
-  ServeRest.adicionarQueryParams(param, valor);
+  cy.get('@Usuario').then(usuario => {
+    cy.get('@IdUsuario').then(id => {
+      switch (param) {
+        case "_id":
+          valor = id
+          break;
+        case "nome":
+          valor = usuario.nome
+          break;
+        case "email":
+          valor = usuario.email
+          break;
+        case "password":
+          valor = usuario.password
+          cy.log(usuario.password)
+          break;
+        case "administrador":
+          valor = usuario.administrador
+          cy.log(usuario.administrador)
+          break;
+        default:
+          param = ""
+          valor = ""
+          break;
+      }
+      ServeRest.adicionarQueryParams(param, valor);
+    })
+  })
 });
 
 When('realizar uma requisição do tipo {string}', (tipo) => {
@@ -42,30 +47,26 @@ When('realizar uma requisição do tipo {string}', (tipo) => {
 });
 
 Given('que utilize complemento de rota {string}', (id) => {
-  // Refatorar para uso de fixtures
   switch (id) {
-    case "válido":
-      id = "0uxuPY0cbmQhpEz1"
-      ServeRest.adicionarComplemento(id)
-      break;
-    case "inválido":
-      id = "0uxuPY0cbmQhpEz"
-      ServeRest.adicionarComplemento(id)
-      break;
     case "existente":
-      ServeRest.criarUsuario("sem carrinho")
-      cy.get('@Id').then(id => {
+      ServeRest.criarUsuario()
+      cy.get('@IdUsuario').then(id => {
         ServeRest.adicionarComplemento(id)
       })
       break;
     case "existente com carrinho":
-      ServeRest.criarUsuario("com carrinho")
-      cy.get('@Id').then(id => {
+      ServeRest.criarUsuario({ admin: 'true' }) // cy.wrap('Usuario')
+      ServeRest.realizarLogin() // cy.wrap('Token')
+      ServeRest.criarProduto() // cy.wrap('Usario') cy.wrap('Token')
+      ServeRest.criarUsuario()
+      ServeRest.realizarLogin()
+      ServeRest.criarCarrinho()
+      cy.get('@IdUsuario').then(id => {
         ServeRest.adicionarComplemento(id)
       })
       break;
     case "inexistente":
-      id = "0uxuPY0cbmQhpEz"
+      id = "00000000000"
       ServeRest.adicionarComplemento(id)
       break;
     default:
@@ -76,54 +77,34 @@ Given('que utilize complemento de rota {string}', (id) => {
 });
 
 Given('que utilize body {string}', (body) => {
-  // Refatorar para uso de fixtures
   switch (body) {
     case "válido":
-      body = {
-        "nome": "Fulano da Silva",
-        "email": faker.internet.email(),
-        "password": "teste",
-        "administrador": "true"
-      }
+      body = criarBodyUsuario()
+      ServeRest.adicionarBody(body)
       break;
     case "e-mail já utilizado":
-      body = {
-        "nome": "Fulano da Silva",
-        "email": "fulano@qa.com",
-        "password": "teste",
-        "administrador": "true"
-      }
+      ServeRest.criarUsuario()
+      cy.get('@Usuario').then(usuario => {
+        body = criarBodyUsuario({ email: usuario.email })
+        ServeRest.adicionarBody(body)
+      })
       break;
     case "e-mail inválido":
-      body = {
-        "nome": "Teste",
-        "email": "thatisnotanemail",
-        "password": "teste",
-        "administrador": "true"
-      }
+      body = criarBodyUsuario({ email: "thatisnotanemail" })
+      ServeRest.adicionarBody(body)
       break;
     case "campos vazios":
-      body = {
-        "nome": "",
-        "email": "",
-        "password": "",
-        "administrador": ""
-      }
+      body = criarBodyUsuario({ vazio: true })
+      ServeRest.adicionarBody(body)
       break;
     case "campos inválidos":
-      body = {
-        "nome": 123,
-        "email": 123,
-        "password": 123,
-        "administrador": 123
-      }
+      body = criarBodyUsuario({ nome: 123 })
+      ServeRest.adicionarBody(body)
       break;
     default:
       body = ""
       break;
   }
-
-  ServeRest.adicionarBody(body)
 });
 
 Then('deverá ser retornada a mensagem {string}', (mensagem) => {

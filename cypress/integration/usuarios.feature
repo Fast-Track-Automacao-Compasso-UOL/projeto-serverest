@@ -24,9 +24,9 @@ Funcionalidade: Usuários
     Então deverá ser retornado o schema "get_usuarios_id" e status <status>
 
     Exemplos:
-      | id       | status |
-      | válido   | 200    |
-      | inválido | 400    |
+      | id          | status |
+      | existente   | 200    |
+      | inexistente | 400    |
 
   Esquema do Cenário: Cadastrar usuário
     Dado que utilize body "<body>"
