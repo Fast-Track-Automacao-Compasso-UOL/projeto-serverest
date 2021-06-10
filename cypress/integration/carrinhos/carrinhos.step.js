@@ -123,25 +123,10 @@ Given('{string} carrinho ', (condicao) => {
   let cond;
   switch (condicao) {
     case "possua":
-      cond = {
-        "produtos": [
-          [
-            {
-              "idProduto": "BeeJh5lz3k6kSIzA",
-              "quantidade": 1,
-              "precoUnitario": 470
-            },
-            {                                              // refatorar
-              "idProduto": "K6leHdftCeOJj8BJ",
-              "quantidade": 2,
-              "precoUnitario": 5240
-            }
-          ]
-        ],
-      }
+      ServeRest.criarUsuario('com carrinho')
       break;
     case "não possua":
-      cond = ""
+      ServeRest.criarUsuario('sem carrinho')
       break;
   }
 
