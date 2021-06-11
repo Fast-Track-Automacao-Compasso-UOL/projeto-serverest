@@ -5,7 +5,10 @@
     "title": "The root schema",
     "description": "The root schema comprises the entire JSON document.",
     "default": {},
-    "examples": [     
+    "examples": [
+        {
+            "message": "Token de acesso ausente, inválido, expirado ou usuário do token não existe mais"
+        }
     ],
     "required": [
         "message"

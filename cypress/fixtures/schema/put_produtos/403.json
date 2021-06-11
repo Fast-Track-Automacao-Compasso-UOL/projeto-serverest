@@ -10,7 +10,8 @@
             "message": "Rota exclusiva para administradores"
         }
     ],
-    "required": [ 
+    "required": [
+        "message"
     ],
     "properties": {
         "message": {

@@ -5,9 +5,15 @@
     "title": "The root schema",
     "description": "The root schema comprises the entire JSON document.",
     "default": {},
-    "examples": [      
+    "examples": [
+        {
+            "message": "Cadastro realizado com sucesso",
+            "_id": "jogfODIlXsqxNFS2"
+        }
     ],
     "required": [
+        "message",
+        "_id"
     ],
     "properties": {
         "message": {
