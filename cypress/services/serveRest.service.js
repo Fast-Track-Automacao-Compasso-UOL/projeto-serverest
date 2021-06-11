@@ -47,7 +47,7 @@ export class ServeRest extends Rest {
           })
           break;
           case "POST":
-            cy.get('@Token').then(token => {
+            cy.get('@Autenticacao').then(token => {
                 super.post(rota, body, { authorization: token }).then(res => {
                     cy.wrap(res).as('Response')
                     cy.wrap(res.body).as('Body')
@@ -56,18 +56,22 @@ export class ServeRest extends Rest {
             })
           break;
         case "DELETE":
-          super.delete(rota, body).then(res => {
+          cy.get('@Autenticacao').then(token => {
+            super.delete(rota, body, { authorization: token }).then(res => {
             cy.wrap(res).as('Response')
             cy.wrap(res.body).as('Body')
             cy.wrap(res.status).as('Status')
           })
+        })        
           break;
         case "PUT":
-          super.put(rota, body).then(res => {
+          cy.get('@Autenticacao').then(token => {
+            super.put(rota, body, { authorization: token }).then(res => {
             cy.wrap(res).as('Response')
             cy.wrap(res.body).as('Body')
             cy.wrap(res.status).as('Status')
           })
+        })
           break;
         default:
           break;
@@ -214,7 +218,6 @@ export class ServeRest extends Rest {
 
     cy.get('@LoginBody').then(body => {
       super.post(URL_LOGIN, body).then(res => {
-        cy.wrap(res.body).as('Body');
         cy.wrap(res.body.authorization).as('Token');
       });
     })

@@ -73,8 +73,8 @@
       | válida admin | válido            | existente   | 200    | Registro alterado com sucesso                                                   |
       | válida admin | válido            | inexistente | 201    | Cadastro realizado com sucesso                                                  |
       | válida admin | nome já utilizado | existente   | 400    | Já existe produto com esse nome                                                 |
-      | válida admin | campo ausente     | existente   | 400    | nome do produto é obrigatório                                                   |
+      | válida admin | campo ausente     | existente   | 400    | nome não pode ficar em branco                                                   |
       | válida admin | campos vazios     | existente   | 400    | nome não pode ficar em branco                                                   |
-      | válida admin | campos inválidos  | existente   | 400    | deve ser uma string                                                             |
+      | válida admin | campos inválidos  | existente   | 400    | nome deve ser uma string                                                             |
       | inválida     | válido            | existente   | 401    | Token de acesso ausente, inválido, expirado ou usuário do token não existe mais |
       | válida comum | válido            | existente   | 403    | Rota exclusiva para administradores                                             |

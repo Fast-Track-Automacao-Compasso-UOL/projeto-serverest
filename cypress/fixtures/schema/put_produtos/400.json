@@ -5,13 +5,9 @@
     "title": "The root schema",
     "description": "The root schema comprises the entire JSON document.",
     "default": {},
-    "examples": [
-        {
-            "message": "Já existe produto com esse nome"
-        }
+    "examples": [    
     ],
-    "required": [
-        "message"
+    "required": [       
     ],
     "properties": {
         "message": {

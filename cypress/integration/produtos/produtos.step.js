@@ -6,7 +6,9 @@ import { criarBodyProduto } from "../../factories/dynamic";
 // Listar Produtos
 
 Given("que utilize query params {string}", (param) => {
-    ServeRest.criarProduto()
+  //  ServeRest.criarUsuario()
+  //  ServeRest.realizarLogin()    
+   ServeRest.criarProduto()
     let valor;
     cy.get('@Produto').then(produto => {
         cy.get('@IdProduto').then(id => {
@@ -36,27 +38,23 @@ Given("que utilize query params {string}", (param) => {
         })
     })
     });
-  
-
 
 // Buscar produtos por ID
 
 Given('que utilize complemento de rota {string}', (id) => {
     switch (id) {
       case "existente":
-        id = "BeeJh5lz3k6kSIzA"
-        ServeRest.adicionarComplemento(id)
-        // ServeRest.criarProduto()
-        // cy.get('@IdProduto').then(id => {
-        //   ServeRest.adicionarComplemento(id)
-        // })
-        break;
+        ServeRest.criarUsuario({ admin: 'true' }) // cy.wrap('Usuario')
+        ServeRest.realizarLogin() // cy.wrap('Token')
+        ServeRest.criarProduto() // cy.wrap('Usario') cy.wrap('Token')
+        cy.get('@IdProduto').then(id => {
+          ServeRest.adicionarComplemento(id)
+        })
+        break;        
       case "existente com carrinho":
         ServeRest.criarUsuario({ admin: 'true' }) // cy.wrap('Usuario')
         ServeRest.realizarLogin() // cy.wrap('Token')
         ServeRest.criarProduto() // cy.wrap('Usario') cy.wrap('Token')
-        ServeRest.criarUsuario()
-        ServeRest.realizarLogin()
         ServeRest.criarCarrinho()
         cy.get('@IdProduto').then(id => {
           ServeRest.adicionarComplemento(id)
@@ -91,70 +89,7 @@ Given('que utilize complemento de rota {string}', (id) => {
 
 // Cadastrar Produto
 
-Given("que utilize body {string}", (body) => {
-    // switch (body) {
-    //     case "válido":
-    //       body = {
-    //         nome: "oUTRO PRODUTO",
-    //         preco: 470,
-    //         descricao: "Mouse",
-    //         quantidade: 381,
-    //       };
-    //       break;
-    //     case "nome já utilizado":
-    //       body = {
-    //         nome: "Logitech MX Vertical",
-    //         preco: 470,
-    //         descricao: "Mouse",
-    //         quantidade: 381,
-    //       };
-    //       break;
-    //     case "campo ausente":
-    //       body = {
-    //         nome: "",
-    //         preco: 470,
-    //         descricao: "Mouse",
-    //         quantidade: 381,
-    //       };
-    //       break;
-    //     case "campos vazios":
-    //       body = {
-    //         nome: "",
-    //         preco: "",
-    //         descricao: "",
-    //         quantidade: "",
-    //       };
-    //       break;
-    //     case "campos inválidos":
-    //       body = {
-    //         nome: 123,
-    //         preco: 123,
-    //         descricao: 123,
-    //         quantidade: 123,
-    //       };
-    
-    //       break;
-    //     case "inválido":
-    //       body = {
-    //         nome: "Logitech MX Vertical",
-    //         preco: 470,
-    //         descricao: "Mouse",
-    //         quantidade: 381,
-    //       };
-    //       break;
-    //     case "válida comum":
-    //       body = {
-    //         nome: "Logitech MX Vertical",
-    //         preco: 470,
-    //         descricao: "Mouse",
-    //         quantidade: 381,
-    //       };
-    //       break;
-    //     default:
-    //       body = "";
-    //       break;
-    //   }
-    //   ServeRest.adicionarBody(body);
+Given("que utilize body {string}", (body) => {    
   switch (body) {
     case "válido":
       body = criarBodyProduto();

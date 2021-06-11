@@ -23,14 +23,20 @@ Given('que possua uma autenticação {string}', (auth) => {
     case "válida comum":
         ServeRest.criarUsuario()
         ServeRest.realizarLogin()
+        cy.get('@Token').then(token =>{
+          cy.wrap(token).as('Autenticacao')
+        })
       break;
     case "válida admin":
         ServeRest.criarUsuario({ admin: 'true' })
         ServeRest.realizarLogin()
+        cy.get('@Token').then(token =>{
+          cy.wrap(token).as('Autenticacao')
+        })
       break;
     
     case "inválida":
-        cy.wrap('AUTENTICACAOINVALIDA').as('Token')
+        cy.wrap('AUTENTICACAOINVALIDA').as('Autenticacao')
       break;
   
     default:
