@@ -1,6 +1,6 @@
 /// <reference types="cypress" />
 import Rest from "./_rest.service"
-import { criarBodyUsuario, criarBodyProduto } from '../factories/dynamic';
+import { criarBodyUsuario, criarBodyProduto, criarBodyLogin } from '../factories/dynamic';
 
 const URL_BASE = Cypress.config("baseUrl");
 const URL_USUARIOS = "/usuarios";
@@ -75,13 +75,6 @@ export class ServeRest extends Rest {
     });
   }
 
-  // Valida schema e status com body da requisição recebido pelo cy.wrap() e parâmetros
-  static validarSchemaEStatus(schema, status) {
-    cy.get("@Body").then((body) => {
-      cy.validateSchema(body, `${schema}/${status}`);
-    });
-  }
-
   static adicionarBody(body) {
     cy.wrap(body).as('Body')
   }
@@ -132,92 +125,93 @@ export class ServeRest extends Rest {
 
   static realizarLogin(tipo = 'padrao') {
     let body;
-
-    switch (tipo) {
-      case 'válido':
-        body = {
-          "email": "fulano@qa.com",
-          "password": "teste"
-        };
-        cy.wrap(body).as('LoginBody');
-        break;
-      case 'e-mail inválido':
-        body = {
-          "email": "fulano",
-          "password": "teste"
-        };
-        cy.wrap(body).as('LoginBody');
-        break;
-      case 'senha inválida':
-        body = {
-          "email": "fulano@qa.com",
-          "password": "senha errada"
-        };
-        cy.wrap(body).as('LoginBody');
-
-        break;
-      case 'vazio':
-        body = {};
-        cy.wrap(body).as('LoginBody');
-        break;
-      case 'campos vazios':
-        body = {
-          "email": "",
-          "password": ""
-        };
-        cy.wrap(body).as('LoginBody');
-
-        break;
-      case 'campos inválidos':
-        body = {
-          "email": 3,
-          "password": 5
-        };
-        cy.wrap(body).as('LoginBody');
-
-        break;
-      case 'admin':
-        cy.log('INICIO BUSCAR DADOS USUÁRIO')
-
-        this.buscarDadosUsuario(tipo);
-        cy.get('@Email').then(email => {
-          cy.get('@Password').then(password => {
+    cy.fixture('login/req_body.json').then(loginBody => {
+      
+      switch (tipo) {
+        case 'válido':
+          body = loginBody.tipos.valido;
+          cy.wrap(body).as('LoginBody');
+          break;
+        case 'e-mail inválido':
+          body = {
+            "email": "fulano",
+            "password": "teste"
+          };
+          cy.wrap(body).as('LoginBody');
+          break;
+        case 'senha inválida':
+          body = {
+            "email": "fulano@qa.com",
+            "password": "senha errada"
+          };
+          cy.wrap(body).as('LoginBody');
+  
+          break;
+        case 'vazio':
+          body = criarBodyLogin();
+          cy.wrap(body).as('LoginBody');
+          break;
+        case 'campos vazios':
+          body = {
+            "email": "",
+            "password": ""
+          };
+          cy.wrap(body).as('LoginBody');
+  
+          break;
+        case 'campos inválidos':
+          body = {
+            "email": 3,
+            "password": 5
+          };
+          cy.wrap(body).as('LoginBody');
+  
+          break;
+        case 'admin':
+          cy.log('INICIO BUSCAR DADOS USUÁRIO')
+  
+          this.buscarDadosUsuario(tipo);
+          cy.get('@Email').then(email => {
+            cy.get('@Password').then(password => {
+              body = {
+                "email": email,
+                "password": password
+              };
+              cy.wrap(body).as('LoginBody');
+            })
+          })
+          break;
+        case 'comum':
+          this.buscarDadosUsuario(tipo);
+          body = {
+            "email": cy.get('@Email'),
+            "password": cy.get('@Password')
+          };
+          cy.wrap(body).as('LoginBody');
+          break;
+        case 'padrao':
+          cy.get('@Usuario').then(usuario => {
             body = {
-              "email": email,
-              "password": password
+              "email": usuario.email,
+              "password": usuario.password
             };
             cy.wrap(body).as('LoginBody');
           })
-        })
-        break;
-      case 'comum':
-        this.buscarDadosUsuario(tipo);
-        body = {
-          "email": cy.get('@Email'),
-          "password": cy.get('@Password')
-        };
-        cy.wrap(body).as('LoginBody');
-        break;
-      case 'padrao':
-        cy.get('@Usuario').then(usuario => {
-          body = {
-            "email": usuario.email,
-            "password": usuario.password
-          };
-          cy.wrap(body).as('LoginBody');
-        })
-        break;
-      default:
-        cy.log(`Tipo não reconhecido: ${tipo}`);
-        break;
-    }
+          break;
+        default:
+          cy.log(`Tipo não reconhecido: ${tipo}`);
+          break;
+      }
+  
+      cy.get('@LoginBody').then(body => {
+        super.post(URL_LOGIN, body).then(res => {
+          cy.wrap(res.body).as('Body');
+          cy.wrap(res.body.authorization).as('Token');
+        });
+      })
 
-    cy.get('@LoginBody').then(body => {
-      super.post(URL_LOGIN, body).then(res => {
-        cy.wrap(res.body).as('Body');
-        cy.wrap(res.body.authorization).as('Token');
-      });
     })
+    
 
   }
 
