@@ -2,7 +2,6 @@
 import Rest from "./_rest.service"
 import { criarBodyUsuario, criarBodyProduto } from '../factories/dynamic';
 
-const URL_BASE = Cypress.config("baseUrl");
 const URL_USUARIOS = "/usuarios";
 const URL_LOGIN = "/login";
 const URL_PRODUTOS = "/produtos";
