@@ -39,6 +39,7 @@ Given('que utilize complemento de rota {string}', (id) => {
       id = "ID11qntef4iTO11INVALIDO"
       ServeRest.adicionarComplemento(id)
       break;
+      // Cenario: excluir carrinho
     case "concluir-compra":
       ServeRest.adicionarComplemento(id)
       break;
@@ -113,6 +114,9 @@ Given('{string} carrinho', (condicao) => {
     case "não possua":
       ServeRest.criarUsuario({ admin: 'true' })
       ServeRest.realizarLogin()
+      break;
+    default:
+      cy.log(`Tipo não identificado: ${condicao}`)
       break;
   }
 

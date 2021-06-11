@@ -31,16 +31,15 @@ Funcionalidade: Carrinhos
               E que utilize body "<body>"
              Quando realizar uma requisição do tipo "POST"
              Então deverá ser retornado o schema "post_carrinhos" e status <status>
-              E deverá ser retornada a mensagem "<mensagem>"
-
+              E deverá ser retornada a mensagem
         Exemplos:
-                  | auth     | body                   | status | mensagem                                                                        |
-                  | válida   | válido                 | 201    | Cadastro realizado com sucesso                                                  |
-                  | válida   | carrinho já cadastrado | 400    | Não é permitido ter mais de 1 carrinho                                          |
-                  | válida   | vazio                  | 400    | produtos é obrigatório                                                          |
-                  | válida   | campos vazios          | 400    | produtos deve ser um array                                                      |
-                  | inválida | válido                 | 401    | Token de acesso ausente, inválido, expirado ou usuário do token não existe mais |
-
+                  | auth         | body                   | status | mensagem                                                                        |
+                  | válida comum | válido                 | 201    | Cadastro realizado com sucesso                                                  |
+                  | válida comum | carrinho já cadastrado | 400    | Não é permitido ter mais de 1 carrinho                                          |
+                  | válida comum | vazio                  | 400    | produtos é obrigatório                                                          |
+                  | válida comum | campos vazios          | 400    | produtos deve ser um array                                                      |
+                  | inválida     | válido                 | 401    | Token de acesso ausente, inválido, expirado ou usuário do token não existe mais |
+ 
         Esquema do Cenário: Excluir carrinho
             Dado que possua uma autenticação "<auth>"
               E "<condicao>" carrinho
@@ -50,10 +49,10 @@ Funcionalidade: Carrinhos
               E deverá ser retornada a mensagem "<mensagem>"
 
         Exemplos:
-                  | auth     | condicao   | status | mensagem                                                                        |
-                  | válida   | possua     | 200    | Registro excluído com sucesso                                                   |
-                  | válida   | não possua | 200    | Não foi encontrado carrinho para esse usuário                                   |
-                  | inválida | não possua | 401    | Token de acesso ausente, inválido, expirado ou usuário do token não existe mais |
+                  | auth         | condicao   | status | mensagem                                                                        |
+                  | válida comum | possua     | 200    | Registro excluído com sucesso                                                   |
+                  | válida comum | não possua | 200    | Não foi encontrado carrinho para esse usuário                                   |
+                  | inválida     | não possua | 401    | Token de acesso ausente, inválido, expirado ou usuário do token não existe mais |
 
         Esquema do Cenário: Excluir carrinho e retornar produtos para estoque
             Dado que possua uma autenticação "<auth>"
@@ -64,7 +63,7 @@ Funcionalidade: Carrinhos
               E deverá ser retornada a mensagem "<mensagem>"
 
         Exemplos:
-                  | auth     | condicao   | status | mensagem                                                                        |
-                  | válida   | possua     | 200    | Registro excluído com sucesso. Estoque dos produtos reabastecido                |
-                  | válida   | não possua | 200    | Não foi encontrado carrinho para esse usuário                                   |
-                  | inválida | não possua | 401    | Token de acesso ausente, inválido, expirado ou usuário do token não existe mais |
+                  | auth         | condicao   | status | mensagem                                                                        |
+                  | válida comum | possua     | 200    | Registro excluído com sucesso. Estoque dos produtos reabastecido                |
+                  | válida comum | não possua | 200    | Não foi encontrado carrinho para esse usuário                                   |
+                  | inválida     | não possua | 401    | Token de acesso ausente, inválido, expirado ou usuário do token não existe mais |
