@@ -8,9 +8,16 @@ Given('a rota {string}', (rota) => {
 });
 
 When('realizar uma requisição do tipo {string}', (tipo) => {
-  cy.get('@Body').then(body => {
-    ServeRest.realizarRequisicao(tipo, body);
-  })
+  if (tipo == 'DELETE') {
+    
+      ServeRest.realizarRequisicao(tipo);
+    
+  } else {
+    cy.get('@Body').then(body => {
+      ServeRest.realizarRequisicao(tipo, body);
+    })
+  }
+
 });
 
 Then('deverá ser retornado o schema {string} e status {int}', (schema, status) => {

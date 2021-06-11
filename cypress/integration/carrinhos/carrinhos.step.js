@@ -39,6 +39,12 @@ Given('que utilize complemento de rota {string}', (id) => {
       id = "ID11qntef4iTO11INVALIDO"
       ServeRest.adicionarComplemento(id)
       break;
+    case "concluir-compra":
+      ServeRest.adicionarComplemento(id)
+      break;
+    case "cancelar-compra":
+      ServeRest.adicionarComplemento(id)
+      break;
   }
   // When('realizar uma requisição do tipo {string}', (tipo) => {
   //  ServeRest.realizarRequisicao(tipo);
@@ -95,14 +101,18 @@ Given('que utilize body {string}', (body) => {
 });
 
 //DELETE Cenario: Excluir carrinho concluir-compra/cancelar-compra
-Given('{string} carrinho ', (condicao) => {
-  let cond;
+Given('{string} carrinho', (condicao) => {
+  
   switch (condicao) {
     case "possua":
-      cond = ""                                                              //refatorar
+      ServeRest.criarUsuario({ admin: 'true' })
+      ServeRest.realizarLogin()
+      ServeRest.criarProduto()
+      ServeRest.criarCarrinho()                                                           //refatorar
       break;
     case "não possua":
-      cond = ""
+      ServeRest.criarUsuario({ admin: 'true' })
+      ServeRest.realizarLogin()
       break;
   }
 

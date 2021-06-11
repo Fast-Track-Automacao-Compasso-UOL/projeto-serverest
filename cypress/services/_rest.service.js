@@ -28,11 +28,12 @@ export default class Rest {
     });
   }
 
-  static delete(endpoint, body = null) {
+  static delete(endpoint, body = null, headers = null) {
     return cy.request({
       method: 'DELETE',
       url: endpoint,
       body: body,
+      headers: headers,
       failOnStatusCode: false
     });
   }
