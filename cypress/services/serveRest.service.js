@@ -125,47 +125,31 @@ export class ServeRest extends Rest {
 
   static realizarLogin(tipo = 'padrao') {
     let body;
-    cy.fixture('login/req_body.json').then(loginBody => {
-      
+    cy.fixture('login/req_body').then(loginBody => {
       switch (tipo) {
         case 'válido':
           body = loginBody.tipos.valido;
           cy.wrap(body).as('LoginBody');
           break;
         case 'e-mail inválido':
-          body = {
-            "email": "fulano",
-            "password": "teste"
-          };
+          body = loginBody.tipos.emailInvalido;
           cy.wrap(body).as('LoginBody');
           break;
         case 'senha inválida':
-          body = {
-            "email": "fulano@qa.com",
-            "password": "senha errada"
-          };
+          body = loginBody.tipos.senhaInvalida;
           cy.wrap(body).as('LoginBody');
-  
           break;
         case 'vazio':
-          body = criarBodyLogin();
+          body = loginBody.tipos.vazio;
           cy.wrap(body).as('LoginBody');
           break;
         case 'campos vazios':
-          body = {
-            "email": "",
-            "password": ""
-          };
+          body = loginBody.tipos.emBranco;
           cy.wrap(body).as('LoginBody');
-  
           break;
         case 'campos inválidos':
-          body = {
-            "email": 3,
-            "password": 5
-          };
+          body = loginBody.tipos.tiposInvalidos;
           cy.wrap(body).as('LoginBody');
-  
           break;
         case 'admin':
           cy.log('INICIO BUSCAR DADOS USUÁRIO')

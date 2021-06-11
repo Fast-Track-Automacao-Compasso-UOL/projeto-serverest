@@ -4,10 +4,22 @@
             "email": "fulano@qa.com",
             "password": "teste"
         },
-        "email-invalido": {
+        "emailInvalido": {
             "email": "fulano",
             "password": "teste"
+        },
+        "senhaInvalida": {
+            "email": "fulano@qa.com",
+            "password": "senha errada"
+        },
+        "vazio": {},
+        "emBranco": {
+            "email": "",
+            "password": ""
+        },
+        "tiposInvalidos": {
+            "email": 3,
+            "password": 123
         }
     }
-    
 }
