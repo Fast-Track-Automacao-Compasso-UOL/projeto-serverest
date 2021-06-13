@@ -26,8 +26,19 @@ Then('deverá ser retornado o schema {string} e status {int}', (schema, status) 
 
 Given('que possua uma autenticação {string}', (auth) => {
   switch (auth) {
-    case "válida":
-      ServeRest.realizarLogin('admin');
+    case "válida comum":
+      ServeRest.criarUsuario()
+      ServeRest.realizarLogin()
+      cy.get('@Token').then(token => {
+        cy.wrap(token).as('Autenticacao')
+      })
+      break;
+    case "válida admin":
+      ServeRest.criarUsuario({ admin: 'true' })
+      ServeRest.realizarLogin()
+      cy.get('@Token').then(token =>{
+        cy.wrap(token).as('Autenticacao')
+      })
       break;
     case "inválida":
       cy.wrap("AUTHJIUzI1NiIsInRINVALIDA").as('Token')
