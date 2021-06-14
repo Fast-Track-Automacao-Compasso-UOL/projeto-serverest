@@ -2,6 +2,7 @@
 import { Given, Then, When } from 'cypress-cucumber-preprocessor/steps'
 import { ServeRest } from '../../services/serveRest.service'
 import Rest from '../../services/_rest.service'
+import { Produtos } from "../../services/produtos.service";
 
 // GET Cenario: Listar Carrinhos
 Given('que utilize query params {string}', (params) => {
@@ -107,7 +108,7 @@ Given('{string} carrinho', (condicao) => {
 if (condicao == 'possua') {
   ServeRest.criarUsuario({ admin: 'true' })
   ServeRest.realizarLogin()
-  ServeRest.criarProduto()
+  Produtos.criarProduto()
   cy.get('@Autenticacao').then(auth => {
     cy.wrap(auth).as('Token')
     ServeRest.criarCarrinho()

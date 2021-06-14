@@ -2,6 +2,7 @@
 import { Given, Then, When } from 'cypress-cucumber-preprocessor/steps'
 import { ServeRest } from '../../services/serveRest.service'
 import { criarBodyUsuario } from '../../factories/dynamic';
+import { Produtos } from "../../services/produtos.service";
 
 Given('que utilize query params {string}', (param) => {
   ServeRest.criarUsuario()
@@ -47,7 +48,7 @@ Given('que utilize complemento de rota {string}', (id) => {
         cy.wrap(usuarioAdmin).as('Usuario')
       })
       ServeRest.realizarLogin()
-      ServeRest.criarProduto()
+      Produtos.criarProduto()
       ServeRest.criarUsuario()
       ServeRest.realizarLogin()
       ServeRest.criarCarrinho()

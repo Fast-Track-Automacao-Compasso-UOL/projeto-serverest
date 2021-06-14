@@ -2,13 +2,14 @@
 import { Given, Then, When } from "cypress-cucumber-preprocessor/steps";
 import { ServeRest } from "../../services/serveRest.service";
 import { criarBodyProduto } from "../../factories/dynamic";
+import { Produtos } from "../../services/produtos.service";
 
 // Listar Produtos
 
 Given("que utilize query params {string}", (param) => {
   //  ServeRest.criarUsuario()
   //  ServeRest.realizarLogin()    
-   ServeRest.criarProduto()
+   Produtos.criarProduto()
     let valor;
     cy.get('@Produto').then(produto => {
         cy.get('@IdProduto').then(id => {
@@ -46,7 +47,7 @@ Given('que utilize complemento de rota {string}', (id) => {
       case "existente":
         ServeRest.criarUsuario({ admin: 'true' })
         ServeRest.realizarLogin()
-        ServeRest.criarProduto() 
+        Produtos.criarProduto() 
         cy.get('@IdProduto').then(id => {
           ServeRest.adicionarComplemento(id)
         })
@@ -54,7 +55,7 @@ Given('que utilize complemento de rota {string}', (id) => {
       case "existente com carrinho":
         ServeRest.criarUsuario({ admin: 'true' }) 
         ServeRest.realizarLogin() 
-        ServeRest.criarProduto() 
+        Produtos.criarProduto() 
         ServeRest.criarCarrinho()
         cy.get('@IdProduto').then(id => {
           ServeRest.adicionarComplemento(id)
@@ -96,7 +97,7 @@ Given("que utilize body {string}", (body) => {
       ServeRest.adicionarBody(body);
       break;
     case "nome já utilizado":
-      ServeRest.criarProduto();
+      Produtos.criarProduto();
       cy.get('@Produto').then(produto => { 
           body = criarBodyProduto ({ nome: produto.nome })
           ServeRest.adicionarBody(body);
