@@ -15,8 +15,9 @@ When('realizar uma requisição do tipo {string}', (tipo) => {
 });
 
 Then('deverá ser retornado o schema {string} e status {int}', (schema, status) => {
-  ServeRest.validarSchemaEStatus(schema, status);
-});
+  cy.get("@Body").then((body) => {
+    cy.validateSchema(body, `${schema}/${status}`);
+  });});
 
 Given('que possua uma autenticação {string}', (auth) => { 
   switch (auth) {
