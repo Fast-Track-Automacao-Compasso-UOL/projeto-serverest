@@ -1,5 +1,6 @@
 /// <reference types="cypress" />
 import { Given, Then, When } from 'cypress-cucumber-preprocessor/steps'
+import { Login } from '../../services/login.service';
 import { ServeRest } from '../../services/serveRest.service'
 import Rest from '../../services/_rest.service'
 
@@ -106,7 +107,7 @@ Given('{string} carrinho', (condicao) => {
   
 if (condicao == 'possua') {
   ServeRest.criarUsuario({ admin: 'true' })
-  ServeRest.realizarLogin()
+  Login.realizarLogin()
   ServeRest.criarProduto()
   cy.get('@Autenticacao').then(auth => {
     cy.wrap(auth).as('Token')

@@ -2,6 +2,7 @@
 import { Given, Then, When } from "cypress-cucumber-preprocessor/steps";
 import { ServeRest } from "../../services/serveRest.service";
 import { criarBodyProduto } from "../../factories/dynamic";
+import { Login } from "../../services/login.service";
 
 // Listar Produtos
 
@@ -45,7 +46,7 @@ Given('que utilize complemento de rota {string}', (id) => {
     switch (id) {
       case "existente":
         ServeRest.criarUsuario({ admin: 'true' })
-        ServeRest.realizarLogin()
+        Login.realizarLogin()
         ServeRest.criarProduto() 
         cy.get('@IdProduto').then(id => {
           ServeRest.adicionarComplemento(id)
@@ -53,7 +54,7 @@ Given('que utilize complemento de rota {string}', (id) => {
         break;        
       case "existente com carrinho":
         ServeRest.criarUsuario({ admin: 'true' }) 
-        ServeRest.realizarLogin() 
+        Login.realizarLogin() 
         ServeRest.criarProduto() 
         ServeRest.criarCarrinho()
         cy.get('@IdProduto').then(id => {
