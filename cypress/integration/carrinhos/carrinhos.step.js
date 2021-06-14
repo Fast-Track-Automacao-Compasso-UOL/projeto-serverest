@@ -104,23 +104,16 @@ Given('que utilize body {string}', (body) => {
 //DELETE Cenario: Excluir carrinho concluir-compra/cancelar-compra
 Given('{string} carrinho', (condicao) => {
   
-  switch (condicao) {
-    case "possua":
-      ServeRest.criarUsuario({ admin: 'true' })
-      ServeRest.realizarLogin()
-      ServeRest.criarProduto()
-      ServeRest.criarCarrinho()                                                           
-      break;
-    case "não possua":
-      ServeRest.criarUsuario({ admin: 'true' })
-      ServeRest.realizarLogin()
-      break;
-    default:
-      cy.log(`Tipo não identificado: ${condicao}`)
-      break;
-  }
-
-
+if (condicao == 'possua') {
+  ServeRest.criarUsuario({ admin: 'true' })
+  ServeRest.realizarLogin()
+  ServeRest.criarProduto()
+  cy.get('@Autenticacao').then(auth => {
+    cy.wrap(auth).as('Token')
+    ServeRest.criarCarrinho()
+  })
+  
+}
 });
 
 Given('que utilize complemento de rota {string}', (complemento) => {
