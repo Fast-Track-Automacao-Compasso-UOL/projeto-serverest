@@ -1,4 +1,4 @@
-name: After server responds
+name: Rodando servidor e testes
 on: [push]
 jobs:
   cypress-run:
@@ -10,5 +10,4 @@ jobs:
         uses: cypress-io/github-action@v2
         with:
           start: npx serverest
-          # quote the url to be safe against YML parsing surprises
           wait-on: 'http://localhost:3000'
