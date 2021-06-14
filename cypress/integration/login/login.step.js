@@ -13,5 +13,8 @@ Given('que utilize body {string}', (tipoBody) => {
 When('realizar login', () => {
   cy.get('@TipoBody').then(tipo => {
     ServeRest.realizarLogin(tipo);
+    cy.get('@LoginBody').then(body => {
+      cy.wrap(body).as('Body')
+    })
   })
 })

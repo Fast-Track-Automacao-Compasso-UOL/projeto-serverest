@@ -14,6 +14,7 @@ export class ServeRest extends Rest {
     cy.wrap(rota).as('Rota');
     cy.wrap('').as('Body')
     cy.wrap('').as('Token')
+    cy.wrap('').as('Autenticacao')
   }
 
   // Adiciona query params à rota recebida pelo cy.wrap()
@@ -46,32 +47,32 @@ export class ServeRest extends Rest {
             cy.wrap(res.status).as('Status')
           })
           break;
-          case "POST":
-            cy.get('@Autenticacao').then(token => {
-                super.post(rota, body, { authorization: token }).then(res => {
-                    cy.wrap(res).as('Response')
-                    cy.wrap(res.body).as('Body')
-                    cy.wrap(res.status).as('Status')
-                })
+        case "POST":
+          cy.get('@Autenticacao').then(token => {
+            super.post(rota, body, { authorization: token }).then(res => {
+              cy.wrap(res).as('Response')
+              cy.wrap(res.body).as('Body')
+              cy.wrap(res.status).as('Status')
             })
+          })
           break;
         case "DELETE":
           cy.get('@Autenticacao').then(token => {
             super.delete(rota, body, { authorization: token }).then(res => {
-            cy.wrap(res).as('Response')
-            cy.wrap(res.body).as('Body')
-            cy.wrap(res.status).as('Status')
+              cy.wrap(res).as('Response')
+              cy.wrap(res.body).as('Body')
+              cy.wrap(res.status).as('Status')
+            })
           })
-        })        
           break;
         case "PUT":
           cy.get('@Autenticacao').then(token => {
             super.put(rota, body, { authorization: token }).then(res => {
-            cy.wrap(res).as('Response')
-            cy.wrap(res.body).as('Body')
-            cy.wrap(res.status).as('Status')
+              cy.wrap(res).as('Response')
+              cy.wrap(res.body).as('Body')
+              cy.wrap(res.status).as('Status')
+            })
           })
-        })
           break;
         default:
           break;
@@ -218,6 +219,7 @@ export class ServeRest extends Rest {
 
     cy.get('@LoginBody').then(body => {
       super.post(URL_LOGIN, body).then(res => {
+        cy.wrap(res.body).as('LoginBody');
         cy.wrap(res.body.authorization).as('Token');
       });
     })
