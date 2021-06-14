@@ -50,10 +50,10 @@ Funcionalidade: Carrinhos
               E deverá ser retornada a mensagem "<mensagem>"
 
         Exemplos:
-                  | auth     | condicao   | status | mensagem                                                                        |
-                  | válida   | possua     | 200    | Registro excluído com sucesso                                                   |
-                  | válida   | não possua | 200    | Não foi encontrado carrinho para esse usuário                                   |
-                  | inválida |            | 401    | Token de acesso ausente, inválido, expirado ou usuário do token não existe mais |
+                  | auth         | condicao   | status | mensagem                                                                        |
+                  | válida comum | possua     | 200    | Registro excluído com sucesso                                                   |
+                  | válida comum | não possua | 200    | Não foi encontrado carrinho para esse usuário                                   |
+                  | inválida     |            | 401    | Token de acesso ausente, inválido, expirado ou usuário do token não existe mais |
 
         #Cenario exclusivo para o token inválido
         ##Esquema do Cenário: Excluir carrinho (concluir compra) com autenticação inválida
@@ -78,10 +78,10 @@ Funcionalidade: Carrinhos
               E deverá ser retornada a mensagem "<mensagem>"
 
         Exemplos:
-                  | auth     | condicao   | status | mensagem                                                                        |
-                  | válida   | possua     | 200    | Registro excluído com sucesso. Estoque dos produtos reabastecido                |
-                  | válida   | não possua | 200    | Não foi encontrado carrinho para esse usuário                                   |
-                  | inválida |            | 401    | Token de acesso ausente, inválido, expirado ou usuário do token não existe mais |
+                  | auth         | condicao   | status | mensagem                                                                        |
+                  | válida comum | possua     | 200    | Registro excluído com sucesso. Estoque dos produtos reabastecido                |
+                  | válida comum | não possua | 200    | Não foi encontrado carrinho para esse usuário                                   |
+                  | inválida     |            | 401    | Token de acesso ausente, inválido, expirado ou usuário do token não existe mais |
 
          #Cenario exclusivo para o token inválido
         #Esquema do Cenário: Excluir carrinho (cancelar compra) com autenticação inválida

@@ -109,7 +109,7 @@ Given('{string} carrinho', (condicao) => {
       ServeRest.criarUsuario({ admin: 'true' })
       ServeRest.realizarLogin()
       ServeRest.criarProduto()
-      ServeRest.criarCarrinho()                                                           //refatorar
+      ServeRest.criarCarrinho()                                                           
       break;
     case "não possua":
       ServeRest.criarUsuario({ admin: 'true' })
