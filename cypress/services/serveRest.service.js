@@ -1,8 +1,7 @@
 /// <reference types="cypress" />
 import Rest from "./_rest.service"
-import { criarBodyUsuario, criarBodyProduto, criarBodyLogin } from '../factories/dynamic';
+import { criarBodyProduto } from '../factories/dynamic';
 
-const URL_USUARIOS = "/usuarios";
 const URL_LOGIN = "/login";
 const URL_PRODUTOS = "/produtos";
 const URL_CARRINHOS = "/carrinhos";
@@ -79,10 +78,6 @@ export class ServeRest extends Rest {
     })
   }
 
-  static adicionarBody(body) {
-    cy.wrap(body).as('Body')
-  }
-
   // Valida mensagem contida no body da requisição
   static validarMensagem(mensagem) {
     cy.get('@Body').then(body => {
@@ -90,43 +85,7 @@ export class ServeRest extends Rest {
     })
   }
 
-  // static validarAuthorization (auth){
-  //   switch (Token) {
-  //     case "válida":
-  //       token = "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImZ1bGFub0BxYS5jb20iLCJwYXNzd29yZCI6InRlc3RlIiwiaWF0IjoxNjIzMTgyMjY5LCJleHAiOjE2MjMxODI4Njl9.C2LPuX9wKCGGDzjitoHaTuNgQk8sVe6InFGbdooVgKc" // Terminar esse caso
-  //       break;
-  //     case "inválida":
-  //       token = "AUTHJIUzI1NiIsInRINVALIDA"
-  //       break;
-  //   }
-  //   cy.wrap(token).as('Token');
-  // }
-
-  // Realiza Login com body recebido pelo cy.wrap()
-  static buscarDadosUsuario(tipo = false) {
-    let admin;
-    if (tipo == 'admin') {
-      admin = true;
-    } else {
-      admin = false;
-    }
-    super.get(`${URL_USUARIOS}?administrador=${admin}`).then((res) => {
-      cy.wrap(res.body.usuarios[0].email).as("Email");
-      cy.wrap(res.body.usuarios[0].password).as("Password");
-    });
-  }
-  // Realiza o login com usuário recebido pelo cy.wrap()
-  // static realizarLogin() {
-  //   cy.get('@Usuario').then(usuario => {
-  //     super.post(URL_LOGIN, {
-  //       "email": usuario.email,
-  //       "password": usuario.password
-  //     }).then(res => {
-  //       cy.wrap(res.body.authorization).as('Token')
-  //     })
-  //   })
-  // }
-
+  // Realiza Login com body recebido pelo cy.wrap() por padrão, ou conforme o parâmetro passado
   static realizarLogin(tipo = 'padrao') {
     let body;
     cy.fixture('login/req_body').then(loginBody => {
@@ -200,14 +159,6 @@ export class ServeRest extends Rest {
     })
   }
 
-  // Cria usuário(admin ou não), baseado no parâmetro recebido
-  static criarUsuario(options = { admin: 'false' }) {
-    super.post(URL_USUARIOS, criarBodyUsuario({ administrador: options.admin })).then(res => {
-      cy.wrap(res.body._id).as('IdUsuario')
-      cy.wrap(JSON.parse(res.requestBody)).as('Usuario')
-    })
-  }
-
   // Cria um produto aleatório com Token recebido pelo cy.wrap()
   static criarProduto() {
     cy.get('@Token').then(authorization => {
@@ -234,5 +185,4 @@ export class ServeRest extends Rest {
       })
     })
   }
-
 }
