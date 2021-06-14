@@ -40,3 +40,12 @@ export const criarBodyCarrinho = (options = { produtos: null, vazio: false }) =>
     "produtos": options.produtos
   }
 }
+
+export const criarBodyLogin = (email = "", password = "", vazio = false) => {
+  return vazio ? {
+  } : {
+    "email": email,
+    "password": password
+  }
+
+}

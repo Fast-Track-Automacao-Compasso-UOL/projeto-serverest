@@ -20,11 +20,9 @@ Given('que utilize query params {string}', (param) => {
           break;
         case "password":
           valor = usuario.password
-          cy.log(usuario.password)
           break;
         case "administrador":
           valor = usuario.administrador
-          cy.log(usuario.administrador)
           break;
         default:
           param = ""
@@ -45,9 +43,11 @@ Given('que utilize complemento de rota {string}', (id) => {
       })
       break;
     case "existente com carrinho":
-      ServeRest.criarUsuario({ admin: 'true' }) // cy.wrap('Usuario')
-      ServeRest.realizarLogin() // cy.wrap('Token')
-      ServeRest.criarProduto() // cy.wrap('Usario') cy.wrap('Token')
+      cy.get('@UsuarioAdmin').then(usuarioAdmin => {
+        cy.wrap(usuarioAdmin).as('Usuario')
+      })
+      ServeRest.realizarLogin()
+      ServeRest.criarProduto()
       ServeRest.criarUsuario()
       ServeRest.realizarLogin()
       ServeRest.criarCarrinho()

@@ -19,11 +19,12 @@ export default class Rest {
     });
   }
 
-  static put(endpoint, body) {
+  static put(endpoint, body, headers = null) {
     return cy.request({
       method: 'PUT',
       url: endpoint,
       body: body,
+      headers: headers,
       failOnStatusCode: false
     });
   }

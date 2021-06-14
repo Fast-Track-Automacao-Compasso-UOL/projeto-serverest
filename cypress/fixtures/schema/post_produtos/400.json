@@ -11,7 +11,7 @@
         }
     ],
     "required": [
-        "message"
+       
     ],
     "properties": {
         "message": {

@@ -123,7 +123,7 @@ Given('{string} carrinho', (condicao) => {
 
 });
 
-Given('que utilize complemento de rota {string}', () => {
+Given('que utilize complemento de rota {string}', (complemento) => {
   ServeRest.adicionarComplemento(complemento);
 });
 

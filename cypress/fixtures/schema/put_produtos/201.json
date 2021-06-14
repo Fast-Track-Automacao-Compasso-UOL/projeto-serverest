@@ -12,7 +12,8 @@
         }
     ],
     "required": [
-     
+        "message",
+        "_id"
     ],
     "properties": {
         "message": {
