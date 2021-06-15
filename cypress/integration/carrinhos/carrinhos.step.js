@@ -2,7 +2,7 @@
 import { Given, Then, When } from 'cypress-cucumber-preprocessor/steps'
 import { Carrinhos } from '../../services/carrinhos.service';
 import { ServeRest } from '../../services/serveRest.service'
-import Rest from '../../services/_rest.service'
+import { Usuarios } from '../../services/usuarios.service'
 
 // GET Cenario: Listar Carrinhos
 Given('que utilize query params {string}', (params) => {
@@ -27,9 +27,6 @@ Given('que utilize query params {string}', (params) => {
 });
 
 //GET Cenario: Buscar carrinhos por ID
-// Given('a rota {string}', (rota) => {
-//  ServeRest.armazenarRota(rota);
-
 Given('que utilize complemento de rota {string}', (id) => {
   switch (id) {
     case "válido":
@@ -40,7 +37,7 @@ Given('que utilize complemento de rota {string}', (id) => {
       id = "ID11qntef4iTO11INVALIDO"
       ServeRest.adicionarComplemento(id)
       break;
-      // Cenario: excluir carrinho
+    // Cenario: excluir carrinho
     case "concluir-compra":
       ServeRest.adicionarComplemento(id)
       break;
@@ -56,7 +53,6 @@ Given('que utilize complemento de rota {string}', (id) => {
 });
 
 //POST Cenario: Cadastrar Carrinho
-
 Given('que utilize body {string}', (body) => {
   let aux;
   switch (body) {
@@ -97,16 +93,16 @@ Given('que utilize body {string}', (body) => {
     default:
       aux = ""
       break;
-
   }
-  ServeRest.adicionarBody(aux)
+
+  cy.wrap(aux).as('Body')
 });
 
 //DELETE Cenario: Excluir carrinho concluir-compra/cancelar-compra
 Given('{string} carrinho', (condicao) => {
   
 if (condicao == 'possua') {
-  ServeRest.criarUsuario({ admin: 'true' })
+  Usuarios.criarUsuario({ admin: 'true' })
   ServeRest.realizarLogin()
   ServeRest.criarProduto()
   cy.get('@Autenticacao').then(auth => {

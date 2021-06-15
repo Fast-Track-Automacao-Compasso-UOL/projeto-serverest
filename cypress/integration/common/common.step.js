@@ -2,10 +2,11 @@
 
 import { Before, Given, Then, When } from 'cypress-cucumber-preprocessor/steps'
 import { ServeRest } from '../../services/serveRest.service'
+import { Usuarios } from '../../services/usuarios.service'
 
 Before(() => {
   // Criando usuário comum e disponibilizando através dos aliases 'idUsuarioComum' e 'UsuarioComum'
-  ServeRest.criarUsuario()
+  Usuarios.criarUsuario()
   cy.get('@IdUsuario').then(idUsuario => {
     cy.get('@Usuario').then(usuario => {
       cy.wrap(idUsuario).as('idUsuarioComum')
@@ -13,7 +14,7 @@ Before(() => {
     })
   })
   // Criando usuário admin e disponibilizando através dos aliases 'idUsuarioAdmin' e 'UsuarioAdmin'
-  ServeRest.criarUsuario({ admin: 'true' })
+  Usuarios.criarUsuario({ admin: 'true' })
   cy.get('@IdUsuario').then(idUsuario => {
     cy.get('@Usuario').then(usuario => {
       cy.wrap(idUsuario).as('idUsuarioAdmin')
@@ -28,9 +29,9 @@ Given('a rota {string}', (rota) => {
 
 When('realizar uma requisição do tipo {string}', (tipo) => {
   if (tipo == 'DELETE') {
-    
-      ServeRest.realizarRequisicao(tipo);
-    
+
+    ServeRest.realizarRequisicao(tipo);
+
   } else {
     cy.get('@Body').then(body => {
       ServeRest.realizarRequisicao(tipo, body);
@@ -48,14 +49,14 @@ Then('deverá ser retornado o schema {string} e status {int}', (schema, status) 
 Given('que possua uma autenticação {string}', (auth) => {
   switch (auth) {
     case "válida comum":
-      ServeRest.criarUsuario()
+      Usuarios.criarUsuario()
       ServeRest.realizarLogin()
       cy.get('@Token').then(token => {
         cy.wrap(token).as('Autenticacao')
       })
       break;
     case "válida admin":
-      ServeRest.criarUsuario({ admin: 'true' })
+      Usuarios.criarUsuario({ admin: 'true' })
       ServeRest.realizarLogin()
       cy.get('@Token').then(token => {
         cy.wrap(token).as('Autenticacao')
@@ -70,20 +71,6 @@ Given('que possua uma autenticação {string}', (auth) => {
       break;
   }
 })
-
-
-// switch (auth) {
-//   case "válida admin":
-//     ServeRest.realizarLogin('admin');
-//     break;
-//   case "inválida":
-//     cy.wrap("AUTHJIUzI1NiIsInRINVALIDA").as('Token')
-//     break;
-//   case "válida comum":
-//    ServeRest.realizarLogin('válido')
-//    break;
-// }
-
 
 Then('deverá ser retornada a mensagem {string}', (mensagem) => {
   ServeRest.validarMensagem(mensagem);
