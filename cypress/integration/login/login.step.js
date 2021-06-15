@@ -1,7 +1,6 @@
 /// <reference types="cypress" />
 import { Given, Then, When } from 'cypress-cucumber-preprocessor/steps'
 import { Login } from '../../services/login.service';
-import { ServeRest } from '../../services/serveRest.service'
 
 Given('que utilize body {string}', (tipoBody) => {
   cy.wrap(tipoBody).as('TipoBody');
