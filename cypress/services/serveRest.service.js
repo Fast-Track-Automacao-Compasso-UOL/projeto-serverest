@@ -160,13 +160,13 @@ export class ServeRest extends Rest {
   }
 
   // Cria um produto aleatório com Token recebido pelo cy.wrap()
-  static criarProduto() {
-    cy.get('@Token').then(authorization => {
-      super.post(URL_PRODUTOS, criarBodyProduto(), { authorization }).then(res => {
-        cy.wrap(res.body._id).as('IdProduto')
-        cy.wrap(JSON.parse(res.requestBody)).as('Produto')
-      })
-    })
-  }
+  // static criarProduto() {
+  //   cy.get('@Token').then(authorization => {
+  //     super.post(URL_PRODUTOS, criarBodyProduto(), { authorization }).then(res => {
+  //       cy.wrap(res.body._id).as('IdProduto')
+  //       cy.wrap(JSON.parse(res.requestBody)).as('Produto')
+  //     })
+  //   })
+  // }
 
 }

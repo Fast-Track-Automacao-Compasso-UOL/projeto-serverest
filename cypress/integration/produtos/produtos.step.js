@@ -4,6 +4,7 @@ import { ServeRest } from "../../services/serveRest.service";
 import { criarBodyProduto } from "../../factories/dynamic";
 import { Carrinhos } from "../../services/carrinhos.service";
 import { Usuarios } from '../../services/usuarios.service'
+import { Produtos } from "../../services/produtos.service";
 
 // Listar Produtos
 Given("que utilize query params {string}", (param) => {
@@ -11,7 +12,7 @@ Given("que utilize query params {string}", (param) => {
     cy.wrap(admin).as('Usuario')
   })
   ServeRest.realizarLogin()
-  ServeRest.criarProduto()
+  Produtos.criarProduto()
   let valor;
   cy.get('@Produto').then(produto => {
     cy.get('@IdProduto').then(id => {
@@ -48,7 +49,7 @@ Given('que utilize complemento de rota {string}', (id) => {
     case "existente":
       Usuarios.criarUsuario({ admin: 'true' })
       ServeRest.realizarLogin()
-      ServeRest.criarProduto()
+      Produtos.criarProduto()
       cy.get('@IdProduto').then(id => {
         ServeRest.adicionarComplemento(id)
       })
@@ -56,7 +57,7 @@ Given('que utilize complemento de rota {string}', (id) => {
     case "existente com carrinho":
       Usuarios.criarUsuario({ admin: 'true' })
       ServeRest.realizarLogin()
-      ServeRest.criarProduto()
+      Produtos.criarProduto()
       Carrinhos.criarCarrinho()
       cy.get('@IdProduto').then(id => {
         ServeRest.adicionarComplemento(id)
@@ -82,7 +83,7 @@ Given("que utilize body {string}", (body) => {
       break;
 
     case "nome já utilizado":
-      ServeRest.criarProduto();
+      Produtos.criarProduto();
       cy.get('@Produto').then(produto => {
         body = criarBodyProduto({ nome: produto.nome })
         cy.wrap(body).as('Body')

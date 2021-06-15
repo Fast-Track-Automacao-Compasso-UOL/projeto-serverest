@@ -4,6 +4,7 @@ import { ServeRest } from '../../services/serveRest.service'
 import { criarBodyUsuario } from '../../factories/dynamic';
 import { Carrinhos } from '../../services/carrinhos.service';
 import { Usuarios } from '../../services/usuarios.service'
+import { Produtos } from "../../services/produtos.service";
 
 Given('que utilize query params {string}', (param) => {
   Usuarios.criarUsuario()
@@ -49,7 +50,7 @@ Given('que utilize complemento de rota {string}', (id) => {
         cy.wrap(usuarioAdmin).as('Usuario')
       })
       ServeRest.realizarLogin()
-      ServeRest.criarProduto()
+      Produtos.criarProduto()
       Usuarios.criarUsuario()
       ServeRest.realizarLogin()
       Carrinhos.criarCarrinho()
