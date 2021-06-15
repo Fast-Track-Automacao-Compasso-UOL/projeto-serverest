@@ -17,7 +17,6 @@ export class ServeRest extends Rest {
 
   // Adiciona query params à rota recebida pelo cy.wrap()
   static adicionarQueryParams(param, valor) {
-    cy.log(param, valor)
     cy.get('@Rota').then(rota => {
       if (param && valor) {
         cy.wrap(`${rota}?${param}=${valor}`).as('Rota')
@@ -85,17 +84,7 @@ export class ServeRest extends Rest {
     })
   }
 
-  // static validarAuthorization (auth){
-  //   switch (Token) {
-  //     case "válida":
-  //       token = "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImZ1bGFub0BxYS5jb20iLCJwYXNzd29yZCI6InRlc3RlIiwiaWF0IjoxNjIzMTgyMjY5LCJleHAiOjE2MjMxODI4Njl9.C2LPuX9wKCGGDzjitoHaTuNgQk8sVe6InFGbdooVgKc" // Terminar esse caso
-  //       break;
-  //     case "inválida":
-  //       token = "AUTHJIUzI1NiIsInRINVALIDA"
-  //       break;
-  //   }
-  //   cy.wrap(token).as('Token');
-  // }
+
 
   // Realiza Login com body recebido pelo cy.wrap()
   static buscarDadosUsuario(tipo = false) {
@@ -111,14 +100,6 @@ export class ServeRest extends Rest {
     });
   }  
 
-  // Cria um produto aleatório com Token recebido pelo cy.wrap()
-  // static criarProduto() {
-  //   cy.get('@Token').then(authorization => {
-  //     super.post(URL_PRODUTOS, criarBodyProduto(), { authorization }).then(res => {
-  //       cy.wrap(res.body._id).as('IdProduto')
-  //       cy.wrap(JSON.parse(res.requestBody)).as('Produto')
-  //     })
-  //   })
-  // }
+
 
 }

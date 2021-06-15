@@ -1,0 +1,9 @@
+
+  {
+    "tipos":{
+        "válido": "qbMqntef4iTOwWfg",
+        "inválido": "ID11qntef4iTO11INVALIDO",
+        "concluir-compra": "concluir-compra",
+        "cancelar-compra": "cancelar-compra"
+    }
+  }

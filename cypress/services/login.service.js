@@ -3,10 +3,9 @@ import Rest from "./_rest.service"
 import { criarBodyUsuario, criarBodyProduto, criarBodyLogin } from '../factories/dynamic';
 import { ServeRest } from "./serveRest.service";
 
-//const URL_USUARIOS = "/usuarios";
+
 const URL_LOGIN = "/login";
-//const URL_PRODUTOS = "/produtos";
-//const URL_CARRINHOS = "/carrinhos";
+
 
 export class Login extends ServeRest {
 

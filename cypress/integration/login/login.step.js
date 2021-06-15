@@ -6,9 +6,7 @@ Given('que utilize body {string}', (tipoBody) => {
   cy.wrap(tipoBody).as('TipoBody');
 });
 
-//When('realizar uma requisição do tipo {string}', (verb) => {
-//  Login.realizarLogin(cy.get('@Rota'), cy.get('@Body'))
-//});
+
 
 When('realizar login', () => {
   cy.get('@TipoBody').then(tipo => {

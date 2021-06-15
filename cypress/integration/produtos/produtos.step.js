@@ -29,7 +29,6 @@ Given("que utilize query params {string}", (param) => {
           break;
         case "descricao":
           valor = produto.descricao
-          // cy.log(produto.descricao)
           break;
         case "quantidade":
           valor = produto.quantidade
