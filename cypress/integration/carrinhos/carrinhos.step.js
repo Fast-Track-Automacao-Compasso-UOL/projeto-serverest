@@ -57,48 +57,54 @@ Given('que utilize complemento de rota {string}', (id) => {
 
 //POST Cenario: Cadastrar Carrinho
 Given('que utilize body {string}', (body) => {
-  let aux;
-  switch (body) {
-    case "válido":
-      aux = {
-        "produtos": [
-          {
-            "idProduto": "BeeJh5lz3k6kSIzA",
-            "quantidade": 5
-          },
-          {
-            "idProduto": "K6leHdftCeOJj8BJ",
-            "quantidade": 3
-          }
-        ]
-      }
-      break;
-    case "carrinho já cadastrado":
-      aux = {
-        "produtos":
-          [
-            {
-              "idProduto": "BeeJh5lz3k6kSIzA",
-              "quantidade": 1
-            },
-            {
-              "idProduto": "K6leHdftCeOJj8BJ",
-              "quantidade": 2
-            }
-          ],
-      }
-      break;
-    case "campos vazios":
-      aux = {
-        "produtos": 123
-      }
-      break;
-    default:
-      aux = ""
-      break;
-  }
-
+  //let aux = fixture.tipos[body];
+cy.fixture('carrinhos/req_body').then(carrinhosBody => {
+  let aux = carrinhosBody.tipos[body];
   cy.wrap(aux).as('Body')
+})
+
+  // switch (body) {
+  //   case "válido":
+  //     aux = {
+  //       "produtos": [
+  //         {
+  //           "idProduto": "BeeJh5lz3k6kSIzA",
+  //           "quantidade": 5
+  //         },
+  //         {
+  //           "idProduto": "K6leHdftCeOJj8BJ",
+  //           "quantidade": 3
+  //         }
+  //       ]
+  //     }
+  //     break;
+
+    // case "carrinho já cadastrado":
+    //   aux = {
+    //     "produtos":
+    //       [
+    //         {
+    //           "idProduto": "BeeJh5lz3k6kSIzA",
+    //           "quantidade": 1
+    //         },
+    //         {
+    //           "idProduto": "K6leHdftCeOJj8BJ",
+    //           "quantidade": 2
+    //         }
+    //       ],
+    //   }
+    //   break;
+
+    // case "campos vazios":
+    //   aux = {
+    //     "produtos": ""
+    //   }
+    //   break;
+    // default:
+    //   aux = ""
+    //   break;
+  //}
+ // ServeRest.adicionarBody(aux)
 });
 
 //DELETE Cenario: Excluir carrinho concluir-compra/cancelar-compra
