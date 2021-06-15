@@ -1,6 +1,7 @@
 /// <reference types="cypress" />
 
 import { Before, Given, Then, When } from 'cypress-cucumber-preprocessor/steps'
+import { Login } from '../../services/login.service';
 import { ServeRest } from '../../services/serveRest.service'
 import { Usuarios } from '../../services/usuarios.service'
 
@@ -50,14 +51,14 @@ Given('que possua uma autenticação {string}', (auth) => {
   switch (auth) {
     case "válida comum":
       Usuarios.criarUsuario()
-      ServeRest.realizarLogin()
+      Login.realizarLogin()
       cy.get('@Token').then(token => {
         cy.wrap(token).as('Autenticacao')
       })
       break;
     case "válida admin":
       Usuarios.criarUsuario({ admin: 'true' })
-      ServeRest.realizarLogin()
+      Login.realizarLogin()
       cy.get('@Token').then(token => {
         cy.wrap(token).as('Autenticacao')
       })

@@ -85,79 +85,31 @@ export class ServeRest extends Rest {
     })
   }
 
-  // Realiza Login com body recebido pelo cy.wrap() por padrão, ou conforme o parâmetro passado
-  static realizarLogin(tipo = 'padrao') {
-    let body;
-    cy.fixture('login/req_body').then(loginBody => {
-      switch (tipo) {
-        case 'válido':
-          body = loginBody.tipos.valido;
-          cy.wrap(body).as('LoginBody');
-          break;
-        case 'e-mail inválido':
-          body = loginBody.tipos.emailInvalido;
-          cy.wrap(body).as('LoginBody');
-          break;
-        case 'senha inválida':
-          body = loginBody.tipos.senhaInvalida;
-          cy.wrap(body).as('LoginBody');
-          break;
-        case 'vazio':
-          body = loginBody.tipos.vazio;
-          cy.wrap(body).as('LoginBody');
-          break;
-        case 'campos vazios':
-          body = loginBody.tipos.emBranco;
-          cy.wrap(body).as('LoginBody');
-          break;
-        case 'campos inválidos':
-          body = loginBody.tipos.tiposInvalidos;
-          cy.wrap(body).as('LoginBody');
-          break;
-        case 'admin':
-          cy.log('INICIO BUSCAR DADOS USUÁRIO')
+  // static validarAuthorization (auth){
+  //   switch (Token) {
+  //     case "válida":
+  //       token = "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImZ1bGFub0BxYS5jb20iLCJwYXNzd29yZCI6InRlc3RlIiwiaWF0IjoxNjIzMTgyMjY5LCJleHAiOjE2MjMxODI4Njl9.C2LPuX9wKCGGDzjitoHaTuNgQk8sVe6InFGbdooVgKc" // Terminar esse caso
+  //       break;
+  //     case "inválida":
+  //       token = "AUTHJIUzI1NiIsInRINVALIDA"
+  //       break;
+  //   }
+  //   cy.wrap(token).as('Token');
+  // }
 
-          this.buscarDadosUsuario(tipo);
-          cy.get('@Email').then(email => {
-            cy.get('@Password').then(password => {
-              body = {
-                "email": email,
-                "password": password
-              };
-              cy.wrap(body).as('LoginBody');
-            })
-          })
-          break;
-        case 'comum':
-          this.buscarDadosUsuario(tipo);
-          body = {
-            "email": cy.get('@Email'),
-            "password": cy.get('@Password')
-          };
-          cy.wrap(body).as('LoginBody');
-          break;
-        case 'padrao':
-          cy.get('@Usuario').then(usuario => {
-            body = {
-              "email": usuario.email,
-              "password": usuario.password
-            };
-            cy.wrap(body).as('LoginBody');
-          })
-          break;
-        default:
-          cy.log(`Tipo não reconhecido: ${tipo}`);
-          break;
-      }
-
-      cy.get('@LoginBody').then(body => {
-        super.post(URL_LOGIN, body).then(res => {
-          cy.wrap(res.body).as('LoginBody');
-          cy.wrap(res.body.authorization).as('Token');
-        });
-      })
-    })
-  }
+  // Realiza Login com body recebido pelo cy.wrap()
+  static buscarDadosUsuario(tipo = false) {
+    let admin;
+    if (tipo == 'admin') {
+      admin = true;
+    } else {
+      admin = false;
+    }
+    super.get(`${URL_USUARIOS}?administrador=${admin}`).then((res) => {
+      cy.wrap(res.body.usuarios[0].email).as("Email");
+      cy.wrap(res.body.usuarios[0].password).as("Password");
+    });
+  }  
 
   // Cria um produto aleatório com Token recebido pelo cy.wrap()
   // static criarProduto() {
