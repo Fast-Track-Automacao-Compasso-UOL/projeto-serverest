@@ -1,121 +1,55 @@
 /// <reference types="cypress" />
 import { Given, Then, When } from 'cypress-cucumber-preprocessor/steps'
 import { Carrinhos } from '../../services/carrinhos.service';
+import { Login } from '../../services/login.service';
 import { ServeRest } from '../../services/serveRest.service'
+import { Usuarios } from '../../services/usuarios.service'
 import Rest from '../../services/_rest.service'
 import { Produtos } from "../../services/produtos.service";
 
 // GET Cenario: Listar Carrinhos
 Given('que utilize query params {string}', (params) => {
-  let valor;
-  switch (params) {
-    case "precoTotal":
-      valor = "6180"
-      break;
-    case "quantidadeTotal":
-      valor = "3"
-      break;
-    case "idUsuario":
-      valor = "oUb7aGkMtSEPf6BZ"
-      break;
-    default:
-      params = ""
-      valor = ""
-      break;
-  }
-
-  ServeRest.adicionarQueryParams(params, valor);
+  cy.fixture('carrinhos/query_params').then(query_params => {
+    cy.log(query_params)
+    
+    ServeRest.adicionarQueryParams(params, query_params[params]);
+  })
 });
 
 //GET Cenario: Buscar carrinhos por ID
-// Given('a rota {string}', (rota) => {
-//  ServeRest.armazenarRota(rota);
-
 Given('que utilize complemento de rota {string}', (id) => {
-  switch (id) {
-    case "válido":
-      id = "qbMqntef4iTOwWfg"
-      ServeRest.adicionarComplemento(id)
-      break;
-    case "inválido":
-      id = "ID11qntef4iTO11INVALIDO"
-      ServeRest.adicionarComplemento(id)
-      break;
-      // Cenario: excluir carrinho
-    case "concluir-compra":
-      ServeRest.adicionarComplemento(id)
-      break;
-    case "cancelar-compra":
-      ServeRest.adicionarComplemento(id)
-      break;
-  }
-  // When('realizar uma requisição do tipo {string}', (tipo) => {
-  //  ServeRest.realizarRequisicao(tipo);
+  cy.fixture('carrinhos/complemento').then(complemento => {
+    cy.log(complemento)
+    let aux = complemento.tipos[id];
+    ServeRest.adicionarComplemento(aux)
+  })
 
-  //Then('deverá ser retornado o schema {string} e status {int}', (schema, status) => {
-  //  ServeRest.validarSchemaEStatus(schema, status);
 });
 
 //POST Cenario: Cadastrar Carrinho
-
 Given('que utilize body {string}', (body) => {
-  let aux;
-  switch (body) {
-    case "válido":
-      aux = {
-        "produtos": [
-          {
-            "idProduto": "BeeJh5lz3k6kSIzA",
-            "quantidade": 5
-          },
-          {
-            "idProduto": "K6leHdftCeOJj8BJ",
-            "quantidade": 3
-          }
-        ]
-      }
-      break;
-    case "carrinho já cadastrado":
-      aux = {
-        "produtos":
-          [
-            {
-              "idProduto": "BeeJh5lz3k6kSIzA",
-              "quantidade": 1
-            },
-            {
-              "idProduto": "K6leHdftCeOJj8BJ",
-              "quantidade": 2
-            }
-          ],
-      }
-      break;
-    case "campos vazios":
-      aux = {
-        "produtos": 123
-      }
-      break;
-    default:
-      aux = ""
-      break;
+  cy.fixture('carrinhos/req_body').then(carrinhosBody => {
+    cy.log(carrinhosBody)
+    let aux = carrinhosBody.tipos[body];
+    cy.wrap(aux).as('Body')
+  })
 
-  }
-  ServeRest.adicionarBody(aux)
+
 });
 
 //DELETE Cenario: Excluir carrinho concluir-compra/cancelar-compra
 Given('{string} carrinho', (condicao) => {
-  
-if (condicao == 'possua') {
-  ServeRest.criarUsuario({ admin: 'true' })
-  ServeRest.realizarLogin()
-  Produtos.criarProduto()
-  cy.get('@Autenticacao').then(auth => {
-    cy.wrap(auth).as('Token')
-    Carrinhos.criarCarrinho()
-  })
-  
-}
+
+  if (condicao == 'possua') {
+    Usuarios.criarUsuario({ admin: 'true' })
+    Login.realizarLogin()
+    Produtos.criarProduto()
+    cy.get('@Autenticacao').then(auth => {
+      cy.wrap(auth).as('Token')
+      Carrinhos.criarCarrinho()
+    })
+
+  }
 });
 
 Given('que utilize complemento de rota {string}', (complemento) => {

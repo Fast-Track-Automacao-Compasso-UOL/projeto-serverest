@@ -1,12 +1,14 @@
 /// <reference types="cypress" />
-import { Given, Then, When } from 'cypress-cucumber-preprocessor/steps'
+import { Given } from 'cypress-cucumber-preprocessor/steps'
 import { ServeRest } from '../../services/serveRest.service'
 import { criarBodyUsuario } from '../../factories/dynamic';
-import { Produtos } from "../../services/produtos.service";
 import { Carrinhos } from '../../services/carrinhos.service';
+import { Usuarios } from '../../services/usuarios.service'
+import { Produtos } from "../../services/produtos.service";
+import { Login } from '../../services/login.service';
 
 Given('que utilize query params {string}', (param) => {
-  ServeRest.criarUsuario()
+  Usuarios.criarUsuario()
   let valor;
   cy.get('@Usuario').then(usuario => {
     cy.get('@IdUsuario').then(id => {
@@ -39,7 +41,7 @@ Given('que utilize query params {string}', (param) => {
 Given('que utilize complemento de rota {string}', (id) => {
   switch (id) {
     case "existente":
-      ServeRest.criarUsuario()
+      Usuarios.criarUsuario()
       cy.get('@IdUsuario').then(id => {
         ServeRest.adicionarComplemento(id)
       })
@@ -48,10 +50,10 @@ Given('que utilize complemento de rota {string}', (id) => {
       cy.get('@UsuarioAdmin').then(usuarioAdmin => {
         cy.wrap(usuarioAdmin).as('Usuario')
       })
-      ServeRest.realizarLogin()
+      Login.realizarLogin()
       Produtos.criarProduto()
-      ServeRest.criarUsuario()
-      ServeRest.realizarLogin()
+      Usuarios.criarUsuario()
+      Login.realizarLogin()
       Carrinhos.criarCarrinho()
       cy.get('@IdUsuario').then(id => {
         ServeRest.adicionarComplemento(id)
@@ -72,26 +74,26 @@ Given('que utilize body {string}', (body) => {
   switch (body) {
     case "válido":
       body = criarBodyUsuario()
-      ServeRest.adicionarBody(body)
+      cy.wrap(body).as('Body')
       break;
     case "e-mail já utilizado":
-      ServeRest.criarUsuario()
+      Usuarios.criarUsuario()
       cy.get('@Usuario').then(usuario => {
         body = criarBodyUsuario({ email: usuario.email })
-        ServeRest.adicionarBody(body)
+        cy.wrap(body).as('Body')
       })
       break;
     case "e-mail inválido":
       body = criarBodyUsuario({ email: "thatisnotanemail" })
-      ServeRest.adicionarBody(body)
+      cy.wrap(body).as('Body')
       break;
     case "campos vazios":
       body = criarBodyUsuario({ vazio: true })
-      ServeRest.adicionarBody(body)
+      cy.wrap(body).as('Body')
       break;
     case "campos inválidos":
       body = criarBodyUsuario({ nome: 123 })
-      ServeRest.adicionarBody(body)
+      cy.wrap(body).as('Body')
       break;
     default:
       body = ""

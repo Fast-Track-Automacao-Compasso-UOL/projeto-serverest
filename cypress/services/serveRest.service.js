@@ -1,8 +1,7 @@
 /// <reference types="cypress" />
 import Rest from "./_rest.service"
-import { criarBodyUsuario, criarBodyProduto, criarBodyLogin } from '../factories/dynamic';
+import { criarBodyProduto } from '../factories/dynamic';
 
-const URL_USUARIOS = "/usuarios";
 const URL_LOGIN = "/login";
 const URL_PRODUTOS = "/produtos";
 const URL_CARRINHOS = "/carrinhos";
@@ -18,7 +17,6 @@ export class ServeRest extends Rest {
 
   // Adiciona query params à rota recebida pelo cy.wrap()
   static adicionarQueryParams(param, valor) {
-    cy.log(param, valor)
     cy.get('@Rota').then(rota => {
       if (param && valor) {
         cy.wrap(`${rota}?${param}=${valor}`).as('Rota')
@@ -79,10 +77,6 @@ export class ServeRest extends Rest {
     })
   }
 
-  static adicionarBody(body) {
-    cy.wrap(body).as('Body')
-  }
-
   // Valida mensagem contida no body da requisição
   static validarMensagem(mensagem) {
     cy.get('@Body').then(body => {
@@ -90,7 +84,7 @@ export class ServeRest extends Rest {
     })
   }
 
-  
+
 
   // Realiza Login com body recebido pelo cy.wrap()
   static buscarDadosUsuario(tipo = false) {
@@ -104,99 +98,8 @@ export class ServeRest extends Rest {
       cy.wrap(res.body.usuarios[0].email).as("Email");
       cy.wrap(res.body.usuarios[0].password).as("Password");
     });
-  }
-  
+  }  
 
-  static realizarLogin(tipo = 'padrao') {
-    let body;
-    cy.fixture('login/req_body').then(loginBody => {
-      switch (tipo) {
-        case 'válido':
-          body = loginBody.tipos.valido;
-          cy.wrap(body).as('LoginBody');
-          break;
-        case 'e-mail inválido':
-          body = loginBody.tipos.emailInvalido;
-          cy.wrap(body).as('LoginBody');
-          break;
-        case 'senha inválida':
-          body = loginBody.tipos.senhaInvalida;
-          cy.wrap(body).as('LoginBody');
-          break;
-        case 'vazio':
-          body = loginBody.tipos.vazio;
-          cy.wrap(body).as('LoginBody');
-          break;
-        case 'campos vazios':
-          body = loginBody.tipos.emBranco;
-          cy.wrap(body).as('LoginBody');
-          break;
-        case 'campos inválidos':
-          body = loginBody.tipos.tiposInvalidos;
-          cy.wrap(body).as('LoginBody');
-          break;
-        case 'admin':
-          cy.log('INICIO BUSCAR DADOS USUÁRIO')
-
-          this.buscarDadosUsuario(tipo);
-          cy.get('@Email').then(email => {
-            cy.get('@Password').then(password => {
-              body = {
-                "email": email,
-                "password": password
-              };
-              cy.wrap(body).as('LoginBody');
-            })
-          })
-          break;
-        case 'comum':
-          this.buscarDadosUsuario(tipo);
-          body = {
-            "email": cy.get('@Email'),
-            "password": cy.get('@Password')
-          };
-          cy.wrap(body).as('LoginBody');
-          break;
-        case 'padrao':
-          cy.get('@Usuario').then(usuario => {
-            body = {
-              "email": usuario.email,
-              "password": usuario.password
-            };
-            cy.wrap(body).as('LoginBody');
-          })
-          break;
-        default:
-          cy.log(`Tipo não reconhecido: ${tipo}`);
-          break;
-      }
-
-      cy.get('@LoginBody').then(body => {
-        super.post(URL_LOGIN, body).then(res => {
-          cy.wrap(res.body).as('LoginBody');
-          cy.wrap(res.body.authorization).as('Token');
-        });
-      })
-    })
-  }
-
-  // Cria usuário(admin ou não), baseado no parâmetro recebido
-  static criarUsuario(options = { admin: 'false' }) {
-    super.post(URL_USUARIOS, criarBodyUsuario({ administrador: options.admin })).then(res => {
-      cy.wrap(res.body._id).as('IdUsuario')
-      cy.wrap(JSON.parse(res.requestBody)).as('Usuario')
-    })
-  }
-
-  // Cria um produto aleatório com Token recebido pelo cy.wrap()
-  // static criarProduto() {
-  //   cy.get('@Token').then(authorization => {
-  //     super.post(URL_PRODUTOS, criarBodyProduto(), { authorization }).then(res => {
-  //       cy.wrap(res.body._id).as('IdProduto')
-  //       cy.wrap(JSON.parse(res.requestBody)).as('Produto')
-  //     })
-  //   })
-  // }
 
 
 }
