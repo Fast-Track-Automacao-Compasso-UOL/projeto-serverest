@@ -90,17 +90,7 @@ export class ServeRest extends Rest {
     })
   }
 
-  // static validarAuthorization (auth){
-  //   switch (Token) {
-  //     case "válida":
-  //       token = "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImZ1bGFub0BxYS5jb20iLCJwYXNzd29yZCI6InRlc3RlIiwiaWF0IjoxNjIzMTgyMjY5LCJleHAiOjE2MjMxODI4Njl9.C2LPuX9wKCGGDzjitoHaTuNgQk8sVe6InFGbdooVgKc" // Terminar esse caso
-  //       break;
-  //     case "inválida":
-  //       token = "AUTHJIUzI1NiIsInRINVALIDA"
-  //       break;
-  //   }
-  //   cy.wrap(token).as('Token');
-  // }
+  
 
   // Realiza Login com body recebido pelo cy.wrap()
   static buscarDadosUsuario(tipo = false) {
@@ -115,17 +105,7 @@ export class ServeRest extends Rest {
       cy.wrap(res.body.usuarios[0].password).as("Password");
     });
   }
-  // Realiza o login com usuário recebido pelo cy.wrap()
-  // static realizarLogin() {
-  //   cy.get('@Usuario').then(usuario => {
-  //     super.post(URL_LOGIN, {
-  //       "email": usuario.email,
-  //       "password": usuario.password
-  //     }).then(res => {
-  //       cy.wrap(res.body.authorization).as('Token')
-  //     })
-  //   })
-  // }
+  
 
   static realizarLogin(tipo = 'padrao') {
     let body;
@@ -218,21 +198,5 @@ export class ServeRest extends Rest {
   //   })
   // }
 
-  // Cria um carrinho com id do produto recebido pelo cy.wrap()
-  static criarCarrinho() {
-    cy.get('@IdProduto').then(idProduto => {
-      cy.get('@Token').then(authorization => {
-        super.post(URL_CARRINHOS, {
-          produtos: [
-            {
-              "idProduto": idProduto,
-              "quantidade": 1
-            }
-          ]
-        },
-          { authorization })
-      })
-    })
-  }
 
 }

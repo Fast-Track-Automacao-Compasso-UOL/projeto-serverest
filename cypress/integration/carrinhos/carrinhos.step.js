@@ -1,5 +1,6 @@
 /// <reference types="cypress" />
 import { Given, Then, When } from 'cypress-cucumber-preprocessor/steps'
+import { Carrinhos } from '../../services/carrinhos.service';
 import { ServeRest } from '../../services/serveRest.service'
 import Rest from '../../services/_rest.service'
 import { Produtos } from "../../services/produtos.service";
@@ -111,7 +112,7 @@ if (condicao == 'possua') {
   Produtos.criarProduto()
   cy.get('@Autenticacao').then(auth => {
     cy.wrap(auth).as('Token')
-    ServeRest.criarCarrinho()
+    Carrinhos.criarCarrinho()
   })
   
 }
