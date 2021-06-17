@@ -1,3 +1,5 @@
+/// <reference types="cypress"/>
+
 import faker from 'faker';
 
 export const criarBodyUsuario = (options = { nome: null, email: null, password: null, administrador: null, vazio: false }) => {
@@ -42,10 +44,14 @@ export const criarBodyCarrinho = (options = { produtos: null, vazio: false }) =>
 }
 
 export const criarBodyLogin = (email = "", password = "", vazio = false) => {
-  return vazio ? {
+  let body = vazio ? {
   } : {
     "email": email,
     "password": password
   }
+
+cy.wrap(body).as('LoginBody');
+
+return body
 
 }
