@@ -30,8 +30,7 @@ export class Login extends ServeRest {
               body = criarBodyLogin(senhaInvalida.email, senhaInvalida.password)
               break;
             case 'vazio':
-              body = vazio;
-              cy.wrap(body).as('LoginBody');
+              body = criarBodyLogin(null, null, true)
               break;
             case 'campos vazios':
               body = criarBodyLogin(emBranco.email, emBranco.password)

@@ -10,6 +10,7 @@
     "faker": "^5.5.3",
     "fs-extra": "^10.0.0",
     "jsonschema": "^1.4.0",
+    "multiple-cucumber-html-reporter": "^1.18.0",
     "rimraf": "^3.0.2",
     "start-server-and-test": "^1.12.5"
   },
@@ -32,6 +33,12 @@
   },
   "homepage": "https://github.com/Fast-Track-Automacao-Compasso-UOL/projeto-serverest#readme",
   "cypress-cucumber-preprocessor": {
-    "nonGlobalStepDefinitions": true
+    "nonGlobalStepDefinitions": true,
+    "cucumberJson": {
+      "generate": true,
+      "outputFolder": "cypress/cucumber-json",
+      "filePrefix": "",
+      "fileSuffix": ".cucumber"
+    }
   }
 }
