@@ -1,0 +1,10 @@
+{
+    "$schema": "https://on.cypress.io/cypress.schema.json",
+    "baseUrl": "https://serverest.dev",
+    "env": {
+      "globalTimeout": 30000,
+      "environment": "PRD"
+    }
+  }
+
+  
